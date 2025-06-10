@@ -6,7 +6,7 @@ namespace GradeFlowECTS.Analyzers.MDK01
 {
     public static class Task6Analyzer
     {
-        public static string Analyze(string code)
+        public static (string totalScore, string criteria) Analyze(string code)
         {
             var tree = CSharpSyntaxTree.ParseText(code);
             var compilation = CSharpCompilation.Create("Analysis")
@@ -60,7 +60,7 @@ namespace GradeFlowECTS.Analyzers.MDK01
                     : "✅ Не используется запрещённая сортировка"
             };
 
-            return string.Join(Environment.NewLine, results);
+            return ($"{ArrayAnalyzer.MetCriteria}/{ArrayAnalyzer.TotalCriteria}", string.Join(Environment.NewLine, results));
         }
 
         private static bool HasArraySizeInput(SyntaxNode root, SemanticModel semanticModel)

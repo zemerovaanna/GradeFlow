@@ -68,5 +68,7 @@ namespace GradeFlowECTS.Interfaces
         string Decrypt(string encryptedString);
 
         List<ExamItemViewModel> GetUpcomingExamsForStudent(int? studentId);
+        void RemoveQuestion(int questionId);
+        void UpdateQuestion(Question question);
     }
 }

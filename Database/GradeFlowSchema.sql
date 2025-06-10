@@ -1,6 +1,6 @@
 USE [master]
 GO
-/****** Object:  Database [GradeFlow]    Script Date: 08.06.2025 23:28:38 ******/
+/****** Object:  Database [GradeFlow]    Script Date: 10.06.2025 17:59:40 ******/
 CREATE DATABASE [GradeFlow]
 GO
 IF (1 = FULLTEXTSERVICEPROPERTY('IsFullTextInstalled'))
@@ -76,7 +76,7 @@ ALTER DATABASE [GradeFlow] SET QUERY_STORE (OPERATION_MODE = READ_WRITE, CLEANUP
 GO
 USE [GradeFlow]
 GO
-/****** Object:  Table [dbo].[__EFMigrationsHistory]    Script Date: 08.06.2025 23:28:39 ******/
+/****** Object:  Table [dbo].[__EFMigrationsHistory]    Script Date: 10.06.2025 17:59:40 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -90,7 +90,7 @@ CREATE TABLE [dbo].[__EFMigrationsHistory](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[Criteria]    Script Date: 08.06.2025 23:28:39 ******/
+/****** Object:  Table [dbo].[Criteria]    Script Date: 10.06.2025 17:59:40 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -107,7 +107,7 @@ PRIMARY KEY CLUSTERED
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[Disciplines]    Script Date: 08.06.2025 23:28:39 ******/
+/****** Object:  Table [dbo].[Disciplines]    Script Date: 10.06.2025 17:59:40 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -121,7 +121,7 @@ CREATE TABLE [dbo].[Disciplines](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[ExamPractices]    Script Date: 08.06.2025 23:28:39 ******/
+/****** Object:  Table [dbo].[ExamPractices]    Script Date: 10.06.2025 17:59:40 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -137,7 +137,7 @@ CREATE TABLE [dbo].[ExamPractices](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[Exams]    Script Date: 08.06.2025 23:28:39 ******/
+/****** Object:  Table [dbo].[Exams]    Script Date: 10.06.2025 17:59:40 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -155,7 +155,7 @@ CREATE TABLE [dbo].[Exams](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[ExamTests]    Script Date: 08.06.2025 23:28:39 ******/
+/****** Object:  Table [dbo].[ExamTests]    Script Date: 10.06.2025 17:59:40 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -171,7 +171,7 @@ CREATE TABLE [dbo].[ExamTests](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[Groups]    Script Date: 08.06.2025 23:28:39 ******/
+/****** Object:  Table [dbo].[Groups]    Script Date: 10.06.2025 17:59:40 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -186,7 +186,7 @@ CREATE TABLE [dbo].[Groups](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[GroupsExams]    Script Date: 08.06.2025 23:28:39 ******/
+/****** Object:  Table [dbo].[GroupsExams]    Script Date: 10.06.2025 17:59:40 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -201,7 +201,7 @@ CREATE TABLE [dbo].[GroupsExams](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[Modules]    Script Date: 08.06.2025 23:28:39 ******/
+/****** Object:  Table [dbo].[Modules]    Script Date: 10.06.2025 17:59:40 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -215,7 +215,7 @@ PRIMARY KEY CLUSTERED
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[QualificationExamScores]    Script Date: 08.06.2025 23:28:39 ******/
+/****** Object:  Table [dbo].[QualificationExamScores]    Script Date: 10.06.2025 17:59:40 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -231,7 +231,7 @@ CREATE TABLE [dbo].[QualificationExamScores](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[QuestionAnswers]    Script Date: 08.06.2025 23:28:39 ******/
+/****** Object:  Table [dbo].[QuestionAnswers]    Script Date: 10.06.2025 17:59:40 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -249,7 +249,7 @@ CREATE TABLE [dbo].[QuestionAnswers](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[Questions]    Script Date: 08.06.2025 23:28:39 ******/
+/****** Object:  Table [dbo].[Questions]    Script Date: 10.06.2025 17:59:40 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -269,7 +269,7 @@ CREATE TABLE [dbo].[Questions](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[QuestionTypes]    Script Date: 08.06.2025 23:28:39 ******/
+/****** Object:  Table [dbo].[QuestionTypes]    Script Date: 10.06.2025 17:59:40 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -284,7 +284,7 @@ CREATE TABLE [dbo].[QuestionTypes](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[ScoreOptions]    Script Date: 08.06.2025 23:28:39 ******/
+/****** Object:  Table [dbo].[ScoreOptions]    Script Date: 10.06.2025 17:59:40 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -300,7 +300,7 @@ PRIMARY KEY CLUSTERED
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[StudentAttempts]    Script Date: 08.06.2025 23:28:39 ******/
+/****** Object:  Table [dbo].[StudentAttempts]    Script Date: 10.06.2025 17:59:40 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -316,7 +316,7 @@ CREATE TABLE [dbo].[StudentAttempts](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[StudentExamResults]    Script Date: 08.06.2025 23:28:39 ******/
+/****** Object:  Table [dbo].[StudentExamResults]    Script Date: 10.06.2025 17:59:40 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -327,16 +327,18 @@ CREATE TABLE [dbo].[StudentExamResults](
 	[ExamId] [uniqueidentifier] NOT NULL,
 	[TimeEnded] [time](0) NULL,
 	[DateEnded] [date] NULL,
-	[TestTimeSpent] [time](0) NULL,
-	[TestGrade] [tinyint] NULL,
-	[PracticeGrade] [tinyint] NULL,
+	[TestTimeSpent] [int] NULL,
+	[MDKCode] [nvarchar](max) NULL,
+	[MDKCriteria] [nvarchar](max) NULL,
+	[QualCriteria] [nvarchar](max) NULL,
+	[TotalScore] [nvarchar](max) NULL,
  CONSTRAINT [PK_StudentExam] PRIMARY KEY CLUSTERED 
 (
 	[StudentExamId] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
-) ON [PRIMARY]
+) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[Students]    Script Date: 08.06.2025 23:28:39 ******/
+/****** Object:  Table [dbo].[Students]    Script Date: 10.06.2025 17:59:40 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -351,7 +353,7 @@ CREATE TABLE [dbo].[Students](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[Teachers]    Script Date: 08.06.2025 23:28:39 ******/
+/****** Object:  Table [dbo].[Teachers]    Script Date: 10.06.2025 17:59:40 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -366,7 +368,7 @@ CREATE TABLE [dbo].[Teachers](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[TopicsDisciplines]    Script Date: 08.06.2025 23:28:39 ******/
+/****** Object:  Table [dbo].[TopicsDisciplines]    Script Date: 10.06.2025 17:59:40 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -381,7 +383,7 @@ CREATE TABLE [dbo].[TopicsDisciplines](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[TopicsExamTest]    Script Date: 08.06.2025 23:28:39 ******/
+/****** Object:  Table [dbo].[TopicsExamTest]    Script Date: 10.06.2025 17:59:40 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -397,7 +399,7 @@ CREATE TABLE [dbo].[TopicsExamTest](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[UserRoles]    Script Date: 08.06.2025 23:28:39 ******/
+/****** Object:  Table [dbo].[UserRoles]    Script Date: 10.06.2025 17:59:40 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -411,7 +413,7 @@ CREATE TABLE [dbo].[UserRoles](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[Users]    Script Date: 08.06.2025 23:28:39 ******/
+/****** Object:  Table [dbo].[Users]    Script Date: 10.06.2025 17:59:40 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -431,121 +433,121 @@ CREATE TABLE [dbo].[Users](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
 GO
-/****** Object:  Index [IX_ExamPractices_DisciplineId]    Script Date: 08.06.2025 23:28:39 ******/
+/****** Object:  Index [IX_ExamPractices_DisciplineId]    Script Date: 10.06.2025 17:59:40 ******/
 CREATE NONCLUSTERED INDEX [IX_ExamPractices_DisciplineId] ON [dbo].[ExamPractices]
 (
 	[DisciplineId] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 GO
-/****** Object:  Index [IX_Exams_DisciplineId]    Script Date: 08.06.2025 23:28:39 ******/
+/****** Object:  Index [IX_Exams_DisciplineId]    Script Date: 10.06.2025 17:59:41 ******/
 CREATE NONCLUSTERED INDEX [IX_Exams_DisciplineId] ON [dbo].[Exams]
 (
 	[DisciplineId] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 GO
-/****** Object:  Index [IX_Exams_OwnerTeacherId]    Script Date: 08.06.2025 23:28:39 ******/
+/****** Object:  Index [IX_Exams_OwnerTeacherId]    Script Date: 10.06.2025 17:59:41 ******/
 CREATE NONCLUSTERED INDEX [IX_Exams_OwnerTeacherId] ON [dbo].[Exams]
 (
 	[OwnerTeacherId] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 GO
-/****** Object:  Index [IX_ExamTests_ExamId]    Script Date: 08.06.2025 23:28:39 ******/
+/****** Object:  Index [IX_ExamTests_ExamId]    Script Date: 10.06.2025 17:59:41 ******/
 CREATE NONCLUSTERED INDEX [IX_ExamTests_ExamId] ON [dbo].[ExamTests]
 (
 	[ExamId] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 GO
-/****** Object:  Index [IX_GroupsExams_ExamId]    Script Date: 08.06.2025 23:28:39 ******/
+/****** Object:  Index [IX_GroupsExams_ExamId]    Script Date: 10.06.2025 17:59:41 ******/
 CREATE NONCLUSTERED INDEX [IX_GroupsExams_ExamId] ON [dbo].[GroupsExams]
 (
 	[ExamId] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 GO
-/****** Object:  Index [IX_GroupsExams_GroupId]    Script Date: 08.06.2025 23:28:39 ******/
+/****** Object:  Index [IX_GroupsExams_GroupId]    Script Date: 10.06.2025 17:59:41 ******/
 CREATE NONCLUSTERED INDEX [IX_GroupsExams_GroupId] ON [dbo].[GroupsExams]
 (
 	[GroupId] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 GO
-/****** Object:  Index [IX_QuestionAnswers_QuestionId]    Script Date: 08.06.2025 23:28:39 ******/
+/****** Object:  Index [IX_QuestionAnswers_QuestionId]    Script Date: 10.06.2025 17:59:41 ******/
 CREATE NONCLUSTERED INDEX [IX_QuestionAnswers_QuestionId] ON [dbo].[QuestionAnswers]
 (
 	[QuestionId] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 GO
-/****** Object:  Index [IX_Questions_ExamTestId]    Script Date: 08.06.2025 23:28:39 ******/
+/****** Object:  Index [IX_Questions_ExamTestId]    Script Date: 10.06.2025 17:59:41 ******/
 CREATE NONCLUSTERED INDEX [IX_Questions_ExamTestId] ON [dbo].[Questions]
 (
 	[ExamTestId] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 GO
-/****** Object:  Index [IX_Questions_QuestionTypeId]    Script Date: 08.06.2025 23:28:39 ******/
+/****** Object:  Index [IX_Questions_QuestionTypeId]    Script Date: 10.06.2025 17:59:41 ******/
 CREATE NONCLUSTERED INDEX [IX_Questions_QuestionTypeId] ON [dbo].[Questions]
 (
 	[QuestionTypeId] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 GO
-/****** Object:  Index [IX_Questions_TopicId]    Script Date: 08.06.2025 23:28:39 ******/
+/****** Object:  Index [IX_Questions_TopicId]    Script Date: 10.06.2025 17:59:41 ******/
 CREATE NONCLUSTERED INDEX [IX_Questions_TopicId] ON [dbo].[Questions]
 (
 	[TopicId] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 GO
-/****** Object:  Index [IX_StudentAttempts_ExamId]    Script Date: 08.06.2025 23:28:39 ******/
+/****** Object:  Index [IX_StudentAttempts_ExamId]    Script Date: 10.06.2025 17:59:41 ******/
 CREATE NONCLUSTERED INDEX [IX_StudentAttempts_ExamId] ON [dbo].[StudentAttempts]
 (
 	[ExamId] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 GO
-/****** Object:  Index [IX_StudentAttempts_StudentId]    Script Date: 08.06.2025 23:28:39 ******/
+/****** Object:  Index [IX_StudentAttempts_StudentId]    Script Date: 10.06.2025 17:59:41 ******/
 CREATE NONCLUSTERED INDEX [IX_StudentAttempts_StudentId] ON [dbo].[StudentAttempts]
 (
 	[StudentId] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 GO
-/****** Object:  Index [IX_StudentExamResults_ExamId]    Script Date: 08.06.2025 23:28:39 ******/
+/****** Object:  Index [IX_StudentExamResults_ExamId]    Script Date: 10.06.2025 17:59:41 ******/
 CREATE NONCLUSTERED INDEX [IX_StudentExamResults_ExamId] ON [dbo].[StudentExamResults]
 (
 	[ExamId] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 GO
-/****** Object:  Index [IX_StudentExamResults_StudentId]    Script Date: 08.06.2025 23:28:39 ******/
+/****** Object:  Index [IX_StudentExamResults_StudentId]    Script Date: 10.06.2025 17:59:41 ******/
 CREATE NONCLUSTERED INDEX [IX_StudentExamResults_StudentId] ON [dbo].[StudentExamResults]
 (
 	[StudentId] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 GO
-/****** Object:  Index [IX_Students_GroupId]    Script Date: 08.06.2025 23:28:39 ******/
+/****** Object:  Index [IX_Students_GroupId]    Script Date: 10.06.2025 17:59:41 ******/
 CREATE NONCLUSTERED INDEX [IX_Students_GroupId] ON [dbo].[Students]
 (
 	[GroupId] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 GO
-/****** Object:  Index [IX_Students_UserId]    Script Date: 08.06.2025 23:28:39 ******/
+/****** Object:  Index [IX_Students_UserId]    Script Date: 10.06.2025 17:59:41 ******/
 CREATE NONCLUSTERED INDEX [IX_Students_UserId] ON [dbo].[Students]
 (
 	[UserId] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 GO
-/****** Object:  Index [IX_Teachers_UserId]    Script Date: 08.06.2025 23:28:39 ******/
+/****** Object:  Index [IX_Teachers_UserId]    Script Date: 10.06.2025 17:59:41 ******/
 CREATE NONCLUSTERED INDEX [IX_Teachers_UserId] ON [dbo].[Teachers]
 (
 	[UserId] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 GO
-/****** Object:  Index [IX_TopicsDisciplines_DisciplineId]    Script Date: 08.06.2025 23:28:39 ******/
+/****** Object:  Index [IX_TopicsDisciplines_DisciplineId]    Script Date: 10.06.2025 17:59:41 ******/
 CREATE NONCLUSTERED INDEX [IX_TopicsDisciplines_DisciplineId] ON [dbo].[TopicsDisciplines]
 (
 	[DisciplineId] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 GO
-/****** Object:  Index [IX_TopicsExamTest_ExamTestId]    Script Date: 08.06.2025 23:28:39 ******/
+/****** Object:  Index [IX_TopicsExamTest_ExamTestId]    Script Date: 10.06.2025 17:59:41 ******/
 CREATE NONCLUSTERED INDEX [IX_TopicsExamTest_ExamTestId] ON [dbo].[TopicsExamTest]
 (
 	[ExamTestId] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 GO
-/****** Object:  Index [IX_Users_RoleId]    Script Date: 08.06.2025 23:28:39 ******/
+/****** Object:  Index [IX_Users_RoleId]    Script Date: 10.06.2025 17:59:41 ******/
 CREATE NONCLUSTERED INDEX [IX_Users_RoleId] ON [dbo].[Users]
 (
 	[RoleId] ASC

@@ -14,6 +14,8 @@ namespace GradeFlowECTS.View.Pages
     {
         private readonly ExamRepository _examRepository;
         private readonly Exam _exam;
+        private readonly IUserContext _userContext;
+
 
         public ExamPage()
         {
@@ -24,8 +26,8 @@ namespace GradeFlowECTS.View.Pages
             StudentMDK.Visibility = Visibility.Collapsed;
             StudentQualificationExam.Visibility = Visibility.Collapsed;
 
-            IUserContext userContext = App.Current.ServiceProvider.GetRequiredService<IUserContext>();
-            int roleId = userContext.CurrentUser.RoleId;
+            _userContext = App.Current.ServiceProvider.GetRequiredService<IUserContext>();
+            int roleId = _userContext.CurrentUser.RoleId;
             GradeFlowContext context = App.Current.ServiceProvider.GetRequiredService<GradeFlowContext>();
             AesGcmCryptographyService cryptographyService = new AesGcmCryptographyService();
             FileService fileService = new FileService("GradeFlow");
@@ -97,7 +99,8 @@ namespace GradeFlowECTS.View.Pages
 
         private void ViewPracticalResultsButton_Click(object sender, RoutedEventArgs e)
         {
-
+            MDK01ResultsWindow window = new MDK01ResultsWindow(_exam, _examRepository);
+            window.ShowDialog();
         }
 
         private void ViewAttemptsButton_Click(object sender, RoutedEventArgs e)
@@ -120,7 +123,7 @@ namespace GradeFlowECTS.View.Pages
         {
             if(_exam.Discipline.DisciplineName == "МДК 01.01")
             {
-                StudentMDK01Window window = new StudentMDK01Window();
+                StudentMDK01Window window = new StudentMDK01Window(_userContext.CurrentUser.StudentId ?? 0, _exam.ExamId);
                 window.ShowDialog();
             }
             else if(_exam.Discipline.DisciplineName == "МДК 01.02")

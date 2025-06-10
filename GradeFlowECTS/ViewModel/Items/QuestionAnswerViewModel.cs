@@ -36,5 +36,16 @@ namespace GradeFlowECTS.ViewModel.Items
             get => Model.FileName;
             set { Model.FileName = value; OnPropertyChanged(nameof(FileName)); }
         }
+
+        public QuestionAnswer ToModel()
+        {
+            return new QuestionAnswer
+            {
+                QuestionAnswerText = this.AnswerText,
+                IsCorrect = this.Correct,
+                FileData = this.FileData,
+                FileName = this.FileName
+            };
+        }
     }
 }

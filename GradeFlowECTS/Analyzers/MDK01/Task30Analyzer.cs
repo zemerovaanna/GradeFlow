@@ -5,7 +5,7 @@ namespace GradeFlowECTS.Analyzers.MDK01
 {
     public static class Task30Analyzer
     {
-        public static string Analyze(SyntaxNode root)
+        public static (string totalScore, string criteria) Analyze(SyntaxNode root)
         {
             MatrixAnalyzer.Analyze(root); // проверка ввода, заполнения и вывода
 
@@ -42,7 +42,7 @@ namespace GradeFlowECTS.Analyzers.MDK01
                 MatrixAnalyzer.CriteriaDetails.Add("❌ Не найдено присваивание между первым и последним столбцами матрицы");
             }
 
-            return MatrixAnalyzer.PrintResults();
+            return ($"{MatrixAnalyzer.MetCriteria}/{MatrixAnalyzer.TotalCriteria}", MatrixAnalyzer.PrintResults());
         }
     }
 }

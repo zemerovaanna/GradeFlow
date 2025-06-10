@@ -75,6 +75,8 @@ namespace GradeFlowECTS.View.Pages
                 int index = _testManagmentViewModel.Topics.IndexOf(topic);
                 _testManagmentViewModel.Topics.Remove(topic);
                 _testManagmentViewModel.Topics.Insert(index, topic);
+                _testManagmentViewModel.SaveExamTest();
+                _testManagmentViewModel.RecalculateTotalPoints();
             }
         }
 
@@ -90,7 +92,10 @@ namespace GradeFlowECTS.View.Pages
                     int index = _testManagmentViewModel.Topics.IndexOf(topic);
                     _testManagmentViewModel.Topics.Remove(topic);
                     _testManagmentViewModel.Topics.Insert(index, topic);
+ 
                 }
+                _testManagmentViewModel.SaveExamTest();
+                _testManagmentViewModel.RecalculateTotalPoints();
             }
         }
 
@@ -105,6 +110,8 @@ namespace GradeFlowECTS.View.Pages
                 {
                     topic.IsSelected = true;
                 }
+                _testManagmentViewModel.SaveExamTest();
+                _testManagmentViewModel.RecalculateTotalPoints();
             }
         }
         private void QuestionCheckBox_Unchecked(object sender, RoutedEventArgs e)
@@ -113,6 +120,8 @@ namespace GradeFlowECTS.View.Pages
             {
                 var topic = _testManagmentViewModel.Topics.First(t => t.Questions.Contains(question));
                 topic.IsSelected = false;
+                _testManagmentViewModel.SaveExamTest();
+                _testManagmentViewModel.RecalculateTotalPoints();
             }
         }
     }

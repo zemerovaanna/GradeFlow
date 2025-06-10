@@ -1,7 +1,4 @@
-﻿using System.DirectoryServices;
-using System.Reflection;
-
-namespace GradeFlowECTS.Models
+﻿namespace GradeFlowECTS.Models
 {
     public partial class Criterion
     {

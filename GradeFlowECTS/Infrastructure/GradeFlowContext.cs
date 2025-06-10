@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using GradeFlowECTS.Models;
+﻿using GradeFlowECTS.Models;
 using Microsoft.EntityFrameworkCore;
 
 namespace GradeFlowECTS.Infrastructure;
@@ -9,12 +7,15 @@ public partial class GradeFlowContext : DbContext
 {
     public GradeFlowContext()
     {
+
     }
 
-    public GradeFlowContext(DbContextOptions<GradeFlowContext> options)
-        : base(options)
+    public GradeFlowContext(DbContextOptions<GradeFlowContext> options) : base(options)
     {
+
     }
+
+    public virtual DbSet<Criterion> Criteria { get; set; }
 
     public virtual DbSet<Discipline> Disciplines { get; set; }
 
@@ -28,6 +29,8 @@ public partial class GradeFlowContext : DbContext
 
     public virtual DbSet<GroupsExam> GroupsExams { get; set; }
 
+    public virtual DbSet<Module> Modules { get; set; }
+
     public virtual DbSet<QualificationExamScore> QualificationExamScores { get; set; }
 
     public virtual DbSet<Question> Questions { get; set; }
@@ -35,6 +38,8 @@ public partial class GradeFlowContext : DbContext
     public virtual DbSet<QuestionAnswer> QuestionAnswers { get; set; }
 
     public virtual DbSet<QuestionType> QuestionTypes { get; set; }
+
+    public virtual DbSet<ScoreOption> ScoreOptions { get; set; }
 
     public virtual DbSet<Student> Students { get; set; }
 
@@ -52,13 +57,6 @@ public partial class GradeFlowContext : DbContext
 
     public virtual DbSet<UserRole> UserRoles { get; set; }
 
-    public virtual DbSet<Criterion> Criteria { get; set; }
-
-    public virtual DbSet<Module> Modules { get; set; }
-
-    public virtual DbSet<ScoreOption> ScoreOptions { get; set; }
-
-
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         => optionsBuilder.UseSqlServer("Server=Home-PC;Database=GradeFlow;Trusted_Connection=true;MultipleActiveResultSets=true;TrustServerCertificate=true;");
 
@@ -67,35 +65,21 @@ public partial class GradeFlowContext : DbContext
     {
         modelBuilder.Entity<Criterion>(entity =>
         {
-            entity.HasKey(e => e.CriterionId).HasName("PK__Evaluati__3214EC0725107624");
+            entity.HasKey(e => e.CriterionId).HasName("PK__Criteria__647C3BB1B6F756FB");
 
             entity.Property(e => e.CriterionTitle).HasMaxLength(255);
 
             entity.HasOne(d => d.Module).WithMany(p => p.Criteria)
                 .HasForeignKey(d => d.ModuleId)
-                .HasConstraintName("FK__Evaluatio__Modul__398D8EEE");
-        });
-
-        modelBuilder.Entity<Module>(entity =>
-        {
-            entity.HasKey(e => e.ModuleId).HasName("PK__Modules__3214EC077EFCF48A");
-
-            entity.Property(e => e.ModuleName).HasMaxLength(100);
-        });
-
-        modelBuilder.Entity<ScoreOption>(entity =>
-        {
-            entity.HasKey(e => e.ScoreOptionIdId).HasName("PK__ScoreOpt__3214EC079336F92F");
-
-            entity.Property(e => e.Description).HasMaxLength(500);
-
-            entity.HasOne(d => d.Criterion).WithMany(p => p.ScoreOptions)
-                .HasForeignKey(d => d.CriterionId)
-                .HasConstraintName("FK__ScoreOpti__Crite__3C69FB99");
+                .HasConstraintName("FK__Criteria__Module__71D1E811");
         });
 
         modelBuilder.Entity<Exam>(entity =>
         {
+            entity.HasIndex(e => e.DisciplineId, "IX_Exams_DisciplineId");
+
+            entity.HasIndex(e => e.OwnerTeacherId, "IX_Exams_OwnerTeacherId");
+
             entity.Property(e => e.ExamId).ValueGeneratedNever();
             entity.Property(e => e.OpenTime).HasPrecision(0);
 
@@ -112,6 +96,8 @@ public partial class GradeFlowContext : DbContext
 
         modelBuilder.Entity<ExamPractice>(entity =>
         {
+            entity.HasIndex(e => e.DisciplineId, "IX_ExamPractices_DisciplineId");
+
             entity.HasOne(d => d.Discipline).WithMany(p => p.ExamPractices)
                 .HasForeignKey(d => d.DisciplineId)
                 .OnDelete(DeleteBehavior.ClientSetNull)
@@ -120,6 +106,8 @@ public partial class GradeFlowContext : DbContext
 
         modelBuilder.Entity<ExamTest>(entity =>
         {
+            entity.HasIndex(e => e.ExamId, "IX_ExamTests_ExamId");
+
             entity.HasOne(d => d.Exam).WithMany(p => p.ExamTests)
                 .HasForeignKey(d => d.ExamId)
                 .OnDelete(DeleteBehavior.ClientSetNull)
@@ -129,6 +117,10 @@ public partial class GradeFlowContext : DbContext
         modelBuilder.Entity<GroupsExam>(entity =>
         {
             entity.HasKey(e => e.GroupExamId);
+
+            entity.HasIndex(e => e.ExamId, "IX_GroupsExams_ExamId");
+
+            entity.HasIndex(e => e.GroupId, "IX_GroupsExams_GroupId");
 
             entity.HasOne(d => d.Exam).WithMany(p => p.GroupsExams)
                 .HasForeignKey(d => d.ExamId)
@@ -141,8 +133,21 @@ public partial class GradeFlowContext : DbContext
                 .HasConstraintName("FK_GroupsExams_Groups1");
         });
 
+        modelBuilder.Entity<Module>(entity =>
+        {
+            entity.HasKey(e => e.ModuleId).HasName("PK__Modules__2B7477A73301393D");
+
+            entity.Property(e => e.ModuleName).HasMaxLength(100);
+        });
+
         modelBuilder.Entity<Question>(entity =>
         {
+            entity.HasIndex(e => e.ExamTestId, "IX_Questions_ExamTestId");
+
+            entity.HasIndex(e => e.QuestionTypeId, "IX_Questions_QuestionTypeId");
+
+            entity.HasIndex(e => e.TopicId, "IX_Questions_TopicId");
+
             entity.HasOne(d => d.ExamTest).WithMany(p => p.Questions)
                 .HasForeignKey(d => d.ExamTestId)
                 .OnDelete(DeleteBehavior.ClientSetNull)
@@ -161,14 +166,31 @@ public partial class GradeFlowContext : DbContext
 
         modelBuilder.Entity<QuestionAnswer>(entity =>
         {
+            entity.HasIndex(e => e.QuestionId, "IX_QuestionAnswers_QuestionId");
+
             entity.HasOne(d => d.Question).WithMany(p => p.QuestionAnswers)
                 .HasForeignKey(d => d.QuestionId)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK_QuestionAnswers_Questions");
         });
 
+        modelBuilder.Entity<ScoreOption>(entity =>
+        {
+            entity.HasKey(e => e.ScoreOptionIdId).HasName("PK__ScoreOpt__7731FCCAB33EBFB9");
+
+            entity.Property(e => e.Description).HasMaxLength(500);
+
+            entity.HasOne(d => d.Criterion).WithMany(p => p.ScoreOptions)
+                .HasForeignKey(d => d.CriterionId)
+                .HasConstraintName("FK__ScoreOpti__Crite__7C4F7684");
+        });
+
         modelBuilder.Entity<Student>(entity =>
         {
+            entity.HasIndex(e => e.GroupId, "IX_Students_GroupId");
+
+            entity.HasIndex(e => e.UserId, "IX_Students_UserId");
+
             entity.HasOne(d => d.Group).WithMany(p => p.Students)
                 .HasForeignKey(d => d.GroupId)
                 .OnDelete(DeleteBehavior.ClientSetNull)
@@ -182,6 +204,10 @@ public partial class GradeFlowContext : DbContext
 
         modelBuilder.Entity<StudentAttempt>(entity =>
         {
+            entity.HasIndex(e => e.ExamId, "IX_StudentAttempts_ExamId");
+
+            entity.HasIndex(e => e.StudentId, "IX_StudentAttempts_StudentId");
+
             entity.HasOne(d => d.Exam).WithMany(p => p.StudentAttempts)
                 .HasForeignKey(d => d.ExamId)
                 .OnDelete(DeleteBehavior.ClientSetNull)
@@ -197,7 +223,12 @@ public partial class GradeFlowContext : DbContext
         {
             entity.HasKey(e => e.StudentExamId).HasName("PK_StudentExam");
 
-            entity.Property(e => e.TestTimeSpent).HasPrecision(0);
+            entity.HasIndex(e => e.ExamId, "IX_StudentExamResults_ExamId");
+
+            entity.HasIndex(e => e.StudentId, "IX_StudentExamResults_StudentId");
+
+            entity.Property(e => e.Mdkcode).HasColumnName("MDKCode");
+            entity.Property(e => e.Mdkcriteria).HasColumnName("MDKCriteria");
             entity.Property(e => e.TimeEnded).HasPrecision(0);
 
             entity.HasOne(d => d.Exam).WithMany(p => p.StudentExamResults)
@@ -213,6 +244,8 @@ public partial class GradeFlowContext : DbContext
 
         modelBuilder.Entity<Teacher>(entity =>
         {
+            entity.HasIndex(e => e.UserId, "IX_Teachers_UserId");
+
             entity.HasOne(d => d.User).WithMany(p => p.Teachers)
                 .HasForeignKey(d => d.UserId)
                 .OnDelete(DeleteBehavior.ClientSetNull)
@@ -222,6 +255,8 @@ public partial class GradeFlowContext : DbContext
         modelBuilder.Entity<TopicsDiscipline>(entity =>
         {
             entity.HasKey(e => e.TopicDisciplinesId);
+
+            entity.HasIndex(e => e.DisciplineId, "IX_TopicsDisciplines_DisciplineId");
 
             entity.HasOne(d => d.Discipline).WithMany(p => p.TopicsDisciplines)
                 .HasForeignKey(d => d.DisciplineId)
@@ -235,6 +270,8 @@ public partial class GradeFlowContext : DbContext
 
             entity.ToTable("TopicsExamTest");
 
+            entity.HasIndex(e => e.ExamTestId, "IX_TopicsExamTest_ExamTestId");
+
             entity.HasOne(d => d.ExamTest).WithMany(p => p.TopicsExamTests)
                 .HasForeignKey(d => d.ExamTestId)
                 .OnDelete(DeleteBehavior.ClientSetNull)
@@ -243,6 +280,8 @@ public partial class GradeFlowContext : DbContext
 
         modelBuilder.Entity<User>(entity =>
         {
+            entity.HasIndex(e => e.RoleId, "IX_Users_RoleId");
+
             entity.Property(e => e.UserId).ValueGeneratedNever();
 
             entity.HasOne(d => d.Role).WithMany(p => p.Users)

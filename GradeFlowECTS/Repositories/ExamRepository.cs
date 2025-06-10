@@ -13,6 +13,12 @@ namespace GradeFlowECTS.Repositories
 {
     public class ExamRepository : IExamRepository
     {
+        public void UpdateQuestion(Question question)
+        {
+            _context.Questions.Update(question);
+            _context.SaveChanges();
+        }
+
         static class LOL
         {
             private const int KeySize = 32;
@@ -231,6 +237,25 @@ namespace GradeFlowECTS.Repositories
             }
         }
 
+        public void RemoveQuestion(int questionId)
+        {
+            try
+            {
+                var question = _context.Questions
+                    .Include(q => q.QuestionAnswers)
+                    .FirstOrDefault(q => q.QuestionId == questionId);
+
+                if (question == null) return;
+                _context.QuestionAnswers.RemoveRange(question.QuestionAnswers);
+                _context.Questions.Remove(question);
+                _context.SaveChanges();
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine($"[RemoveQuestion] Ошибка: {ex.Message}");
+            }
+        }
+
         public bool RemoveExam(Guid examId)
         {
             try
@@ -262,7 +287,7 @@ namespace GradeFlowECTS.Repositories
             }
             catch (Exception ex)
             {
-                Debug.WriteLine($"[DeleteExam] Ошибка: {ex.Message}");
+                Debug.WriteLine($"[RemoveExam] Ошибка: {ex.Message}");
                 return false;
             }
         }
@@ -333,7 +358,7 @@ namespace GradeFlowECTS.Repositories
         {
             try
             {
-                return _context.TopicsDisciplines.Include(t => t.Questions).AsNoTracking().ToList();
+                return _context.TopicsDisciplines.AsNoTracking().Include(t => t.Questions).ThenInclude(q => q.QuestionAnswers).ToList();
             }
             catch (Exception ex)
             {
@@ -401,7 +426,7 @@ namespace GradeFlowECTS.Repositories
                 .FirstOrDefault(et => et.ExamTestId == examTestId);
 
             if (examTest == null)
-                return 0;
+                return 55;
 
             int totalPoints = 0;
 

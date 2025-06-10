@@ -5,11 +5,11 @@ namespace GradeFlowECTS.Analyzers.MDK01
 {
     public static class Task17Analyzer
     {
-        public static string Analyze(SyntaxNode root)
+        public static (string totalScore, string criteria) Analyze(SyntaxNode root)
         {
             ArrayAnalyzer.Analyze(root);
             CheckTwoMinElements(root);
-            return ArrayAnalyzer.PrintResults();
+            return ($"{ArrayAnalyzer.MetCriteria}/{ArrayAnalyzer.TotalCriteria}", ArrayAnalyzer.PrintResults());
         }
 
         private static void CheckTwoMinElements(SyntaxNode root)

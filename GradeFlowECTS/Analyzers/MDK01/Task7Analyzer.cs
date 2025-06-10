@@ -6,7 +6,7 @@ namespace GradeFlowECTS.Analyzers.MDK01
 {
     public static class Task7Analyzer
     {
-        public static string Analyze(string code)
+        public static (string totalScore, string criteria) Analyze(string code)
         {
             var tree = CSharpSyntaxTree.ParseText(code);
             var compilation = CSharpCompilation.Create("Analysis")
@@ -59,7 +59,7 @@ namespace GradeFlowECTS.Analyzers.MDK01
                 "Используется ручная сортировка",
                 "Обнаружены встроенные методы сортировки");
 
-            return $"Выполнено критериев: {metCriteria} из {totalCriteria}\nДетали:\n{string.Join("\n", criteriaDetails)}";
+            return ($"{metCriteria}/{totalCriteria}", $"Выполнено критериев: {metCriteria} из {totalCriteria}\nДетали:\n{string.Join("\n", criteriaDetails)}");
         }
 
         private static bool HasArraySizeInput(SyntaxNode root, SemanticModel model)

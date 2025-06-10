@@ -2,10 +2,13 @@
 using System.Security.Cryptography;
 using System.Text;
 using System.Windows;
+using System.Windows.Input;
 using System.Windows.Media;
 using GradeFlowECTS.Core;
 using GradeFlowECTS.Interfaces;
 using GradeFlowECTS.Models;
+using GradeFlowECTS.Repositories;
+using GradeFlowECTS.View.Windows;
 using GradeFlowECTS.ViewModel.Items;
 
 namespace GradeFlowECTS.ViewModel
@@ -20,6 +23,9 @@ namespace GradeFlowECTS.ViewModel
 
         private readonly bool _isNewTest;
 
+        public ICommand RemoveQuestionCommand { get; }
+        public ICommand EditQuestionCommand { get; }
+
         public TestManagmentViewModel(IExamRepository examRepository, Exam exam, ExamTest examTest, bool isNewTest)
         {
             _examRepository = examRepository ?? throw new ArgumentNullException(nameof(examRepository));
@@ -31,6 +37,41 @@ namespace GradeFlowECTS.ViewModel
             Minutes = _examTest.TimeToComplete;
 
             LoadTopicsAndQuestions();
+
+            RemoveQuestionCommand = new RelayCommand(RemoveQuestion);
+            EditQuestionCommand = new RelayCommand(EditQuestion);
+        }
+
+        private void EditQuestion(object? parameter)
+        {
+            if (parameter is Question question)
+            {
+                var window = new EditQuestionWindow(_exam, _examTest, question, new ExamRepository());
+                if(window.ShowDialog() == true)
+                {
+                    LoadTopicsAndQuestions();
+                    RecalculateTotalPoints();
+                }
+            }
+        }
+
+        private void RemoveQuestion(object? parameter)
+        {
+            if (parameter is Question question)
+            {
+                var result = MessageBox.Show(
+                    "Вы действительно хотите удалить этот вопрос и все его ответы?",
+                    "Подтверждение удаления",
+                    MessageBoxButton.YesNo,
+                    MessageBoxImage.Warning);
+
+                if (result == MessageBoxResult.Yes)
+                {
+                    _examRepository.RemoveQuestion(question.QuestionId);
+                    LoadTopicsAndQuestions();
+                }
+                RecalculateTotalPoints();
+            }
         }
 
         public void RecalculateTotalPoints()

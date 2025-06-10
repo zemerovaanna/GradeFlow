@@ -5,7 +5,7 @@ namespace GradeFlowECTS.Analyzers.MDK01
 {
     public static class Task26Analyzer
     {
-        public static string Analyze(SyntaxNode root)
+        public static (string totalScore, string criteria) Analyze(SyntaxNode root)
         {
             MatrixAnalyzer.Analyze(root);
 
@@ -54,7 +54,7 @@ namespace GradeFlowECTS.Analyzers.MDK01
                 MatrixAnalyzer.CriteriaDetails.Add("❌ Не найден подсчёт положительных элементов по строкам");
             }
 
-            return MatrixAnalyzer.PrintResults();
+            return ($"{MatrixAnalyzer.MetCriteria}/{MatrixAnalyzer.TotalCriteria}", MatrixAnalyzer.PrintResults());
         }
     }
 }

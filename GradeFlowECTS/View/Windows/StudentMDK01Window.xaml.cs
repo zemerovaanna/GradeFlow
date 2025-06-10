@@ -1,5 +1,9 @@
-﻿using System.Windows;
+﻿using System.Security.Cryptography;
+using System.Text;
+using System.Windows;
 using GradeFlowECTS.Analyzers.MDK01;
+using GradeFlowECTS.Infrastructure;
+using GradeFlowECTS.Models;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
 
@@ -9,9 +13,16 @@ namespace GradeFlowECTS.View.Windows
     {
         private List<(byte Number, string TaskText)> _tasks;
         private (byte Number, string TaskText) _task;
-        public StudentMDK01Window()
+        private int _studentId;
+        private Guid _examId;
+
+        public StudentMDK01Window(int studentId, Guid examId)
         {
             InitializeComponent();
+
+            _studentId = studentId;
+            _examId = examId;
+
             _tasks = new()
             {
                 (1, "Запросить ввод N - размер массива. Заполнить массив размера N с клавиатуры. Вывести все содержащиеся в данном массиве нечетные числа в порядке возрастания их индексов, а также их количество K."),
@@ -55,7 +66,7 @@ namespace GradeFlowECTS.View.Windows
             TaskText.Text = $"{_task.Number}. " + _task.TaskText;
         }
 
-        private string AnalyzeCode(string code, int taskNumber)
+        private (string totalScore, string criteria) AnalyzeCode(string code, int taskNumber)
         {
             try
             {
@@ -65,78 +76,219 @@ namespace GradeFlowECTS.View.Windows
                 switch (taskNumber)
                 {
                     case 1:
-                        return Task1Analyzer.Analyze(root);
+                        return (Task1Analyzer.Analyze(root).totalScore, Task1Analyzer.Analyze(root).criteria);
                     case 2:
-                        return Task2Analyzer.Analyze(root);
+                        return (Task2Analyzer.Analyze(root).totalScore, Task2Analyzer.Analyze(root).criteria);
                     case 3:
-                        return Task3Analyzer.Analyze(root);
+                        return (Task3Analyzer.Analyze(root).totalScore, Task3Analyzer.Analyze(root).criteria);
                     case 4:
-                        return Task4Analyzer.Analyze(root);
+                        return (Task4Analyzer.Analyze(root).totalScore, Task4Analyzer.Analyze(root).criteria);
                     case 5:
-                        return Task5Analyzer.Analyze(code);
+                        return (Task5Analyzer.Analyze(code).totalScore, Task5Analyzer.Analyze(code).criteria);
                     case 6:
-                        return Task6Analyzer.Analyze(code);
+                        return (Task6Analyzer.Analyze(code).totalScore, Task6Analyzer.Analyze(code).criteria);
                     case 7:
-                        return Task7Analyzer.Analyze(code);
+                        return (Task7Analyzer.Analyze(code).totalScore, Task7Analyzer.Analyze(code).criteria);
                     case 8:
-                        return Task8Analyzer.Analyze(root);
+                        return (Task8Analyzer.Analyze(root).totalScore, Task8Analyzer.Analyze(root).criteria);
                     case 9:
-                        return Task9Analyzer.Analyze(root);
+                        return (Task9Analyzer.Analyze(root).totalScore, Task9Analyzer.Analyze(root).criteria);
                     case 10:
-                        return Task10Analyzer.Analyze(root);
+                        return (Task10Analyzer.Analyze(root).totalScore, Task10Analyzer.Analyze(root).criteria);
                     case 11:
-                        return Task11Analyzer.Analyze(root);
+                        return (Task11Analyzer.Analyze(root).totalScore, Task11Analyzer.Analyze(root).criteria);
                     case 12:
-                        return Task12Analyzer.Analyze(root);
+                        return (Task12Analyzer.Analyze(root).totalScore, Task12Analyzer.Analyze(root).criteria);
                     case 13:
-                        return Task13Analyzer.Analyze(root);
+                        return (Task13Analyzer.Analyze(root).totalScore, Task13Analyzer.Analyze(root).criteria);
                     case 14:
-                        return Task14Analyzer.Analyze(root);
+                        return (Task14Analyzer.Analyze(root).totalScore, Task14Analyzer.Analyze(root).criteria);
                     case 15:
-                        return Task15Analyzer.Analyze(root);
+                        return (Task15Analyzer.Analyze(root).totalScore, Task15Analyzer.Analyze(root).criteria);
                     case 16:
-                        return Task16Analyzer.Analyze(root);
+                        return (Task16Analyzer.Analyze(root).totalScore, Task16Analyzer.Analyze(root).criteria);
                     case 17:
-                        return Task17Analyzer.Analyze(root);
+                        return (Task17Analyzer.Analyze(root).totalScore, Task17Analyzer.Analyze(root).criteria);
                     case 18:
-                        return Task18Analyzer.Analyze(root);
+                        return (Task18Analyzer.Analyze(root).totalScore, Task18Analyzer.Analyze(root).criteria);
                     case 19:
-                        return Task19Analyzer.Analyze(root);
+                        return (Task19Analyzer.Analyze(root).totalScore, Task19Analyzer.Analyze(root).criteria);
                     case 20:
-                        return Task20Analyzer.Analyze(root);
+                        return (Task20Analyzer.Analyze(root).totalScore, Task20Analyzer.Analyze(root).criteria);
                     case 21:
-                        return Task21Analyzer.Analyze(root);
+                        return (Task21Analyzer.Analyze(root).totalScore, Task21Analyzer.Analyze(root).criteria);
                     case 22:
-                        return Task22Analyzer.Analyze(root);
+                        return (Task22Analyzer.Analyze(root).totalScore, Task22Analyzer.Analyze(root).criteria);
                     case 23:
-                        return Task23Analyzer.Analyze(root);
+                        return (Task23Analyzer.Analyze(root).totalScore, Task23Analyzer.Analyze(root).criteria);
                     case 24:
-                        return Task24Analyzer.Analyze(root);
+                        return (Task24Analyzer.Analyze(root).totalScore, Task24Analyzer.Analyze(root).criteria);
                     case 25:
-                        return Task25Analyzer.Analyze(root);
+                        return (Task25Analyzer.Analyze(root).totalScore, Task25Analyzer.Analyze(root).criteria);
                     case 26:
-                        return Task26Analyzer.Analyze(root);
+                        return (Task26Analyzer.Analyze(root).totalScore, Task26Analyzer.Analyze(root).criteria);
                     case 27:
-                        return Task27Analyzer.Analyze(root);
+                        return (Task27Analyzer.Analyze(root).totalScore, Task27Analyzer.Analyze(root).criteria);
                     case 28:
-                        return Task28Analyzer.Analyze(root);
+                        return (Task28Analyzer.Analyze(root).totalScore, Task28Analyzer.Analyze(root).criteria);
                     case 29:
-                        return Task29Analyzer.Analyze(root);
+                        return (Task29Analyzer.Analyze(root).totalScore, Task29Analyzer.Analyze(root).criteria);
                     case 30:
-                        return Task30Analyzer.Analyze(root);
+                        return (Task30Analyzer.Analyze(root).totalScore, Task30Analyzer.Analyze(root).criteria);
                     default:
-                        return "Неверный номер задания.";
+                        return ("0/0", "Неверный номер задания.");
                 }
             }
             catch (Exception ex)
             {
-                return "Ошибка анализа: " + ex.Message;
+                return ("0/0", "Ошибка анализа: " + ex.Message);
             }
         }
 
         private void CheckCode_Click(object sender, RoutedEventArgs e)
         {
-            ResultOutput.Text = AnalyzeCode(CodeInput.Text, _task.Number);
+            string mdkCode = CodeInput.Text;
+            string mdkCriteria = AnalyzeCode(CodeInput.Text, _task.Number).criteria;
+            string totalScore = AnalyzeCode(CodeInput.Text, _task.Number).totalScore;
+            DateTime now = DateTime.Now;
+            TimeOnly currentTime = TimeOnly.FromDateTime(now);
+            DateOnly currentDate = DateOnly.FromDateTime(now);
+
+            StudentExamResult studentExamResult = new StudentExamResult
+            {
+                StudentId = _studentId,
+                ExamId = _examId,
+                TimeEnded = currentTime,
+                DateEnded = currentDate,
+                Mdkcode = LOL.Encrypt(mdkCode),
+                Mdkcriteria = LOL.Encrypt(mdkCriteria),
+                TotalScore = LOL.Encrypt(totalScore)
+            };
+
+            GradeFlowContext context = new GradeFlowContext();
+            context.StudentExamResults.Add(studentExamResult);
+            context.SaveChanges();
+            MessageBox.Show("Результаты отправлены.", "Сообщение", MessageBoxButton.OK, MessageBoxImage.Information);
+            Close();
+        }
+        static class LOL
+        {
+            private const int KeySize = 32;
+            private const int IvSize = 12;
+            private const int TagSize = 16;
+
+            public static string Encrypt(string? plainText)
+            {
+                try
+                {
+                    if (plainText != null)
+                    {
+                        var key = "GradeFlowWPF" + ComplexComputation();
+                        byte[] keyBytes = GetKey(key);
+                        byte[] iv = new byte[IvSize];
+
+                        using (RandomNumberGenerator rng = RandomNumberGenerator.Create())
+                        {
+                            rng.GetBytes(iv);
+                        }
+
+                        using (AesGcm aes = new AesGcm(keyBytes, TagSize))
+                        {
+                            byte[] plainBytes = Encoding.UTF8.GetBytes(plainText);
+                            byte[] cipherBytes = new byte[plainBytes.Length];
+                            byte[] tag = new byte[TagSize];
+
+                            aes.Encrypt(iv, plainBytes, cipherBytes, tag);
+
+                            byte[] encryptedData = new byte[IvSize + cipherBytes.Length + TagSize];
+                            Array.Copy(iv, 0, encryptedData, 0, IvSize);
+                            Array.Copy(cipherBytes, 0, encryptedData, IvSize, cipherBytes.Length);
+                            Array.Copy(tag, 0, encryptedData, IvSize + cipherBytes.Length, TagSize);
+
+                            return Convert.ToBase64String(encryptedData);
+                        }
+                    }
+                    else
+                    {
+                        return null!;
+                    }
+                }
+                catch (Exception)
+                {
+                    return null;
+                }
+            }
+
+            public static string Decrypt(string? cipherText)
+            {
+                try
+                {
+                    if (cipherText != null)
+                    {
+                        var key = "GradeFlowWPF" + ComplexComputation();
+                        byte[] keyBytes = GetKey(key);
+
+                        cipherText = cipherText.PadRight(cipherText.Length + (4 - cipherText.Length % 4) % 4, '=');
+                        byte[] cipherData = Convert.FromBase64String(cipherText);
+
+                        byte[] iv = new byte[IvSize];
+                        byte[] tag = new byte[TagSize];
+                        byte[] cipherBytes = new byte[cipherData.Length - IvSize - TagSize];
+
+                        Array.Copy(cipherData, 0, iv, 0, IvSize);
+                        Array.Copy(cipherData, IvSize, cipherBytes, 0, cipherBytes.Length);
+                        Array.Copy(cipherData, IvSize + cipherBytes.Length, tag, 0, TagSize);
+
+                        using (AesGcm aes = new AesGcm(keyBytes, TagSize))
+                        {
+                            byte[] plainBytes = new byte[cipherBytes.Length];
+                            aes.Decrypt(iv, cipherBytes, tag, plainBytes);
+                            return Encoding.UTF8.GetString(plainBytes);
+                        }
+                    }
+                    else
+                    {
+                        return null!;
+                    }
+                }
+                catch (Exception)
+                {
+                    return null;
+                }
+            }
+
+            private static byte[] GetKey(string key)
+            {
+                using (SHA256 sha256 = SHA256.Create())
+                {
+                    return sha256.ComputeHash(Encoding.UTF8.GetBytes(key));
+                }
+            }
+
+            private static string ComplexComputation()
+            {
+                int[] values = { 1012, 3, 5, 7, 4 };
+                int sum = 0;
+                for (int i = 0; i < values.Length; i++)
+                {
+                    sum += values[i] * (i % 2 == 0 ? 2 : 3);
+                }
+                sum -= Fibonacci(5) * 10;
+                sum += Factorial(3);
+                return $"{sum}ects2025";
+            }
+
+            private static int Fibonacci(int n)
+            {
+                if (n <= 1) return n;
+                return Fibonacci(n - 1) + Fibonacci(n - 2);
+            }
+
+            private static int Factorial(int n)
+            {
+                if (n <= 1) return 1;
+                return n * Factorial(n - 1);
+            }
         }
     }
 }

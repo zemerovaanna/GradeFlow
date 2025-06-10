@@ -6,7 +6,7 @@ namespace GradeFlowECTS.Analyzers.MDK01
 {
     public static class Task5Analyzer
     {
-        public static string Analyze(string code)
+        public static (string totalScore, string criteria) Analyze(string code)
         {
             var tree = CSharpSyntaxTree.ParseText(code);
             var compilation = CSharpCompilation.Create("Analysis")
@@ -18,7 +18,7 @@ namespace GradeFlowECTS.Analyzers.MDK01
 
             ArrayAnalyzer.Analyze(root);
             CheckSpecificConditions(root, semanticModel);
-            return ArrayAnalyzer.PrintResults();
+            return ($"{ArrayAnalyzer.MetCriteria}/{ArrayAnalyzer.TotalCriteria}", ArrayAnalyzer.PrintResults());
         }
 
         private static void CheckSpecificConditions(SyntaxNode root, SemanticModel semanticModel)

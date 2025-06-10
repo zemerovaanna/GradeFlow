@@ -5,11 +5,11 @@ namespace GradeFlowECTS.Analyzers.MDK01
 {
     public static class Task13Analyzer
     {
-        public static string Analyze(SyntaxNode root)
+        public static (string totalScore, string criteria) Analyze(SyntaxNode root)
         {
             ArrayAnalyzer.Analyze(root);
             CheckDivisibleByX(root);
-            return ArrayAnalyzer.PrintResults();
+            return ($"{ArrayAnalyzer.MetCriteria}/{ArrayAnalyzer.TotalCriteria}", ArrayAnalyzer.PrintResults());
         }
 
         private static void CheckDivisibleByX(SyntaxNode root)

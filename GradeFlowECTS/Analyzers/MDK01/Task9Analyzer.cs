@@ -5,11 +5,11 @@ namespace GradeFlowECTS.Analyzers.MDK01
 {
     public static class Task9Analyzer
     {
-        public static string Analyze(SyntaxNode root)
+        public static (string totalScore, string criteria) Analyze(SyntaxNode root)
         {
             MatrixAnalyzer.Analyze(root);
             CheckColumnOutput(root);
-            return MatrixAnalyzer.PrintResults();
+            return ($"{MatrixAnalyzer.MetCriteria}/{MatrixAnalyzer.TotalCriteria}", MatrixAnalyzer.PrintResults());
         }
 
         private static void CheckColumnOutput(SyntaxNode root)
