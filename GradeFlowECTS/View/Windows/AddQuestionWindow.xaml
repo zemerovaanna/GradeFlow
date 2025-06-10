@@ -1,0 +1,102 @@
+﻿<Window x:Class="GradeFlowECTS.View.Windows.AddQuestionWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:GradeFlowECTS.View.Windows"
+        xmlns:converter="clr-namespace:GradeFlowECTS.Converters"
+        mc:Ignorable="d"
+        Title="GradeFlow ЕКТС | Добавление вопроса к тесту" Height="800" Width="1100" Background="{StaticResource AccentBrush}" WindowState="Maximized">
+
+    <Window.Resources>
+        <converter:ByteArrayToImageConverter x:Key="ByteArrayToImageConverter"/>
+    </Window.Resources>
+
+    <ScrollViewer Background="{StaticResource WindowBackgroundBrush}" HorizontalScrollBarVisibility="Auto" Margin="2">
+        <StackPanel Margin="10">
+
+            <Border BorderBrush="Purple" BorderThickness="1" CornerRadius="5" Grid.Row="0" Margin="0,0,0,20" Padding="5">
+                <TextBlock FontSize="30" Foreground="Purple" Text="Добавление вопроса" TextAlignment="Center"/>
+            </Border>
+
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition />
+                    <ColumnDefinition />
+                </Grid.ColumnDefinitions>
+                <StackPanel Grid.Column="0" Margin="5" Width="450">
+
+                    <TextBlock FontSize="25" Foreground="Purple" Text="Тип вопроса:"/>
+                    <ComboBox DisplayMemberPath="QuestionTypeName" Height="45" SelectedValuePath="TypeId" SelectionChanged="QuestionTypeComboBox_SelectionChanged" x:Name="QuestionTypeComboBox"/>
+
+                    <TextBlock FontSize="25" Foreground="Purple" Margin="0,10" Text="Тема:"/>
+
+                    <ComboBox DisplayMemberPath="TopicName" Height="45" SelectedValuePath="TopicId" x:Name="TopicsComboBox"/>
+
+                    <TextBlock FontSize="25" Foreground="Purple" Margin="0, 20" Text="Текст вопроса:"/>
+                    <TextBox AcceptsReturn="True" Height="100" MaxLength="100" TextWrapping="Wrap" x:Name="QuestionTextBox"/>
+
+                    <Button Click="LoadQuestionImage_Click" Height="45" Margin="0,20">
+                        <TextBlock FontSize="25" Foreground="Purple" Text="Загрузить изображение к вопросу"/>
+                    </Button>
+                    <StackPanel Margin="0,5" Orientation="Horizontal" VerticalAlignment="Center">
+                        <Image Height="100" Margin="0,0,5,0" Width="100" x:Name="QuestionImage"/>
+                        <Button Background="Transparent" Click="RemoveQuestionImage_Click" Height="45" ToolTip="Удалить изображение" Visibility="Collapsed" Width="75" x:Name="RemoveImageButton">
+                            <TextBlock FontSize="24" Foreground="DarkRed" Text="❌"/>
+                        </Button>
+                    </StackPanel>
+                </StackPanel>
+
+                <StackPanel Grid.Column="1" Margin="5">
+                    <TextBlock FontSize="25" Foreground="{StaticResource AccentBrush}" Margin="0,20" Text="Ответы:"/>
+                    <ScrollViewer Height="290">
+                        <ItemsControl ItemsSource="{Binding _answers}" x:Name="AnswersPanel">
+                            <ItemsControl.ItemTemplate>
+                                <DataTemplate>
+                                    <StackPanel Margin="0,5" Orientation="Horizontal">
+                                        <CheckBox Checked="AnswerCheckBox_Checked" IsChecked="{Binding Correct}" Width="20"/>
+                                        <TextBox AcceptsReturn="True" Margin="5,0" MaxLength="50" Text="{Binding AnswerText}" TextWrapping="Wrap" Width="250"/>
+                                        <Button Background="Transparent" BorderBrush="{StaticResource AccentBrush}" Click="AttachAnswerImage_Click" Height="45" Margin="5,0" Tag="{Binding}">
+                                            <TextBlock FontSize="20" Foreground="{StaticResource AccentBrush}" Text="📎"/>
+                                        </Button>
+                                        <StackPanel Margin="5,0" Orientation="Horizontal" VerticalAlignment="Center">
+                                            <Image Height="75" Source="{Binding FileData, Converter={StaticResource ByteArrayToImageConverter}}" Width="75"/>
+                                            <Button Background="Transparent" Click="RemoveAnswerImage_Click" Height="30" Margin="5" Tag="{Binding}" ToolTip="Удалить изображение" Width="75">
+                                                <Button.Style>
+                                                    <Style TargetType="Button">
+                                                        <Setter Property="Visibility" Value="Visible"/>
+                                                        <Style.Triggers>
+                                                            <DataTrigger Binding="{Binding FileData}" Value="{x:Null}">
+                                                                <Setter Property="Visibility" Value="Collapsed"/>
+                                                            </DataTrigger>
+                                                        </Style.Triggers>
+                                                    </Style>
+                                                </Button.Style>
+                                                <TextBlock Foreground="DarkRed" Text="❌"/>
+                                            </Button>
+                                        </StackPanel>
+                                        <Button Background="Transparent" BorderBrush="DarkRed" Click="RemoveAnswer_Click" Height="45" Margin="5,0" Tag="{Binding}" ToolTip="Удалить ответ">
+                                            <TextBlock FontSize="20" Foreground="DarkRed" Text="🗑"/>
+                                        </Button>
+                                    </StackPanel>
+                                </DataTemplate>
+                            </ItemsControl.ItemTemplate>
+                        </ItemsControl>
+                    </ScrollViewer>
+
+                    <Button BorderBrush="{StaticResource AccentBrush}" Click="AddAnswer_Click" Height="45" Margin="0,5" x:Name="AddAnswerButton">
+                        <TextBlock FontSize="25" Foreground="{StaticResource AccentBrush}" Text="Добавить ответ"/>
+                    </Button>
+                </StackPanel>
+            </Grid>
+
+            <Button Click="SaveQuestion_Click" Height="45" Margin="10">
+                <TextBlock FontSize="25" Foreground="Purple" Text="Сохранить вопрос"/>
+            </Button>
+            <Button BorderBrush="{StaticResource AccentBrush}" Click="CancelButton_Click" Height="45" Margin="10">
+                <TextBlock FontSize="25" Foreground="{StaticResource AccentBrush}" Text="Отмена"/>
+            </Button>
+        </StackPanel>
+    </ScrollViewer>
+
+</Window>

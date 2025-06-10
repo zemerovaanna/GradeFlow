@@ -1,0 +1,25 @@
+﻿<Window x:Class="GradeFlowECTS.View.Windows.StudentQualWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:GradeFlowECTS.View.Windows"
+        mc:Ignorable="d"
+        Title="StudentQualWindow" Height="450" Width="800" WindowState="Maximized">
+    <StackPanel>
+        <Button Content="Загрузить файлы" Command="{Binding LoadFilesCommand}" />
+        <ListBox ItemsSource="{Binding FilePaths}" Height="100"/>
+        <Button Content="Проверить" Command="{Binding AnalyzeCommand}" />
+        <DataGrid ItemsSource="{Binding CriteriaResults}" AutoGenerateColumns="False" IsReadOnly="True">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Номер" Binding="{Binding CriterionNumber}" />
+                <DataGridTextColumn Header="Критерий" Binding="{Binding CriterionTitle}" />
+                <DataGridTextColumn Header="Баллы" Binding="{Binding Score}" />
+                <DataGridTextColumn Header="Макс. Баллы" Binding="{Binding MaxScore}" />
+            </DataGrid.Columns>
+        </DataGrid>
+        <TextBlock FontSize="20">
+            Всего баллов: <Run Text="{Binding TotalScore}" />
+        </TextBlock>
+    </StackPanel>
+</Window>

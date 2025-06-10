@@ -1,0 +1,14 @@
+﻿<Window x:Class="GradeFlowECTS.View.Windows.ExamWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:GradeFlowECTS.View.Windows"
+        mc:Ignorable="d"
+        Title="GradeFlow ЕКТС | Экзамен" Height="1200" Width="800" Background="{StaticResource AccentBrush}" WindowState="Maximized">
+
+    <Grid>
+        <Frame x:Name="examFrame" NavigationUIVisibility="Hidden" />
+    </Grid>
+
+</Window>

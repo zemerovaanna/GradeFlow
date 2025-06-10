@@ -1,0 +1,117 @@
+﻿<Application x:Class="GradeFlowECTS.App"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:local="clr-namespace:GradeFlowECTS"
+             xmlns:item="clr-namespace:GradeFlowECTS.ViewModel.Items"
+             xmlns:controls="clr-namespace:GradeFlowECTS.View.Controls"
+             xmlns:dialogs="clr-namespace:GradeFlowECTS.View.Dialogs"
+             xmlns:viewModel="clr-namespace:GradeFlowECTS.ViewModel"
+             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+             xmlns:coreTypes="clr-namespace:System;assembly=mscorlib">
+    <Application.Resources>
+        <ResourceDictionary>
+
+            <ResourceDictionary.MergedDictionaries>
+                <materialDesign:BundledTheme BaseTheme="Light" PrimaryColor="Purple" SecondaryColor="Purple" />
+                <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.Defaults.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+
+            <DataTemplate DataType="{x:Type viewModel:AddExamViewModel}">
+                <controls:AddExamControl/>
+            </DataTemplate>
+            <DataTemplate DataType="{x:Type viewModel:AddTopicViewModel}">
+                <controls:AddTopicControl/>
+            </DataTemplate>
+            <DataTemplate DataType="{x:Type item:QuestionManagementViewModel}">
+                <controls:QuestionManagementControl/>
+            </DataTemplate>
+            <DataTemplate DataType="{x:Type viewModel:StudentExamsViewModel}">
+                <controls:StudentExamsControl/>
+            </DataTemplate>
+            <DataTemplate DataType="{x:Type viewModel:StudentGroupsManagementViewModel}">
+                <controls:StudentGroupsManagementControl/>
+            </DataTemplate>
+            <DataTemplate DataType="{x:Type viewModel:StudentHomeViewModel}">
+                <controls:StudentHomeControl/>
+            </DataTemplate>
+            <DataTemplate DataType="{x:Type viewModel:StudentLoginViewModel}">
+                <controls:StudentLoginControl/>
+            </DataTemplate>
+            <DataTemplate DataType="{x:Type viewModel:TeacherHomeViewModel}">
+                <controls:TeacherHomeControl/>
+            </DataTemplate>
+            <DataTemplate DataType="{x:Type viewModel:TeacherLoginViewModel}">
+                <controls:TeacherLoginControl/>
+            </DataTemplate>
+            <DataTemplate DataType="{x:Type viewModel:TopicManagementViewModel}">
+                <controls:TopicManagementControl/>
+            </DataTemplate>
+            <DataTemplate DataType="{x:Type viewModel:UserManagementViewModel}">
+                <controls:UserManagementControl/>
+            </DataTemplate>
+            <DataTemplate DataType="{x:Type viewModel:UserRegistrationViewModel}">
+                <controls:UserRegistrationControl/>
+            </DataTemplate>
+
+            <DataTemplate DataType="{x:Type viewModel:DbConnectionViewModel}">
+                <dialogs:DbConnectionControl/>
+            </DataTemplate>
+            <DataTemplate DataType="{x:Type viewModel:MailVerificationViewModel}">
+                <dialogs:MailVerificationControl/>
+            </DataTemplate>
+            <DataTemplate DataType="{x:Type viewModel:PasswordResetViewModel}">
+                <dialogs:PasswordResetControl/>
+            </DataTemplate>
+
+            <SolidColorBrush x:Key="WindowBackgroundBrush" Color="#f1f2f9" />
+            <SolidColorBrush x:Key="ButtonBackgroundBrush" Color="#cabbe2" />
+            <SolidColorBrush x:Key="AccentBrush" Color="#395d9d" />
+            <SolidColorBrush x:Key="TextBoxBrush" Color="#ccd5e4" />
+            <FontFamily x:Key="AppFontFamily">Calibri</FontFamily>
+            <coreTypes:Double x:Key="AppFontSize">18</coreTypes:Double>
+
+            <Style TargetType="Window">
+                <Setter Property="Background" Value="{StaticResource WindowBackgroundBrush}" />
+            </Style>
+
+            <Style TargetType="TextBlock">
+                <Setter Property="FontFamily" Value="{StaticResource AppFontFamily}" />
+                <Setter Property="FontSize" Value="{StaticResource AppFontSize}" />
+                <Setter Property="FontWeight" Value="Normal" />
+                <Setter Property="TextWrapping" Value="Wrap" />
+                <Setter Property="Foreground" Value="Black" />
+            </Style>
+
+            <Style TargetType="Button" BasedOn="{StaticResource MaterialDesignRaisedButton}">
+                <Setter Property="FontFamily" Value="{StaticResource AppFontFamily}" />
+                <Setter Property="Background" Value="White" />
+            </Style>
+
+            <Style TargetType="TextBox" BasedOn="{StaticResource MaterialDesignOutlinedTextBox}">
+                <Setter Property="Background" Value="{StaticResource TextBoxBrush}" />
+                <Setter Property="FontFamily" Value="{StaticResource AppFontFamily}" />
+                <Setter Property="FontSize" Value="{StaticResource AppFontSize}" />
+                <Setter Property="Padding" Value="8" />
+            </Style>
+
+            <Style TargetType="CheckBox" BasedOn="{StaticResource MaterialDesignCheckBox}">
+                <Setter Property="Foreground" Value="{DynamicResource MaterialDesignBody}" />
+                <Setter Property="FontFamily" Value="{StaticResource AppFontFamily}" />
+                <Setter Property="FontSize" Value="{StaticResource AppFontSize}" />
+            </Style>
+
+            <Style TargetType="RadioButton" BasedOn="{StaticResource MaterialDesignRadioButton}">
+                <Setter Property="FontFamily" Value="{StaticResource AppFontFamily}" />
+                <Setter Property="Foreground" Value="{DynamicResource MaterialDesignBody}" />
+            </Style>
+
+            <Style TargetType="ComboBox" BasedOn="{StaticResource MaterialDesignComboBox}">
+                <Setter Property="Foreground" Value="{DynamicResource MaterialDesignBody}" />
+                <Setter Property="FontFamily" Value="{StaticResource AppFontFamily}" />
+                <Setter Property="FontSize" Value="{StaticResource AppFontSize}" />
+            </Style>
+
+        </ResourceDictionary>
+    </Application.Resources>
+
+</Application>

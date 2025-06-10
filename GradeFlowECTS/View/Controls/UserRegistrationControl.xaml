@@ -1,0 +1,128 @@
+﻿<UserControl x:Class="GradeFlowECTS.View.Controls.UserRegistrationControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:GradeFlowECTS.View.Controls"
+             xmlns:infrastructure="clr-namespace:GradeFlowECTS.Infrastructure"
+             mc:Ignorable="d" 
+             d:DesignHeight="750" d:DesignWidth="800" Background="{StaticResource WindowBackgroundBrush}">
+
+    <ScrollViewer HorizontalAlignment="Stretch" HorizontalScrollBarVisibility="Disabled" VerticalAlignment="Center" VerticalScrollBarVisibility="Auto">
+
+        <StackPanel>
+
+            <Border BorderBrush="Purple" BorderThickness="1" CornerRadius="5" Margin="10,20,10,10" Padding="10">
+                <TextBlock FontSize="36" Foreground="Purple" Text="Регистрация" TextAlignment="Center"/>
+            </Border>
+
+            <Grid>
+
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+
+                <StackPanel Grid.Column="0" Margin="10">
+
+                    <TextBlock Foreground="Purple" Margin="10,20,0,2" Text="Роль" Visibility="{Binding IsRoleVisible}"/>
+
+                    <ComboBox DisplayMemberPath="RoleName" ItemsSource="{Binding Roles}" Margin="10,0,0,0" SelectedItem="{Binding SelectedRole}" Visibility="{Binding IsRoleVisible}"/>
+
+                    <TextBlock Foreground="Purple" Margin="10,15,0,2" Text="Фамилия (обязательно)"/>
+
+                    <TextBox MaxLength="255" PreviewKeyDown="Space_PreviewKeyDown" PreviewTextInput="Name_PreviewTextInput" Text="{Binding LastName, UpdateSourceTrigger=PropertyChanged}"/>
+
+                    <TextBlock Foreground="Purple" Margin="10,10,0,2" Text="Имя (обязательно)"/>
+
+                    <TextBox MaxLength="255" PreviewKeyDown="Space_PreviewKeyDown" PreviewTextInput="Name_PreviewTextInput" Text="{Binding FirstName, UpdateSourceTrigger=PropertyChanged}"/>
+
+                    <TextBlock Foreground="Purple" Margin="10,10,0,2" Text="Отчество (необязательно)"/>
+
+                    <TextBox MaxLength="255" PreviewKeyDown="Space_PreviewKeyDown" PreviewTextInput="Name_PreviewTextInput" Text="{Binding MiddleName, UpdateSourceTrigger=PropertyChanged}"/>
+
+                    <TextBlock Foreground="Purple" Margin="10,10,0,2" Text="Почта (обязательно)"/>
+
+                    <TextBox MaxLength="100" PreviewKeyDown="Space_PreviewKeyDown" PreviewTextInput="Email_PreviewTextInput" Text="{Binding Mail, UpdateSourceTrigger=PropertyChanged}"/>
+
+                    <TextBlock Foreground="Purple" Margin="10,15,0,2" Text="Код подтверждения почты:" Visibility="{Binding IsCodeVerificationVisible}"/>
+
+                    <Grid Visibility="{Binding IsCodeVerificationVisible}">
+
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+
+                        <TextBox Grid.Column="0" Margin="5" MaxLength="50" PreviewKeyDown="Space_PreviewKeyDown" PreviewTextInput="VerificationCode_PreviewTextInput" Text="{Binding VerificationCode, UpdateSourceTrigger=PropertyChanged}"/>
+
+                        <Button Grid.Column="1" Command="{Binding SendVerificationCodeCommand}" Height="45" Margin="5" Padding="8,5">
+                            <TextBlock Foreground="Purple" Text="Получить код"/>
+                        </Button>
+                    </Grid>
+                </StackPanel>
+
+                <StackPanel Grid.Column="1" Margin="10">
+
+                    <TextBlock Foreground="Purple" Margin="10,15,0,2" Text="Код преподавателя" Visibility="{Binding IsTeacherCodeVisible}"/>
+
+                    <TextBox Background="LightGray" Focusable="False" IsReadOnly="True" Margin="10,0,0,0" Text="{Binding TeacherCode, Mode=OneWay}" Visibility="{Binding IsTeacherCodeVisible}"/>
+
+                    <TextBlock Foreground="{StaticResource AccentBrush}" Margin="10,15,0,2" Text="Группа" Visibility="{Binding IsGroupVisible}"/>
+
+                    <ComboBox DisplayMemberPath="GroupName" ItemsSource="{Binding Groups}" Margin="10,0,0,0" SelectedItem="{Binding SelectedGroup}" Visibility="{Binding IsGroupVisible}"/>
+
+                    <TextBlock Foreground="Purple" Margin="10,15,0,2" Text="Пароль" Visibility="{Binding IsPasswordVisible}"/>
+
+                    <Grid  Visibility="{Binding IsPasswordVisible}">
+
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+
+                        <PasswordBox x:Name="userPasswordBox" infrastructure:PasswordBoxService.BoundPassword="{Binding UserPassword, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Column="0" Margin="10,0,0,0" MaxLength="255"/>
+
+                        <TextBox x:Name="userPasswordInput" Grid.Column="0" Margin="10,0,0,0" MaxLength="255" Text="{Binding UserPassword, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Visibility="Collapsed"/>
+
+                        <Button Grid.Column="1" Background="Transparent" BorderBrush="Transparent" Click="TogglePasswordVisibility" Content="😎" ToolTip="Показать/скрыть пароль"/>
+                    </Grid>
+
+                    <TextBlock Foreground="Purple" Margin="10,15,0,2" Text="Подтверждение пароля" Visibility="{Binding IsPasswordVisible}"/>
+
+                    <Grid Visibility="{Binding IsPasswordVisible}">
+
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+
+                        <PasswordBox x:Name="confirmPasswordBox" infrastructure:PasswordBoxService.BoundPassword="{Binding ConfirmPassword, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Column="0" Margin="10,0,0,0" MaxLength="255"/>
+
+                        <TextBox x:Name="confirmPasswordInput" Grid.Column="0" Margin="10,0,0,0" MaxLength="255" Text="{Binding ConfirmPassword, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Visibility="Collapsed"/>
+
+                        <Button Grid.Column="1" Background="Transparent" BorderBrush="Transparent" Click="ToggleConfirmPasswordVisibility" Content="😎" ToolTip="Показать/скрыть пароль"/>
+                    </Grid>
+
+                    <Button Visibility="{Binding IsPasswordVisible}" Command="{Binding GeneratePasswordCommand}" Height="45" Margin="10,45,10,0" MinHeight="40">
+                        <TextBlock Foreground="Purple" Text="Сгенерировать пароль"/>
+                    </Button>
+
+                    <TextBlock x:Name="errorsText" FontSize="13" Foreground="DarkRed" Grid.Column="2" Margin="20,30,10,10" Text="{Binding ErrorMessage}" TextWrapping="Wrap" VerticalAlignment="Top"/>
+                </StackPanel>
+            </Grid>
+
+            <StackPanel MaxWidth="750">
+
+                <Button Command="{Binding RegisterCommand}" Margin="0,20,0,0" MinHeight="45">
+                    <TextBlock FontSize="18" Foreground="Purple" Text="Зарегистрировать"/>
+                </Button>
+
+                <Button x:Name="cancelButton" BorderBrush="{StaticResource AccentBrush}" Command="{Binding CancelCommand}" Margin="0,15,0,15" MinHeight="45">
+                    <TextBlock FontSize="18" Foreground="{StaticResource AccentBrush}" Text="Отмена"/>
+                </Button>
+            </StackPanel>
+        </StackPanel>
+    </ScrollViewer>
+
+</UserControl>
