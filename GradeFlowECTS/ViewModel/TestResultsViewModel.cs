@@ -11,7 +11,7 @@ using GradeFlowECTS.View.Windows;
 
 namespace GradeFlowECTS.ViewModel
 {
-    public class MDK01ResultsViewModel : BaseViewModel
+    public class TestResultsViewModel : BaseViewModel
     {
         private readonly IExamRepository _examRepository;
         private readonly Exam _exam;
@@ -19,7 +19,7 @@ namespace GradeFlowECTS.ViewModel
         public ICommand RemoveResultCommand { get; }
         public ICommand ViewResultCommand { get; }
 
-        public MDK01ResultsViewModel(IExamRepository examRepository, Exam exam)
+        public TestResultsViewModel(IExamRepository examRepository, Exam exam)
         {
             _examRepository = examRepository ?? throw new ArgumentNullException(nameof(examRepository));
             _exam = exam ?? throw new ArgumentNullException(nameof(exam));
@@ -72,6 +72,12 @@ namespace GradeFlowECTS.ViewModel
             }
         }
 
+        public class GroupResultsViewModel
+        {
+            public string GroupName { get; set; }
+            public ObservableCollection<StudentResultViewModel> StudentResults { get; set; } = new ObservableCollection<StudentResultViewModel>();
+        }
+
         public class StudentResultViewModel
         {
             public int Id { get; set; }
@@ -79,12 +85,7 @@ namespace GradeFlowECTS.ViewModel
             public string? DateEnded { get; set; }
             public string? TimeEnded { get; set; }
             public string? TotalScore { get; set; }
-        }
-
-        public class GroupResultsViewModel
-        {
-            public string GroupName { get; set; }
-            public ObservableCollection<StudentResultViewModel> StudentResults { get; set; } = new ObservableCollection<StudentResultViewModel>();
+            public string TimeSpent { get; set; }
         }
 
         public void Load()
@@ -104,7 +105,8 @@ namespace GradeFlowECTS.ViewModel
                                 StudentName = $"{LOL.Decrypt(student.User.LastName)} {LOL.Decrypt(student.User.FirstName)}",
                                 DateEnded = result.DateEnded.ToString(),
                                 TimeEnded = result.TimeEnded.ToString(),
-                                TotalScore = LOL.Decrypt(result.TotalScore)
+                                TotalScore = LOL.Decrypt(result.TestCriteria),
+                                TimeSpent = LOL.Decrypt(result.TestTimeSpent)
                             }))
                 });
 
@@ -142,7 +144,7 @@ namespace GradeFlowECTS.ViewModel
             }
         }
 
-    static class LOL
+        static class LOL
         {
             private const int KeySize = 32;
             private const int IvSize = 12;

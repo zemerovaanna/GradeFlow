@@ -30,7 +30,16 @@ namespace GradeFlowECTS.Analyzers
         }
 
         public ObservableCollection<string> FilePaths { get; } = new();
-        public ObservableCollection<CriterionResult> CriteriaResults { get; } = new();
+        private ObservableCollection<CriterionResult> _criteriaResults = new();
+        public ObservableCollection<CriterionResult> CriteriaResults
+        {
+            get => _criteriaResults;
+            set
+            {
+                _criteriaResults = value;
+                OnPropertyChanged(nameof(CriteriaResults));
+            }
+        }
 
         public ICommand LoadFilesCommand => new RelayCommand(_ => LoadFiles());
         public ICommand AnalyzeCommand => new RelayCommand(_ => AnalyzeFiles());
@@ -56,22 +65,18 @@ namespace GradeFlowECTS.Analyzers
 
         public void AnalyzeFiles()
         {
-            // Чтение и разбор файлов в деревья
             var trees = FilePaths.Select(p =>
             {
                 var code = File.ReadAllText(p);
                 return CSharpSyntaxTree.ParseText(code);
             }).ToList();
 
-            // Компиляция и семантические модели
             var compilation = CSharpCompilation.Create("Temp", syntaxTrees: trees);
             var models = trees.Select(t => compilation.GetSemanticModel(t)).ToList();
 
-            // Загрузка критериев
             var repo = new CriterionRepository();
             var criteria = repo.GetAllCriteriaWithDetails();
 
-            // Сопоставление критериев с анализаторами
             var analyzerPairs = new List<(Criterion criterion, ICriterionAnalyzer analyzer)>();
             foreach (var c in criteria)
             {
@@ -91,8 +96,7 @@ namespace GradeFlowECTS.Analyzers
                     analyzerPairs.Add((c, analyzer));
             }
 
-            // Оценка и сохранение результатов
-            CriteriaResults.Clear();
+            var tempList = new ObservableCollection<CriterionResult>();
             string qualCriteria = "";
 
             TotalScore = 0;
@@ -101,7 +105,7 @@ namespace GradeFlowECTS.Analyzers
             foreach (var (criterion, analyzer) in analyzerPairs)
             {
                 var score = analyzer.Evaluate(trees, models, compilation);
-                CriteriaResults.Add(new CriterionResult
+                tempList.Add(new CriterionResult
                 {
                     CriterionNumber = criterion.CriterionNumber,
                     CriterionTitle = criterion.CriterionTitle,
@@ -112,6 +116,12 @@ namespace GradeFlowECTS.Analyzers
                 maxTotalScore += criterion.MaxScore;
                 qualCriteria += $"{criterion.CriterionNumber}. {criterion.CriterionTitle}\nНабрано баллов: {score} Максимально баллов: {criterion.MaxScore}\n\n";
             }
+
+            // Обновляем коллекцию (триггерит UI)
+            CriteriaResults = tempList;
+
+            if (string.IsNullOrWhiteSpace(qualCriteria))
+                qualCriteria = "❌ Критерии не найдены или не обработаны.";
 
             DateTime now = DateTime.Now;
             TimeOnly currentTime = TimeOnly.FromDateTime(now);

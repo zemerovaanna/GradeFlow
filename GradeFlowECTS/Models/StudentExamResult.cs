@@ -12,13 +12,15 @@ public partial class StudentExamResult
 
     public DateOnly? DateEnded { get; set; }
 
-    public int? TestTimeSpent { get; set; }
+    public string? TestTimeSpent { get; set; }
 
     public string? Mdkcode { get; set; }
 
     public string? Mdkcriteria { get; set; }
 
     public string? QualCriteria { get; set; }
+
+    public string? TestCriteria { get; set; }
 
     public string? TotalScore { get; set; }
 
@@ -27,4 +29,6 @@ public partial class StudentExamResult
     public virtual Exam Exam { get; set; } = null!;
 
     public virtual Student Student { get; set; } = null!;
+
+    public int VariantNumber { get; set; }
 }

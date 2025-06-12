@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:GradeFlowECTS.View.Windows"
         mc:Ignorable="d"
-        Title="StudentQualWindow" Height="450" Width="800" WindowState="Maximized">
+        Title="Квалификационный экзамен" Height="450" Width="800" WindowState="Maximized">
     <StackPanel>
         <ListBox ItemsSource="{Binding FilePaths}" Height="200" Margin="5"/>
         <Button Content="Загрузить файлы" Command="{Binding LoadFilesCommand}" Margin="5"/>

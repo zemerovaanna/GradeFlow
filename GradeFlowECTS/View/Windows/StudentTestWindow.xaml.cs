@@ -14,9 +14,13 @@ namespace GradeFlowECTS.View.Windows
     public partial class StudentTestWindow : Window
     {
         TeacherTestViewModel _vm;
-        public StudentTestWindow(ExamRepository examRepository)
+        Exam _exam;
+
+        public StudentTestWindow(ExamRepository examRepository, Exam exam)
         {
             InitializeComponent();
+
+            _exam = exam;
             _vm = new TeacherTestViewModel(examRepository);
             DataContext = _vm;
         }
@@ -45,39 +49,97 @@ namespace GradeFlowECTS.View.Windows
             }
         }
 
+        /*        private void FinishButton_Click(object sender, RoutedEventArgs e)
+                {
+                    _vm.FinishTest();
+                    var result = _vm.ReturnResult();
+                    string resulttxt =
+                        $"📊 Процент: {result.Percent}%\n" +
+                        $"🎯 Баллы: {result.Score}\n" +
+                        $"🏅 Оценка: {result.Mark}\n" +
+                        $"⏱ Время прохождения: {result.TimeSpent}";
+                    var context = new GradeFlowContext();
+                    var user = App.Current.ServiceProvider.GetRequiredService<IUserContext>();
+                    var student = context.Students.Where(s => s.StudentId == user.CurrentUser.StudentId).FirstOrDefault();
+                    if (student != null)
+                    {
+                        DateTime now = DateTime.Now;
+                        TimeOnly currentTime = TimeOnly.FromDateTime(now);
+                        DateOnly currentDate = DateOnly.FromDateTime(now);
+
+                        StudentExamResult studentExamResult = new StudentExamResult
+                        {
+                            StudentId = student.StudentId,
+                            ExamId = _exam.ExamId,
+                            TimeEnded = currentTime,
+                            DateEnded = currentDate,
+                            TotalScore = LOL.Encrypt(result.Score),
+                            TestCriteria = resulttxt
+                        };
+                        context.StudentExamResults.Add(studentExamResult);
+                        context.SaveChanges();
+                        MessageBox.Show("Результаты отправлены.", "Сообщение", MessageBoxButton.OK, MessageBoxImage.Information);
+                        Close();
+                    }
+                }*/
+
         private void FinishButton_Click(object sender, RoutedEventArgs e)
         {
             _vm.FinishTest();
             var result = _vm.ReturnResult();
+
             string resulttxt =
                 $"📊 Процент: {result.Percent}%\n" +
                 $"🎯 Баллы: {result.Score}\n" +
                 $"🏅 Оценка: {result.Mark}\n" +
                 $"⏱ Время прохождения: {result.TimeSpent}";
+
             var context = new GradeFlowContext();
             var user = App.Current.ServiceProvider.GetRequiredService<IUserContext>();
-            var student = context.Students.Where(s => s.StudentId == user.CurrentUser.StudentId).FirstOrDefault();
+            var student = context.Students.FirstOrDefault(s => s.StudentId == user.CurrentUser.StudentId);
+
             if (student != null)
             {
                 DateTime now = DateTime.Now;
                 TimeOnly currentTime = TimeOnly.FromDateTime(now);
                 DateOnly currentDate = DateOnly.FromDateTime(now);
 
-                StudentExamResult studentExamResult = new StudentExamResult
-                {
-                    StudentId = student.StudentId,
-                    ExamId = _examId,
-                    TimeEnded = currentTime,
-                    DateEnded = currentDate,
-                    Mdkcode = LOL.Encrypt(mdkCode),
-                    Mdkcriteria = LOL.Encrypt(mdkCriteria),
-                    TotalScore = LOL.Encrypt(totalScore),
-                    TaskNumber = _task.Number
-                };
+                // Поиск существующего результата
+                Guid examId = _exam.ExamId;
 
-                GradeFlowContext context = new GradeFlowContext();
-                context.StudentExamResults.Add(studentExamResult);
+                var existingResult = context.StudentExamResults
+                    .FirstOrDefault(r => r.StudentId == student.StudentId && r.ExamId == examId);
+
+                if (existingResult != null)
+                {
+                    // Обновление существующего результата
+                    existingResult.TimeEnded = currentTime;
+                    existingResult.DateEnded = currentDate;
+                    existingResult.TotalScore = LOL.Encrypt(result.Score);
+                    existingResult.TestCriteria = LOL.Encrypt(resulttxt);
+                    existingResult.TestTimeSpent = LOL.Encrypt(result.TimeSpent.ToString());
+
+                    context.StudentExamResults.Update(existingResult);
+                }
+                else
+                {
+                    // Создание нового результата
+                    StudentExamResult newResult = new StudentExamResult
+                    {
+                        StudentId = student.StudentId,
+                        ExamId = _exam.ExamId,
+                        TimeEnded = currentTime,
+                        DateEnded = currentDate,
+                        TotalScore = LOL.Encrypt(result.Score),
+                        TestCriteria = LOL.Encrypt(resulttxt),
+                        TestTimeSpent = LOL.Encrypt(result.TimeSpent.ToString())
+                    };
+
+                    context.StudentExamResults.Add(newResult);
+                }
+
                 context.SaveChanges();
+
                 MessageBox.Show("Результаты отправлены.", "Сообщение", MessageBoxButton.OK, MessageBoxImage.Information);
                 Close();
             }

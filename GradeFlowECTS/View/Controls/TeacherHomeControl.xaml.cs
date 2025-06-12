@@ -36,5 +36,10 @@ namespace GradeFlowECTS.View.Controls
             EditCriteriaWindow window = new EditCriteriaWindow();
             window.ShowDialog();
         }
+
+        private void VariantManagementButton_Click(object sender, System.Windows.RoutedEventArgs e)
+        {
+
+        }
     }
 }

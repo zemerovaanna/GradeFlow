@@ -30,6 +30,10 @@
                         <TextBlock FontSize="20" Foreground="{StaticResource AccentBrush}" Text="Управление критериями" />
                     </Button>
 
+                    <Button Click="VariantManagementButton_Click" Margin="10" MinHeight="45" BorderBrush="{StaticResource AccentBrush}">
+                        <TextBlock FontSize="20" Foreground="{StaticResource AccentBrush}" Text="Управление вариантами" />
+                    </Button>
+
                     <Button Command="{Binding UserManagementCommand}" Margin="10" MinHeight="45" BorderBrush="{StaticResource AccentBrush}">
                         <TextBlock FontSize="20" Foreground="{StaticResource AccentBrush}" Text="Управление пользователями" />
                     </Button>

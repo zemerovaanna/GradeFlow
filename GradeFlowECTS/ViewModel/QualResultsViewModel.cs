@@ -11,7 +11,7 @@ using GradeFlowECTS.View.Windows;
 
 namespace GradeFlowECTS.ViewModel
 {
-    public class MDK01ResultsViewModel : BaseViewModel
+    public class QualResultsViewModel : BaseViewModel
     {
         private readonly IExamRepository _examRepository;
         private readonly Exam _exam;
@@ -19,7 +19,7 @@ namespace GradeFlowECTS.ViewModel
         public ICommand RemoveResultCommand { get; }
         public ICommand ViewResultCommand { get; }
 
-        public MDK01ResultsViewModel(IExamRepository examRepository, Exam exam)
+        public QualResultsViewModel(IExamRepository examRepository, Exam exam)
         {
             _examRepository = examRepository ?? throw new ArgumentNullException(nameof(examRepository));
             _exam = exam ?? throw new ArgumentNullException(nameof(exam));
@@ -78,6 +78,7 @@ namespace GradeFlowECTS.ViewModel
             public string StudentName { get; set; }
             public string? DateEnded { get; set; }
             public string? TimeEnded { get; set; }
+            public string? Criteria { get; set; }
             public string? TotalScore { get; set; }
         }
 
@@ -104,7 +105,9 @@ namespace GradeFlowECTS.ViewModel
                                 StudentName = $"{LOL.Decrypt(student.User.LastName)} {LOL.Decrypt(student.User.FirstName)}",
                                 DateEnded = result.DateEnded.ToString(),
                                 TimeEnded = result.TimeEnded.ToString(),
-                                TotalScore = LOL.Decrypt(result.TotalScore)
+                                Criteria = LOL.Decrypt(result.QualCriteria),
+                                TotalScore = "Сумма баллов: " + LOL.Decrypt(result.TotalScore)
+
                             }))
                 });
 
@@ -142,7 +145,7 @@ namespace GradeFlowECTS.ViewModel
             }
         }
 
-    static class LOL
+        static class LOL
         {
             private const int KeySize = 32;
             private const int IvSize = 12;

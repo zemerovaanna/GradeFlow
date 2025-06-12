@@ -89,7 +89,8 @@ namespace GradeFlowECTS.View.Pages
 
         private void ViewTestResultsButton_Click(object sender, RoutedEventArgs e)
         {
-
+            TestResultWindow window = new TestResultWindow(_exam, _examRepository);
+            window.ShowDialog();
         }
 
         private void EditTestButton_Click(object sender, RoutedEventArgs e)
@@ -105,17 +106,19 @@ namespace GradeFlowECTS.View.Pages
 
         private void ViewAttemptsButton_Click(object sender, RoutedEventArgs e)
         {
-
+            QualResultsWindow window = new QualResultsWindow(_exam, _examRepository);
+            window.ShowDialog();
         }
 
         private void EditQualificationExamButton_Click(object sender, RoutedEventArgs e)
         {
-
+            VariantWindow window = new VariantWindow(_exam);
+            window.ShowDialog();
         }
 
         private void TakeTestButton_Click(object sender, RoutedEventArgs e)
         {
-            StudentTestWindow window = new StudentTestWindow(_examRepository);
+            StudentTestWindow window = new StudentTestWindow(_examRepository, _exam);
             window.ShowDialog();
         }
 

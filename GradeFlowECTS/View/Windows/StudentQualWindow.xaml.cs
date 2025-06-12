@@ -17,13 +17,16 @@ namespace GradeFlowECTS.View.Windows
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            _vm.AnalyzeFiles();
-            var studentExamResult = _vm.ReturnResult();
-            GradeFlowContext context = new GradeFlowContext();
-            context.StudentExamResults.Add(studentExamResult);
-            context.SaveChanges();
-            MessageBox.Show("Результаты отправлены.", "Сообщение", MessageBoxButton.OK, MessageBoxImage.Information);
-            Close();
+            if (DataContext is AnalyzerViewModel vm)
+            {
+                vm.AnalyzeFiles();
+                var studentExamResult = _vm.ReturnResult();
+                GradeFlowContext context = new GradeFlowContext();
+                context.StudentExamResults.Add(studentExamResult);
+                context.SaveChanges();
+                MessageBox.Show("Результаты отправлены.", "Сообщение", MessageBoxButton.OK, MessageBoxImage.Information);
+                Close();
+            }
         }
     }
 }
