@@ -7,8 +7,7 @@ using GradeFlowECTS.Core;
 using GradeFlowECTS.Infrastructure;
 using GradeFlowECTS.Interfaces;
 using GradeFlowECTS.Models;
-using GradeFlowECTS.ViewModel.Items;
-using Microsoft.EntityFrameworkCore;
+using GradeFlowECTS.View.Windows;
 
 namespace GradeFlowECTS.ViewModel
 {
@@ -33,15 +32,16 @@ namespace GradeFlowECTS.ViewModel
 
         private void ViewResult(object? parameter)
         {
-            if (parameter is StudentExamResult result)
+            if (parameter is StudentResultViewModel result)
             {
-
+                StudentPracticeResultWindow window = new StudentPracticeResultWindow(result.Id);
+                window.ShowDialog();
             }
         }
 
         private void RemoveResult(object? parameter)
         {
-            if (parameter is StudentExamResult question)
+            if (parameter is StudentResultViewModel ser)
             {
                 var result = MessageBox.Show(
                     "Вы действительно хотите удалить этот результат и все его ответы?",
@@ -51,7 +51,12 @@ namespace GradeFlowECTS.ViewModel
 
                 if (result == MessageBoxResult.Yes)
                 {
-
+                    var context = new GradeFlowContext();
+                    StudentExamResult studentExamResult = context.StudentExamResults.Find(ser.Id);
+                    context.StudentExamResults.Remove(studentExamResult);
+                    context.SaveChanges();
+                    Load();
+                    OnPropertyChanged(nameof(Groups));
                 }
             }
         }
@@ -69,22 +74,41 @@ namespace GradeFlowECTS.ViewModel
 
         public class StudentResultViewModel
         {
+            public int Id { get; set; }
             public string StudentName { get; set; }
             public string? DateEnded { get; set; }
+            public string? TimeEnded { get; set; }
             public string? TotalScore { get; set; }
         }
 
         public class GroupResultsViewModel
         {
             public string GroupName { get; set; }
-            public ObservableCollection<StudentResultViewModel> StudentResults { get; set; }
-                = new ObservableCollection<StudentResultViewModel>();
+            public ObservableCollection<StudentResultViewModel> StudentResults { get; set; } = new ObservableCollection<StudentResultViewModel>();
         }
 
         public void Load()
         {
             var context = new GradeFlowContext();
+
             var groupsData = context.Groups
+                .Select(group => new
+                {
+                    GroupName = $"ПР-{group.CourseNumber}{group.GroupNumber}",
+                    Students = group.Students
+                        .SelectMany(student => student.StudentExamResults
+                            .Where(result => result.Exam.DisciplineId == _exam.DisciplineId)
+                            .Select(result => new StudentResultViewModel
+                            {
+                                Id = result.StudentExamId,
+                                StudentName = $"{LOL.Decrypt(student.User.LastName)} {LOL.Decrypt(student.User.FirstName)}",
+                                DateEnded = result.DateEnded.ToString(),
+                                TimeEnded = result.TimeEnded.ToString(),
+                                TotalScore = LOL.Decrypt(result.TotalScore)
+                            }))
+                });
+
+            /*var groupsData = context.Groups
                     .Select(group => new
                     {
                         GroupName = $"ПР-{group.CourseNumber}{group.GroupNumber}",
@@ -92,11 +116,13 @@ namespace GradeFlowECTS.ViewModel
                             .SelectMany(student => student.StudentExamResults
                                 .Select(result => new StudentResultViewModel
                                 {
-                                    StudentName = $"{LOL.Decrypt(student.User.LastName)} {LOL.Decrypt(student.User.MiddleName)}",
+                                    Id = result.StudentExamId,
+                                    StudentName = $"{LOL.Decrypt(student.User.LastName)} {LOL.Decrypt(student.User.FirstName)}",
                                     DateEnded = result.DateEnded.ToString(),
+                                    TimeEnded = result.TimeEnded.ToString(),
                                     TotalScore = LOL.Decrypt(result.TotalScore)
                                 }))
-                    });
+                    });*/
 
             Groups.Clear();
 

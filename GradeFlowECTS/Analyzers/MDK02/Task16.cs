@@ -10,11 +10,11 @@ namespace GradeFlowECTS.Analyzers.MDK02
         public static int MetCriteria { get; set; } = 0;
         public static List<string> CriteriaDetails { get; } = new();
 
-        public static string AnalyzeFromText(string fullText)
+        public static (string totalScore, string criteria) AnalyzeFromText(string fullText)
         {
             var tree = CSharpSyntaxTree.ParseText(fullText);
             var root = tree.GetRoot();
-            return Analyze(new List<SyntaxNode> { root });
+            return ($"{MetCriteria}/{TotalCriteria}", Analyze(new List<SyntaxNode> { root }));
         }
 
         public static string Analyze(List<SyntaxNode> roots)

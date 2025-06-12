@@ -43,8 +43,6 @@ public partial class GradeFlowContext : DbContext
 
     public virtual DbSet<Student> Students { get; set; }
 
-    public virtual DbSet<StudentAttempt> StudentAttempts { get; set; }
-
     public virtual DbSet<StudentExamResult> StudentExamResults { get; set; }
 
     public virtual DbSet<Teacher> Teachers { get; set; }
@@ -202,22 +200,6 @@ public partial class GradeFlowContext : DbContext
                 .HasConstraintName("FK_Students_Users");
         });
 
-        modelBuilder.Entity<StudentAttempt>(entity =>
-        {
-            entity.HasIndex(e => e.ExamId, "IX_StudentAttempts_ExamId");
-
-            entity.HasIndex(e => e.StudentId, "IX_StudentAttempts_StudentId");
-
-            entity.HasOne(d => d.Exam).WithMany(p => p.StudentAttempts)
-                .HasForeignKey(d => d.ExamId)
-                .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK_StudentAttempts_Exams");
-
-            entity.HasOne(d => d.Student).WithMany(p => p.StudentAttempts)
-                .HasForeignKey(d => d.StudentId)
-                .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK_StudentAttempts_Students");
-        });
 
         modelBuilder.Entity<StudentExamResult>(entity =>
         {

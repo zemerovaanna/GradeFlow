@@ -256,38 +256,120 @@ namespace GradeFlowECTS.Repositories
             }
         }
 
+        /*        public bool RemoveExam(Guid examId)
+                {
+                    try
+                    {
+                        Exam? exam = _context.Exams
+                                     .Include(e => e.GroupsExams)
+                                     .FirstOrDefault(e => e.ExamId == examId);
+
+                        if (exam == null)
+                            return false;
+
+                        List<ExamTest> examTestList = _context.ExamTests
+                                                .Where(e => e.ExamId == examId)
+                                                .ToList();
+
+                        HashSet<int> examTestIds = examTestList.Select(et => et.ExamTestId).ToHashSet();
+
+                        List<TopicsExamTest> topicExamTestList = _context.TopicsExamTests
+                            .Where(t => examTestIds.Contains(t.ExamTestId))
+                            .ToList();
+
+                        _context.GroupsExams.RemoveRange(exam.GroupsExams);
+                        _context.TopicsExamTests.RemoveRange(topicExamTestList);
+                        _context.ExamTests.RemoveRange(examTestList);
+                        _context.Exams.Remove(exam);
+                        Save();
+
+                        return true;
+                    }
+                    catch (Exception ex)
+                    {
+                        Debug.WriteLine($"[RemoveExam] Ошибка: {ex.Message}");
+                        return false;
+                    }
+                }*/
+
         public bool RemoveExam(Guid examId)
         {
             try
             {
+                Debug.WriteLine($"[RemoveExam] Попытка найти экзамен с ID: {examId}");
+
+                // Загружаем экзамен с нужными связями
                 Exam? exam = _context.Exams
-                             .Include(e => e.GroupsExams)
-                             .FirstOrDefault(e => e.ExamId == examId);
+                    .Include(e => e.GroupsExams)
+                    .Include(e => e.StudentExamResults)
+                    .Include(e => e.ExamTests)
+                        .ThenInclude(et => et.Questions)
+                            .ThenInclude(q => q.QuestionAnswers)
+                    .Include(e => e.ExamTests)
+                        .ThenInclude(et => et.TopicsExamTests)
+                    .FirstOrDefault(e => e.ExamId == examId);
 
                 if (exam == null)
+                {
+                    Debug.WriteLine("[RemoveExam] Экзамен не найден.");
                     return false;
+                }
 
-                List<ExamTest> examTestList = _context.ExamTests
-                                        .Where(e => e.ExamId == examId)
-                                        .ToList();
+                Debug.WriteLine("[RemoveExam] Экзамен найден.");
 
-                HashSet<int> examTestIds = examTestList.Select(et => et.ExamTestId).ToHashSet();
+                // Удаляем результаты студентов
+                if (exam.StudentExamResults.Any())
+                {
+                    Debug.WriteLine($"[RemoveExam] Удаляется {exam.StudentExamResults.Count} результатов студентов.");
+                    _context.StudentExamResults.RemoveRange(exam.StudentExamResults);
+                }
 
-                List<TopicsExamTest> topicExamTestList = _context.TopicsExamTests
-                    .Where(t => examTestIds.Contains(t.ExamTestId))
-                    .ToList();
+                // Удаляем связи групп
+                if (exam.GroupsExams.Any())
+                {
+                    Debug.WriteLine($"[RemoveExam] Удаляется {exam.GroupsExams.Count} связей GroupsExam.");
+                    _context.GroupsExams.RemoveRange(exam.GroupsExams);
+                }
 
-                _context.GroupsExams.RemoveRange(exam.GroupsExams);
-                _context.TopicsExamTests.RemoveRange(topicExamTestList);
-                _context.ExamTests.RemoveRange(examTestList);
+                // Обход всех тестов экзамена
+                foreach (var examTest in exam.ExamTests.ToList())
+                {
+                    // Удаляем TopicsExamTests
+                    if (examTest.TopicsExamTests.Any())
+                    {
+                        Debug.WriteLine($"[RemoveExam] Удаляется {examTest.TopicsExamTests.Count} TopicsExamTests.");
+                        _context.TopicsExamTests.RemoveRange(examTest.TopicsExamTests);
+                    }
+
+                    // Удаляем вопросы и их ответы
+                    foreach (var question in examTest.Questions.ToList())
+                    {
+                        if (question.QuestionAnswers.Any())
+                        {
+                            Debug.WriteLine($"[RemoveExam] Удаляется {question.QuestionAnswers.Count} QuestionAnswers.");
+                            _context.QuestionAnswers.RemoveRange(question.QuestionAnswers);
+                        }
+
+                        Debug.WriteLine("[RemoveExam] Удаляется Question.");
+                        _context.Questions.Remove(question);
+                    }
+
+                    Debug.WriteLine("[RemoveExam] Удаляется ExamTest.");
+                    _context.ExamTests.Remove(examTest);
+                }
+
+                // Удаляем сам экзамен
                 _context.Exams.Remove(exam);
+
+                // Сохраняем изменения
                 Save();
 
+                Debug.WriteLine("[RemoveExam] Удаление завершено успешно.");
                 return true;
             }
             catch (Exception ex)
             {
-                Debug.WriteLine($"[RemoveExam] Ошибка: {ex.Message}");
+                Debug.WriteLine($"[RemoveExam] Ошибка при удалении: {ex.Message}");
                 return false;
             }
         }

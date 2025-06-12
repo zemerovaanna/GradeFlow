@@ -22,7 +22,5 @@ public partial class Exam
 
     public virtual Teacher OwnerTeacher { get; set; } = null!;
 
-    public virtual ICollection<StudentAttempt> StudentAttempts { get; set; } = new List<StudentAttempt>();
-
     public virtual ICollection<StudentExamResult> StudentExamResults { get; set; } = new List<StudentExamResult>();
 }

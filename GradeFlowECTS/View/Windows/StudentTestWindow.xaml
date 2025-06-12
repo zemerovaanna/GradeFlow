@@ -46,7 +46,7 @@
                 <Button Command="{Binding NextCommand}" Margin="5" Height="45" Width="150" Visibility="{Binding LastQuestion, Mode=OneWay}">
                     <TextBlock Text="Вперёд" Foreground="Purple"/>
                 </Button>
-                <Button Command="{Binding FinishCommand}" Margin="5" Height="45" Width="150">
+                <Button Click="FinishButton_Click" Margin="5" Height="45" Width="150">
                     <TextBlock Text="Завершить" Foreground="Purple"/>
                 </Button>
             </StackPanel>

@@ -7,10 +7,10 @@
         mc:Ignorable="d"
         Title="StudentQualWindow" Height="450" Width="800" WindowState="Maximized">
     <StackPanel>
-        <Button Content="Загрузить файлы" Command="{Binding LoadFilesCommand}" />
-        <ListBox ItemsSource="{Binding FilePaths}" Height="100"/>
-        <Button Content="Проверить" Command="{Binding AnalyzeCommand}" />
-        <DataGrid ItemsSource="{Binding CriteriaResults}" AutoGenerateColumns="False" IsReadOnly="True">
+        <ListBox ItemsSource="{Binding FilePaths}" Height="200" Margin="5"/>
+        <Button Content="Загрузить файлы" Command="{Binding LoadFilesCommand}" Margin="5"/>
+        <Button Content="Отправить" Click="Button_Click" Margin="5"/>
+        <DataGrid ItemsSource="{Binding CriteriaResults}" AutoGenerateColumns="False" IsReadOnly="True" Visibility="Collapsed">
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Номер" Binding="{Binding CriterionNumber}" />
                 <DataGridTextColumn Header="Критерий" Binding="{Binding CriterionTitle}" />
@@ -18,7 +18,7 @@
                 <DataGridTextColumn Header="Макс. Баллы" Binding="{Binding MaxScore}" />
             </DataGrid.Columns>
         </DataGrid>
-        <TextBlock FontSize="20">
+        <TextBlock FontSize="20" Visibility="Collapsed">
             Всего баллов: <Run Text="{Binding TotalScore}" />
         </TextBlock>
     </StackPanel>

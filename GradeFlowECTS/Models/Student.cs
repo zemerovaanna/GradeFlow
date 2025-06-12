@@ -10,8 +10,6 @@ public partial class Student
 
     public virtual Group Group { get; set; } = null!;
 
-    public virtual ICollection<StudentAttempt> StudentAttempts { get; set; } = new List<StudentAttempt>();
-
     public virtual ICollection<StudentExamResult> StudentExamResults { get; set; } = new List<StudentExamResult>();
 
     public virtual User User { get; set; } = null!;

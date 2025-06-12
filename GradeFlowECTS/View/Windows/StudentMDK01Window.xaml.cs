@@ -162,7 +162,8 @@ namespace GradeFlowECTS.View.Windows
                 DateEnded = currentDate,
                 Mdkcode = LOL.Encrypt(mdkCode),
                 Mdkcriteria = LOL.Encrypt(mdkCriteria),
-                TotalScore = LOL.Encrypt(totalScore)
+                TotalScore = LOL.Encrypt(totalScore),
+                TaskNumber = _task.Number
             };
 
             GradeFlowContext context = new GradeFlowContext();

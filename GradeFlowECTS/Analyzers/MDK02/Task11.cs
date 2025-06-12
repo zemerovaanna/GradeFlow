@@ -9,7 +9,7 @@ namespace GradeFlowECTS.Analyzers.MDK02
         public static int MetCriteria { get; private set; }
         public static List<string> Details { get; } = new();
 
-        public static string Analyze(SyntaxNode root)
+        public static (string totalScore, string criteria) Analyze(SyntaxNode root)
         {
             MetCriteria = 0;
             Details.Clear();
@@ -44,7 +44,7 @@ namespace GradeFlowECTS.Analyzers.MDK02
                 Details.Add("❌ Метод суммирования цифр не найден");
             }
 
-            return Print();
+            return ($"{MetCriteria}/{TotalCriteria}", Print());
         }
 
         private static string Print()

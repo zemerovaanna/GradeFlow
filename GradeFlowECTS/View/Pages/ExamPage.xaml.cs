@@ -128,14 +128,14 @@ namespace GradeFlowECTS.View.Pages
             }
             else if(_exam.Discipline.DisciplineName == "МДК 01.02")
             {
-                StudentMDK02Window window = new StudentMDK02Window();
+                StudentMDK02Window window = new StudentMDK02Window(_userContext.CurrentUser.StudentId ?? 0, _exam.ExamId);
                 window.ShowDialog();
             }
         }
 
         private void TakeQualificationExamButton_Click(object sender, RoutedEventArgs e)
         {
-            StudentQualWindow window = new StudentQualWindow();
+            StudentQualWindow window = new StudentQualWindow(_userContext.CurrentUser.StudentId ?? 0, _exam.ExamId);
             window.ShowDialog();
         }
     }

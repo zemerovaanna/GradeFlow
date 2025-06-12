@@ -31,9 +31,9 @@ namespace GradeFlowECTS.Repositories
             {
                 return _context.TopicsDisciplines
                     .AsNoTracking()
-                        .Where(t => t.DisciplineId == disciplineId)
-                        .Include(t => t.Discipline)
-                        .ToList();
+                    .Where(t => t.DisciplineId == disciplineId)
+                    .Include(t => t.Discipline)
+                    .ToList();
 
             }
             catch (Exception ex)

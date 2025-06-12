@@ -22,6 +22,8 @@ public partial class StudentExamResult
 
     public string? TotalScore { get; set; }
 
+    public byte? TaskNumber { get; set; }
+
     public virtual Exam Exam { get; set; } = null!;
 
     public virtual Student Student { get; set; } = null!;

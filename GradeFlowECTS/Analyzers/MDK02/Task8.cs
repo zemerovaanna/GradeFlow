@@ -9,7 +9,7 @@ namespace GradeFlowECTS.Analyzers.MDK02
         public static int TotalCriteria { get; } = 8;
         public static List<string> CriteriaDetails { get; } = new();
 
-        public static string Analyze(SyntaxNode root)
+        public static (string totalScore, string criteria) Analyze(SyntaxNode root)
         {
             MetCriteria = 0;
             CriteriaDetails.Clear();
@@ -32,7 +32,7 @@ namespace GradeFlowECTS.Analyzers.MDK02
             }
 
             CheckTestFrameworks(root);
-            return PrintSummary();
+            return ($"{MetCriteria}/{TotalCriteria}", PrintSummary());
         }
 
         private static void CheckPrivateFields(ClassDeclarationSyntax abClass)

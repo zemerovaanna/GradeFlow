@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:GradeFlowECTS.View.Windows"
         mc:Ignorable="d"
-        Title="Результаты МДК 01.01" Height="450" Width="800" WindowState="Maximized" Background="{StaticResource WindowBackgroundBrush}">
+        Title="Результаты" Height="450" Width="800" WindowState="Maximized" Background="{StaticResource WindowBackgroundBrush}">
 
     <DockPanel>
         <Grid DockPanel.Dock="Top">
@@ -17,7 +17,7 @@
                 <TextBlock FontSize="20" Foreground="{StaticResource AccentBrush}" Text="Назад" />
             </Button>
             <Border BorderBrush="Purple" BorderThickness="1" CornerRadius="5" Grid.Column="1" Margin="10" Padding="5">
-                <TextBlock FontSize="30" Foreground="Purple" Text="МДК 01.01" TextAlignment="Center" />
+                <TextBlock FontSize="30" Foreground="Purple" Text="Результаты" TextAlignment="Center" />
             </Border>
         </Grid>
         <TreeView ItemsSource="{Binding Groups}">
@@ -26,22 +26,34 @@
                     <TextBlock Text="{Binding GroupName}" FontWeight="Bold"/>
                     <HierarchicalDataTemplate.ItemTemplate>
                         <DataTemplate>
-                            <DockPanel>
-                                <StackPanel HorizontalAlignment="Left">
-                                    <TextBlock Text="{Binding StudentName}"/>
-                                    <TextBlock Text="{Binding DateEnded, StringFormat='Дата: {0}'}"/>
-                                    <TextBlock Text="{Binding TotalScore, StringFormat='Баллы: {0}'}"/>
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*" />
+                                    <!-- Контент слева -->
+                                    <ColumnDefinition Width="Auto" />
+                                    <!-- Кнопки справа -->
+                                </Grid.ColumnDefinitions>
+
+                                <!-- Левая часть -->
+                                <StackPanel Grid.Column="1" Orientation="Vertical" Margin="5">
+                                    <TextBlock>
+                                        <Run Text="{Binding DateEnded}"/> 
+                                        <Run Text="{Binding TimeEnded}"/>
+                                    </TextBlock>
+                                    <TextBlock Text="{Binding StudentName}" />
+                                    <TextBlock Text="{Binding TotalScore, StringFormat='Баллы: {0}'}" />
                                 </StackPanel>
-                                <StackPanel HorizontalAlignment="Right">
-                                    <Button Command="{Binding DataContext.EditQuestionCommand, RelativeSource={RelativeSource AncestorType=Page}}" CommandParameter="{Binding}" BorderBrush="Purple" Margin="5" Width="200">
+
+                                <!-- Правая часть -->
+                                <StackPanel Grid.Column="0" HorizontalAlignment="Right">
+                                    <Button Command="{Binding DataContext.ViewResultCommand, RelativeSource={RelativeSource AncestorType=Window}}" CommandParameter="{Binding}" BorderBrush="Purple" Margin="5">
                                         <TextBlock Foreground="Purple" Text="Просмотр" />
                                     </Button>
-                                    <Button Command="{Binding DataContext.RemoveQuestionCommand, RelativeSource={RelativeSource AncestorType=Page}}" CommandParameter="{Binding}" BorderBrush="DarkRed" Margin="5" Width="200">
+                                    <Button Command="{Binding DataContext.RemoveResultCommand, RelativeSource={RelativeSource AncestorType=Window}}" CommandParameter="{Binding}" BorderBrush="DarkRed" Margin="5">
                                         <TextBlock Foreground="DarkRed" Text="Удалить" />
                                     </Button>
                                 </StackPanel>
-                            </DockPanel>
-
+                            </Grid>
                         </DataTemplate>
                     </HierarchicalDataTemplate.ItemTemplate>
                 </HierarchicalDataTemplate>

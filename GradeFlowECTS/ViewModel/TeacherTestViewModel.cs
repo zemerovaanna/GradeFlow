@@ -4,6 +4,7 @@ using System.Windows.Input;
 using System.Windows.Threading;
 using GradeFlowECTS.Core;
 using GradeFlowECTS.Data;
+using GradeFlowECTS.Infrastructure;
 using GradeFlowECTS.Interfaces;
 using GradeFlowECTS.Models;
 using Microsoft.Extensions.DependencyInjection;
@@ -29,11 +30,13 @@ namespace GradeFlowECTS.ViewModel
             CurrentQuestionNumber = 1;
         }
 
+        private Guid _examId;
         private ExamTest _examTest;
         private List<Question> _questions;
         private int _currentQuestionIndex = 0;
         private DispatcherTimer? _timer;
         private TimeSpan _timeRemaining;
+        private DateTime _startTime;
 
         public Visibility FirstQuestion {  get; private set; }
         public Visibility LastQuestion { get; private set; }
@@ -51,6 +54,8 @@ namespace GradeFlowECTS.ViewModel
 
         private void LoadTest(Guid examId)
         {
+            _startTime = DateTime.Now;
+            _examId = examId;
             _examTest = _repository.GetExamTestByExamId(examId);
             /*var selectedTopicIds = _repository.GetSelectedTopicsByTestId(_examTest.ExamTestId)
                                               .Where(t => t.IsSelected)
@@ -113,6 +118,7 @@ namespace GradeFlowECTS.ViewModel
 
         public void FinishTest()
         {
+            var timeSpent = DateTime.Now - _startTime;
             _timer.Stop();
             FirstQuestion = Visibility.Collapsed;
             LastQuestion = Visibility.Collapsed;
@@ -139,7 +145,34 @@ namespace GradeFlowECTS.ViewModel
                 _ => "2"
             };
 
-            MessageBox.Show($"{Math.Round(percent)} %\nБаллы: {score}/{total}\nОценка: {mark}", "Результат", MessageBoxButton.OK);
+            
+            var context = new GradeFlowContext();
+            var user = App.Current.ServiceProvider.GetRequiredService<IUserContext>();
+            var student = context.Students.Where(s => s.StudentId == user.CurrentUser.StudentId).FirstOrDefault();
+            if (student != null)
+            {
+                studentId = student.StudentId;
+                result = new Result
+                {
+                    Percent = percent.ToString(),
+                    Score = $"{score}/{total}",
+                    Mark = mark.ToString(),
+                    TimeSpent = timeSpent.ToString(@"mm\:ss")
+                };
+
+            }
+            else
+            {
+                MessageBox.Show($"{Math.Round(percent)} %\nБаллы: {score}/{total}\nОценка: {mark}", "Результат", MessageBoxButton.OK);
+            }
+        }
+
+        int studentId;
+        Result result;
+
+        public Result ReturnResult()
+        {
+            return result;
         }
 
         private void ShowHideButtons()
