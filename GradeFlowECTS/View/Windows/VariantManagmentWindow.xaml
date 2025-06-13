@@ -6,7 +6,32 @@
         xmlns:local="clr-namespace:GradeFlowECTS.View.Windows"
         mc:Ignorable="d"
         Title="Управление вариантами заданий" Height="450" Width="800" WindowState="Maximized">
-    <Grid>
-       
+    <Grid Margin="10">
+        <ScrollViewer VerticalScrollBarVisibility="Auto">
+            <ItemsControl x:Name="aaaa">
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate>
+                        <Border BorderBrush="Gray" BorderThickness="1" Margin="5" Padding="5">
+                            <StackPanel>
+                                <TextBlock TextWrapping="Wrap">
+                                    <Run Text="{Binding VariantNumber}"/>. <Run Text="{Binding VariantText}"/>
+                                </TextBlock>
+                                <Button Content="Удалить" Click="DeleteCriterion_Click" Tag="{Binding}" Background="Tomato" Height="35" Margin="5"/>
+                            </StackPanel>
+                        </Border>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
+        </ScrollViewer>
+
+
+        <StackPanel HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="15">
+            <Button Content="Добавить" 
+                 Width="200" Height="40" Margin="5"
+                 Click="AddButton_Click"/>
+            <Button Content="Отмена" 
+                 Width="200" Height="40" Margin="5"
+                 Click="CancelButton_Click"/>
+        </StackPanel>
     </Grid>
 </Window>

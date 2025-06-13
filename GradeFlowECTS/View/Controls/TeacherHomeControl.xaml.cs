@@ -39,7 +39,8 @@ namespace GradeFlowECTS.View.Controls
 
         private void VariantManagementButton_Click(object sender, System.Windows.RoutedEventArgs e)
         {
-
+            VariantManagmentWindow window = new VariantManagmentWindow();
+            window.ShowDialog();
         }
     }
 }

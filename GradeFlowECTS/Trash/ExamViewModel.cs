@@ -14,14 +14,14 @@ namespace GradeFlowECTS.Trash
         public ExamViewModel(Guid examId)
         {
             var groupsWithExam = _context.GroupsExams
-    .Include(ge => ge.Group)
-        .ThenInclude(g => g.Students)
-            .ThenInclude(s => s.User)
-    .Include(ge => ge.Group)
-        .ThenInclude(g => g.Students)
-            .ThenInclude(s => s.StudentExamResults)
-    .Where(ge => ge.ExamId == examId)
-    .ToList();
+                .Include(ge => ge.Group)
+                .ThenInclude(g => g.Students)
+                .ThenInclude(s => s.User)
+                .Include(ge => ge.Group)
+                .ThenInclude(g => g.Students)
+                .ThenInclude(s => s.StudentExamResults)
+                .Where(ge => ge.ExamId == examId)
+                .ToList();
 
 
             foreach (var groupExam in groupsWithExam)
@@ -35,11 +35,13 @@ namespace GradeFlowECTS.Trash
 
                     if (result == null)
                     {
+                        var context = new GradeFlowContext();
+                        var temp = context.Variants.AsNoTracking().Count();
                         result = new StudentExamResult
                         {
                             StudentId = student.StudentId,
                             ExamId = examId,
-                            VariantNumber = new Random().Next(1, 31)
+                            VariantNumber = new Random().Next(1, temp + 1)
                         };
                         _context.StudentExamResults.Add(result);
                         _context.SaveChanges();
