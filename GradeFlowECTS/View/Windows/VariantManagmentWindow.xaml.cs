@@ -2,8 +2,10 @@
 using System.Security.Cryptography;
 using System.Text;
 using System.Windows;
+using System.Windows.Controls;
 using GradeFlowECTS.Infrastructure;
 using GradeFlowECTS.Models;
+using GradeFlowECTS.ViewModel.Items;
 using Microsoft.EntityFrameworkCore;
 
 namespace GradeFlowECTS.View.Windows
@@ -149,9 +151,46 @@ namespace GradeFlowECTS.View.Windows
             }
         }
 
-        private void DeleteCriterion_Click(object sender, RoutedEventArgs e)
+        private void DeleteVariant_Click(object sender, RoutedEventArgs e)
         {
+            if (sender is Button button && button.Tag is Variant variant)
+            {
+                var messageBoxResult = MessageBox.Show(
+                    $"Удалить вариант №{variant.VariantNumber}?",
+                    "Подтверждение удаления",
+                    MessageBoxButton.YesNo,
+                    MessageBoxImage.Warning
+                    );
 
+                if (messageBoxResult != MessageBoxResult.Yes)
+                    return;
+
+                // Проверка: хотя бы один должен остаться
+                if (Variants.Count <= 1)
+                {
+                    MessageBox.Show("Должен остаться хотя бы один вариант.");
+                    return;
+                }
+
+                var _context = new GradeFlowContext();
+
+                // Обновление StudentExamResult, где VariantNumber = удаляемый
+                var affectedResults = _context.StudentExamResults
+                    .Where(r => r.VariantNumber == variant.VariantNumber)
+                    .ToList();
+
+                foreach (var result in affectedResults)
+                {
+                    result.VariantNumber = null;
+                }
+
+                // Удаление варианта
+                _context.Variants.Remove(variant);
+                _context.SaveChanges();
+
+                // Локально убрать из коллекции (если привязка к UI)
+                Variants.Remove(variant);
+            }
         }
 
         private void AddButton_Click(object sender, RoutedEventArgs e)

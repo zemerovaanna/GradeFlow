@@ -14,7 +14,7 @@ namespace GradeFlowECTS.Trash
         public string StudentName { get; set; }
         public List<int> AvailableVariants { get; set; } = Enumerable.Range(1, 30).ToList();
 
-        public int VariantNumber
+        public int? VariantNumber
         {
             get => _model.VariantNumber;
             set

@@ -154,7 +154,7 @@ namespace GradeFlowECTS.ViewModel
                 studentId = student.StudentId;
                 result = new Result
                 {
-                    Percent = percent.ToString(),
+                    Percent = Math.Round(percent,1).ToString(),
                     Score = $"{score}/{total}",
                     Mark = mark.ToString(),
                     TimeSpent = timeSpent.ToString(@"mm\:ss")

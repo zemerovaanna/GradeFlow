@@ -28,7 +28,9 @@ namespace GradeFlowECTS.View.Windows
         private void DeleteCriterion_Click(object sender, RoutedEventArgs e)
         {
             if (sender is Button button && button.Tag is CriterionViewModel criterion)
+            {
                 _viewModel.DeleteCriterion(criterion);
+            }
         }
 
         private void SaveButton_Click(object sender, RoutedEventArgs e)

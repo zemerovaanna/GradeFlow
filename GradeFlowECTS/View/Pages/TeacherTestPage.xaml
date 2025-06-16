@@ -30,7 +30,12 @@
             <ItemsControl ItemsSource="{Binding CurrentQuestion.QuestionAnswers}">
                 <ItemsControl.ItemTemplate>
                     <DataTemplate>
-                        <CheckBox Content="{Binding QuestionAnswerText}" FontSize="25" Margin="5" Tag="{Binding QuestionAnswerId}" Checked="CheckBox_Checked" Unchecked="CheckBox_Unchecked">
+                        <CheckBox Margin="5" Tag="{Binding QuestionAnswerId}" Checked="CheckBox_Checked" Unchecked="CheckBox_Unchecked" FontSize="25">
+                            <CheckBox.Content>
+                                <TextBlock Text="{Binding QuestionAnswerText}" 
+                   TextWrapping="Wrap" 
+                   FontSize="25" />
+                            </CheckBox.Content>
                             <CheckBox.IsChecked>
                                 <MultiBinding Converter="{StaticResource AnswerSelectionMultiConverter}" Mode="OneWay">
                                     <Binding Path="QuestionAnswerId" />

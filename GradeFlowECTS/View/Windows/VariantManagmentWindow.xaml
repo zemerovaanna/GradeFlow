@@ -16,7 +16,7 @@
                                 <TextBlock TextWrapping="Wrap">
                                     <Run Text="{Binding VariantNumber}"/>. <Run Text="{Binding VariantText}"/>
                                 </TextBlock>
-                                <Button Content="Удалить" Click="DeleteCriterion_Click" Tag="{Binding}" Background="Tomato" Height="35" Margin="5"/>
+                                <Button Content="Удалить" Click="DeleteVariant_Click" Tag="{Binding}" Background="Tomato" Height="35" Margin="5"/>
                             </StackPanel>
                         </Border>
                     </DataTemplate>

@@ -30,5 +30,5 @@ public partial class StudentExamResult
 
     public virtual Student Student { get; set; } = null!;
 
-    public int VariantNumber { get; set; }
+    public int? VariantNumber { get; set; }
 }
