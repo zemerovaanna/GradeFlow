@@ -22,7 +22,9 @@ public partial class StudentExamResult
 
     public string? TestCriteria { get; set; }
 
-    public string? TotalScore { get; set; }
+    public string? TestTotalScore { get; set; }
+
+    public string? PracticeTotalScore { get; set; }
 
     public byte? TaskNumber { get; set; }
 

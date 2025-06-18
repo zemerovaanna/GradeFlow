@@ -134,7 +134,7 @@ namespace GradeFlowECTS.Analyzers
                 TimeEnded = currentTime,
                 DateEnded = currentDate,
                 QualCriteria = LOL.Encrypt(qualCriteria),
-                TotalScore = LOL.Encrypt($"{TotalScore.ToString()}/{maxTotalScore}")
+                PracticeTotalScore = LOL.Encrypt($"{TotalScore.ToString()}/{maxTotalScore}")
             };
         }
 

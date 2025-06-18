@@ -115,7 +115,7 @@ namespace GradeFlowECTS.View.Windows
                     // Обновление существующего результата
                     existingResult.TimeEnded = currentTime;
                     existingResult.DateEnded = currentDate;
-                    existingResult.TotalScore = LOL.Encrypt(result.Score);
+                    existingResult.TestTotalScore = LOL.Encrypt(result.Score);
                     existingResult.TestCriteria = LOL.Encrypt(resulttxt);
                     existingResult.TestTimeSpent = LOL.Encrypt(result.TimeSpent.ToString());
 
@@ -130,7 +130,7 @@ namespace GradeFlowECTS.View.Windows
                         ExamId = _exam.ExamId,
                         TimeEnded = currentTime,
                         DateEnded = currentDate,
-                        TotalScore = LOL.Encrypt(result.Score),
+                        TestTotalScore = LOL.Encrypt(result.Score),
                         TestCriteria = LOL.Encrypt(resulttxt),
                         TestTimeSpent = LOL.Encrypt(result.TimeSpent.ToString())
                     };

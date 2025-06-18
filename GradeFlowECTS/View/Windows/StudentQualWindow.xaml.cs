@@ -3,12 +3,17 @@ using System.Text;
 using System.Windows;
 using GradeFlowECTS.Analyzers;
 using GradeFlowECTS.Infrastructure;
+using GradeFlowECTS.Interfaces;
+using GradeFlowECTS.Models;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace GradeFlowECTS.View.Windows
 {
     public partial class StudentQualWindow : Window
     {
         AnalyzerViewModel _vm;
+        Variant _variant;
+
         public StudentQualWindow(int studentId, Guid examId)
         {
             InitializeComponent();
@@ -19,8 +24,8 @@ namespace GradeFlowECTS.View.Windows
             var temp = context.StudentExamResults.Where(r => r.StudentId == studentId && r.ExamId == examId).FirstOrDefault();
             if (temp != null)
             {
-                var temp2 = context.Variants.Where(v => v.VariantNumber == temp.VariantNumber).FirstOrDefault();
-                TaskText.Text = LOL.Decrypt(temp2.VariantText);
+                _variant = context.Variants.Where(v => v.VariantNumber == temp.VariantNumber).FirstOrDefault();
+                TaskText.Text = LOL.Decrypt(_variant.VariantText);
             }
         }
 
@@ -144,15 +149,54 @@ namespace GradeFlowECTS.View.Windows
             }
         }
 
+        /*        private void Button_Click(object sender, RoutedEventArgs e)
+                {
+                    if (DataContext is AnalyzerViewModel vm)
+                    {
+                        vm.AnalyzeFiles();
+                        var studentExamResult = _vm.ReturnResult();
+                        GradeFlowContext context = new GradeFlowContext();
+                        context.StudentExamResults.Add(studentExamResult);
+                        context.SaveChanges();
+                        MessageBox.Show("Результаты отправлены.", "Сообщение", MessageBoxButton.OK, MessageBoxImage.Information);
+                        Close();
+                    }
+                }*/
+
         private void Button_Click(object sender, RoutedEventArgs e)
         {
             if (DataContext is AnalyzerViewModel vm)
             {
                 vm.AnalyzeFiles();
-                var studentExamResult = _vm.ReturnResult();
-                GradeFlowContext context = new GradeFlowContext();
-                context.StudentExamResults.Add(studentExamResult);
+                var result = _vm.ReturnResult();
+                result.VariantNumber = _variant.VariantNumber;
+
+                var context = new GradeFlowContext();
+                var user = App.Current.ServiceProvider.GetRequiredService<IUserContext>();
+                var studentId = user.CurrentUser.StudentId;
+                var examId = result.ExamId;
+
+                var existingResult = context.StudentExamResults.FirstOrDefault(r => r.StudentId == studentId && r.ExamId == examId);
+
+                if (existingResult != null)
+                {
+                    // Обновление существующего результата
+                    existingResult.TimeEnded = result.TimeEnded;
+                    existingResult.DateEnded = result.DateEnded;
+                    existingResult.QualCriteria = result.QualCriteria;
+                    existingResult.PracticeTotalScore = result.PracticeTotalScore;
+                    existingResult.VariantNumber = result.VariantNumber;
+
+                    context.StudentExamResults.Update(existingResult);
+                }
+                else
+                {
+                    // Добавление нового результата
+                    context.StudentExamResults.Add(result);
+                }
+
                 context.SaveChanges();
+
                 MessageBox.Show("Результаты отправлены.", "Сообщение", MessageBoxButton.OK, MessageBoxImage.Information);
                 Close();
             }

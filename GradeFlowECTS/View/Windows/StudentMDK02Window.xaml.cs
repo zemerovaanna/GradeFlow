@@ -106,33 +106,83 @@ namespace GradeFlowECTS.View.Windows
             }
         }
 
+        /*        private void CheckCode_Click(object sender, RoutedEventArgs e)
+                {
+                    string mdkCode = CodeInput.Text;
+                    string mdkCriteria = AnalyzeCode(CodeInput.Text, _task.Number).criteria;
+                    string totalScore = AnalyzeCode(CodeInput.Text, _task.Number).totalScore;
+                    DateTime now = DateTime.Now;
+                    TimeOnly currentTime = TimeOnly.FromDateTime(now);
+                    DateOnly currentDate = DateOnly.FromDateTime(now);
+
+                    StudentExamResult studentExamResult = new StudentExamResult
+                    {
+                        StudentId = _studentId,
+                        ExamId = _examId,
+                        TimeEnded = currentTime,
+                        DateEnded = currentDate,
+                        Mdkcode = LOL.Encrypt(mdkCode),
+                        Mdkcriteria = LOL.Encrypt(mdkCriteria),
+                        TotalScore = LOL.Encrypt(totalScore),
+                        TaskNumber = _task.Number
+                    };
+
+                    GradeFlowContext context = new GradeFlowContext();
+                    context.StudentExamResults.Add(studentExamResult);
+                    context.SaveChanges();
+                    MessageBox.Show("Результаты отправлены.", "Сообщение", MessageBoxButton.OK, MessageBoxImage.Information);
+                    Close();
+                }*/
+
         private void CheckCode_Click(object sender, RoutedEventArgs e)
         {
             string mdkCode = CodeInput.Text;
-            string mdkCriteria = AnalyzeCode(CodeInput.Text, _task.Number).criteria;
-            string totalScore = AnalyzeCode(CodeInput.Text, _task.Number).totalScore;
+            string mdkCriteria = AnalyzeCode(mdkCode, _task.Number).criteria;
+            string totalScore = AnalyzeCode(mdkCode, _task.Number).totalScore;
             DateTime now = DateTime.Now;
             TimeOnly currentTime = TimeOnly.FromDateTime(now);
             DateOnly currentDate = DateOnly.FromDateTime(now);
 
-            StudentExamResult studentExamResult = new StudentExamResult
-            {
-                StudentId = _studentId,
-                ExamId = _examId,
-                TimeEnded = currentTime,
-                DateEnded = currentDate,
-                Mdkcode = LOL.Encrypt(mdkCode),
-                Mdkcriteria = LOL.Encrypt(mdkCriteria),
-                TotalScore = LOL.Encrypt(totalScore),
-                TaskNumber = _task.Number
-            };
+            using var context = new GradeFlowContext();
 
-            GradeFlowContext context = new GradeFlowContext();
-            context.StudentExamResults.Add(studentExamResult);
+            // Поиск существующего результата по StudentId, ExamId и TaskNumber
+            var existingResult = context.StudentExamResults.FirstOrDefault(r =>
+                r.StudentId == _studentId &&
+                r.ExamId == _examId);
+
+            if (existingResult != null)
+            {
+                // Обновление существующего результата
+                existingResult.TimeEnded = currentTime;
+                existingResult.DateEnded = currentDate;
+                existingResult.Mdkcode = LOL.Encrypt(mdkCode);
+                existingResult.Mdkcriteria = LOL.Encrypt(mdkCriteria);
+                existingResult.PracticeTotalScore = LOL.Encrypt(totalScore);
+                existingResult.TaskNumber = _task.Number;
+            }
+            else
+            {
+                // Добавление нового результата
+                StudentExamResult studentExamResult = new StudentExamResult
+                {
+                    StudentId = _studentId,
+                    ExamId = _examId,
+                    TimeEnded = currentTime,
+                    DateEnded = currentDate,
+                    Mdkcode = LOL.Encrypt(mdkCode),
+                    Mdkcriteria = LOL.Encrypt(mdkCriteria),
+                    PracticeTotalScore = LOL.Encrypt(totalScore),
+                    TaskNumber = _task.Number
+                };
+
+                context.StudentExamResults.Add(studentExamResult);
+            }
+
             context.SaveChanges();
             MessageBox.Show("Результаты отправлены.", "Сообщение", MessageBoxButton.OK, MessageBoxImage.Information);
             Close();
         }
+
         static class LOL
         {
             private const int KeySize = 32;

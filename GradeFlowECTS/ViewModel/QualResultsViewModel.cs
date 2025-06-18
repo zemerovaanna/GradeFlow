@@ -106,7 +106,7 @@ namespace GradeFlowECTS.ViewModel
                                 DateEnded = result.DateEnded.ToString(),
                                 TimeEnded = result.TimeEnded.ToString(),
                                 Criteria = LOL.Decrypt(result.QualCriteria),
-                                TotalScore = "Сумма баллов: " + LOL.Decrypt(result.TotalScore)
+                                TotalScore = "Сумма баллов: " + LOL.Decrypt(result.PracticeTotalScore)
 
                             }))
                 });

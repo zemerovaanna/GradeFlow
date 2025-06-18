@@ -16,7 +16,7 @@
     </Page.Resources>
     
     <Grid Margin="2" Background="{StaticResource WindowBackgroundBrush}">
-        <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center" Width="500" Height="400">
+        <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center" Width="500">
             <TextBlock Text="{Binding TimeRemainingText}" 
                        HorizontalAlignment="Right"
                        Foreground="Purple"
@@ -30,11 +30,14 @@
             <ItemsControl ItemsSource="{Binding CurrentQuestion.QuestionAnswers}">
                 <ItemsControl.ItemTemplate>
                     <DataTemplate>
-                        <CheckBox Margin="5" Tag="{Binding QuestionAnswerId}" Checked="CheckBox_Checked" Unchecked="CheckBox_Unchecked" FontSize="25">
+                        <CheckBox Margin="5" Tag="{Binding QuestionAnswerId}"
+          Checked="CheckBox_Checked" Unchecked="CheckBox_Unchecked"
+          FontSize="25" VerticalAlignment="Top">
                             <CheckBox.Content>
                                 <TextBlock Text="{Binding QuestionAnswerText}" 
                    TextWrapping="Wrap" 
-                   FontSize="25" />
+                   FontSize="25" 
+                   MaxWidth="300"/>
                             </CheckBox.Content>
                             <CheckBox.IsChecked>
                                 <MultiBinding Converter="{StaticResource AnswerSelectionMultiConverter}" Mode="OneWay">

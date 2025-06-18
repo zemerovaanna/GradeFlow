@@ -104,7 +104,7 @@ namespace GradeFlowECTS.ViewModel
                                 StudentName = $"{LOL.Decrypt(student.User.LastName)} {LOL.Decrypt(student.User.FirstName)}",
                                 DateEnded = result.DateEnded.ToString(),
                                 TimeEnded = result.TimeEnded.ToString(),
-                                TotalScore = LOL.Decrypt(result.TotalScore)
+                                TotalScore = LOL.Decrypt(result.PracticeTotalScore)
                             }))
                 });
 
