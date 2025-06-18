@@ -16,7 +16,9 @@
                                 <TextBlock TextWrapping="Wrap">
                                     <Run Text="{Binding VariantNumber}"/>. <Run Text="{Binding VariantText}"/>
                                 </TextBlock>
-                                <Button Content="Удалить" Click="DeleteVariant_Click" Tag="{Binding}" Background="Tomato" Height="35" Margin="5"/>
+                                <Button Click="DeleteVariant_Click" Tag="{Binding}" Height="45" Margin="5" BorderBrush="DarkRed">
+                                    <TextBlock Text="Удалить" Foreground="DarkRed" FontSize="25"/>
+                                </Button>
                             </StackPanel>
                         </Border>
                     </DataTemplate>
@@ -25,13 +27,16 @@
         </ScrollViewer>
 
 
-        <StackPanel HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="15">
-            <Button Content="Добавить" 
+        <StackPanel HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="18">
+            <Button Width="200" Height="40" Margin="5"
+                 Click="AddButton_Click">
+                <TextBlock Text="Добавить" Foreground="Purple" FontSize="23"/>
+            </Button>
+            <Button
                  Width="200" Height="40" Margin="5"
-                 Click="AddButton_Click"/>
-            <Button Content="Отмена" 
-                 Width="200" Height="40" Margin="5"
-                 Click="CancelButton_Click"/>
+                 Click="CancelButton_Click" BorderBrush="{StaticResource AccentBrush}">
+                <TextBlock Text="Отмена" Foreground="{StaticResource AccentBrush}" FontSize="23"/>
+            </Button>
         </StackPanel>
     </Grid>
 </Window>

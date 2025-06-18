@@ -46,8 +46,8 @@
             </ItemsControl>
         </ScrollViewer>
         <TextBlock Text="Пусто" TextAlignment="Center" Foreground="Gray" FontSize="25" Visibility="{Binding IsExamsEmpty}" Grid.Row="0" Margin="20"/>
-        <Button Command="{Binding ExitAccountCommand}" Height="45" BorderBrush="{StaticResource AccentBrush}" Margin="10" VerticalAlignment="Bottom" Grid.Row="2">
-            <TextBlock Text="Выйти" FontSize="25" Foreground="{StaticResource AccentBrush}"/>
+        <Button Command="{Binding ExitAccountCommand}" BorderBrush="{StaticResource AccentBrush}" Margin="10" VerticalAlignment="Bottom" Grid.Row="2" Height="45">
+            <TextBlock Text="Выйти" Foreground="{StaticResource AccentBrush}" FontSize="27"/>
         </Button>
 
     </Grid>

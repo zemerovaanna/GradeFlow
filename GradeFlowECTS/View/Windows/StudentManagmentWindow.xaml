@@ -12,8 +12,8 @@
             <RowDefinition Height="*"/>
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
-        <Button Grid.Row="0" Click="BackButton_Click" HorizontalAlignment="Left" Margin="5" Width="100" Background="Transparent" BorderBrush="{StaticResource AccentBrush}">
-            <TextBlock Text="Назад" VerticalAlignment="Top" Foreground="{StaticResource AccentBrush}" />
+        <Button Grid.Row="0" Click="BackButton_Click" HorizontalAlignment="Left" Margin="15" Height="45" Width="280" Background="Transparent" BorderBrush="{StaticResource AccentBrush}">
+            <TextBlock Text="Назад" VerticalAlignment="Top" Foreground="{StaticResource AccentBrush}" FontSize="23"/>
         </Button>
         <!-- Основной контейнер -->
         <Grid Grid.Row="1" Margin="10">
@@ -77,16 +77,18 @@
             <StackPanel Orientation="Horizontal"
                   HorizontalAlignment="Right"
                   VerticalAlignment="Bottom">
-                <Button Content="Выбрать всех"
+                <Button 
                   Command="{Binding SelectAllCommand}"
                   Margin="5"
-                  Height="35"
-                  Width="200"/>
-                <Button Content="Удалить выбранных"
+                  Height="45">
+                    <TextBlock Text="Выбрать всех" Foreground="Purple" FontSize="23"/>
+                </Button>
+                <Button
                   Command="{Binding DeleteSelectedCommand}"
                   Margin="5"
-                  Height="35"
-                  Width="200"/>
+                  Height="45">
+                    <TextBlock Text="Удалить выбранных" Foreground="Purple" FontSize="23"/>
+                </Button>
             </StackPanel>
         </Grid>
     </Grid>

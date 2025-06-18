@@ -24,11 +24,11 @@
             <TextBox Margin="10" MaxLength="50" Text="{Binding DisciplineTopicName, UpdateSourceTrigger=PropertyChanged}" />
 
             <Button Command="{Binding UpdateTopicCommand}" Height="45" Margin="5">
-                <TextBlock Foreground="Purple" Text="Сохранить изменения темы" />
+                <TextBlock Foreground="Purple" Text="Сохранить изменения темы" FontSize="23"/>
             </Button>
 
             <Button BorderBrush="{StaticResource AccentBrush}" Command="{Binding CancelCommand}" Height="45" Margin="5">
-                <TextBlock Foreground="{StaticResource AccentBrush}" Text="Отмена" />
+                <TextBlock Foreground="{StaticResource AccentBrush}" Text="Отмена" FontSize="23"/>
             </Button>
 
         </StackPanel>

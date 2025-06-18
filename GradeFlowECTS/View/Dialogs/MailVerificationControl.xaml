@@ -20,11 +20,11 @@
             <TextBlock x:Name="errorText" Foreground="DarkRed" Margin="0,20,0,0" Text="{Binding ErrorMessage}" />
 
             <Button Command="{Binding ConfirmCommand}" Margin="0,20,0,0" MinHeight="45">
-                <TextBlock Foreground="Purple" Text="Подтвердить" />
+                <TextBlock Foreground="Purple" Text="Подтвердить" FontSize="25"/>
             </Button>
 
             <Button Command="{Binding ResendCommand}" Margin="0,15,0,0" MinHeight="45">
-                <TextBlock Foreground="Purple" Text="Отправить снова" />
+                <TextBlock Foreground="Purple" Text="Отправить снова" FontSize="25"/>
             </Button>
         </StackPanel>
     </Grid>

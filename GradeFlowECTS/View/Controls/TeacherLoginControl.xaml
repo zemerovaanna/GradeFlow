@@ -52,8 +52,8 @@
 
             <TextBlock Foreground="DarkRed" Margin="0 20 0 5" Text="{Binding ErrorMessage, UpdateSourceTrigger=PropertyChanged}" />
 
-            <Button Command="{Binding LoginAsTeacherCommand}" Cursor="Hand" Margin="0,0,0,10" MinHeight="45">
-                <TextBlock FontSize="25" Foreground="Purple" Text="Войти" />
+            <Button Command="{Binding LoginAsTeacherCommand}" Cursor="Hand" Margin="0,0,0,10" MinHeight="50">
+                <TextBlock FontSize="30" Foreground="Purple" Text="Войти" />
             </Button>
 
             <Button Command="{Binding NavigateToStudentLoginCommand}" Background="Transparent" BorderBrush="Transparent" Cursor="Hand" Height="50" HorizontalAlignment="Center" Margin="0,25,0,0">

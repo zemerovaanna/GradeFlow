@@ -31,8 +31,8 @@
                  VerticalScrollBarVisibility="Auto" Height="500" FontFamily="Consolas" FontSize="14"
                  BorderBrush="Gray" BorderThickness="1" Margin="0,0,0,10"/>
 
-            <Button Grid.Row="2" Height="45" Click="CheckCode_Click">
-                <TextBlock Text="Отправить" FontSize="25" Foreground="Purple"/>
+            <Button Grid.Row="2" Height="45" Click="CheckCode_Click" BorderBrush="{StaticResource AccentBrush}">
+                <TextBlock Text="Отправить" FontSize="25" Foreground="{StaticResource AccentBrush}"/>
             </Button>
 
             <TextBox x:Name="ResultOutput" Grid.Row="3" IsReadOnly="True" TextWrapping="Wrap"

@@ -12,8 +12,12 @@
             <LineBreak />
             <Run x:Name="TaskText"/>
         </TextBlock>
-        <Button Content="Загрузить файлы" Command="{Binding LoadFilesCommand}" Margin="5"/>
-        <Button Content="Отправить" Click="Button_Click" Margin="5"/>
+        <Button  Command="{Binding LoadFilesCommand}" Margin="5" BorderBrush="{StaticResource AccentBrush}" Height="45">
+            <TextBlock Text="Загрузить файлы" Foreground="{StaticResource AccentBrush}"/>
+        </Button>
+        <Button  Click="Button_Click" Margin="5" Height="45" BorderBrush="{StaticResource AccentBrush}">
+            <TextBlock Text="Отправить" Foreground="{StaticResource AccentBrush}"/>
+        </Button>
         <ListBox ItemsSource="{Binding FilePaths}" Height="200" Margin="5"/>
         
         <DataGrid ItemsSource="{Binding CriteriaResults}" AutoGenerateColumns="False" IsReadOnly="True" Visibility="Collapsed">

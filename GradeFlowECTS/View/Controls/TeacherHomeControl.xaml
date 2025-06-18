@@ -22,25 +22,22 @@
                 <StackPanel MaxWidth="400">
                     <TextBlock FontSize="30" Foreground="{StaticResource AccentBrush}" Margin="0,15,0,0" Text="Действия:" TextAlignment="Center" />
 
-                    <Button Command="{Binding TopicManagementCommand}" Margin="10" MinHeight="45" BorderBrush="{StaticResource AccentBrush}">
-                        <TextBlock FontSize="20" Foreground="{StaticResource AccentBrush}" Text="Управление темами" />
+                    <Button Command="{Binding TopicManagementCommand}" Margin="10" Height="45" BorderBrush="{StaticResource AccentBrush}">
+                        <TextBlock FontSize="25" Foreground="{StaticResource AccentBrush}" Text="Управление темами" />
                     </Button>
 
-                    <Button Click="CriteriaManagementButton_Click" Margin="10" MinHeight="45" BorderBrush="{StaticResource AccentBrush}">
-                        <TextBlock FontSize="20" Foreground="{StaticResource AccentBrush}" Text="Управление критериями" />
+                    <Button Click="CriteriaManagementButton_Click" Margin="10" Height="45" BorderBrush="{StaticResource AccentBrush}">
+                        <TextBlock FontSize="25" Foreground="{StaticResource AccentBrush}" Text="Управление критериями" />
                     </Button>
 
-                    <Button Click="VariantManagementButton_Click" Margin="10" MinHeight="45" BorderBrush="{StaticResource AccentBrush}">
-                        <TextBlock FontSize="20" Foreground="{StaticResource AccentBrush}" Text="Управление вариантами" />
+                    <Button Click="VariantManagementButton_Click" Margin="10" Height="45" BorderBrush="{StaticResource AccentBrush}">
+                        <TextBlock FontSize="25" Foreground="{StaticResource AccentBrush}" Text="Управление вариантами" />
                     </Button>
 
-                    <Button Command="{Binding UserManagementCommand}" Margin="10" MinHeight="45" BorderBrush="{StaticResource AccentBrush}">
-                        <TextBlock FontSize="20" Foreground="{StaticResource AccentBrush}" Text="Управление пользователями" />
+                    <Button Command="{Binding UserManagementCommand}" Margin="10" Height="45" BorderBrush="{StaticResource AccentBrush}">
+                        <TextBlock FontSize="25" Foreground="{StaticResource AccentBrush}" Text="Управление пользователями" />
                     </Button>
-
-                    <Button Margin="10" MinHeight="45" BorderBrush="{StaticResource AccentBrush}">
-                        <TextBlock FontSize="20" Foreground="{StaticResource AccentBrush}" Text="Управление группами" />
-                    </Button>
+                    
                 </StackPanel>
             </Border>
 
@@ -51,12 +48,12 @@
                         <ColumnDefinition Width="Auto" />
                     </Grid.ColumnDefinitions>
 
-                    <Button Command="{Binding ExitAccountCommand}" Grid.Column="0" MinHeight="45" BorderBrush="{StaticResource AccentBrush}">
-                        <TextBlock FontSize="20" Foreground="{StaticResource AccentBrush}" Text="Выйти" />
+                    <Button Command="{Binding ExitAccountCommand}" Grid.Column="0" Height="45" BorderBrush="{StaticResource AccentBrush}">
+                        <TextBlock FontSize="25" Foreground="{StaticResource AccentBrush}" Text="Выйти" />
                     </Button>
 
-                    <Button Grid.Column="1" Margin="15,0,0,0" MinHeight="45" BorderBrush="{StaticResource AccentBrush}">
-                        <TextBlock FontSize="20" Foreground="{StaticResource AccentBrush}" Text="Изменить профиль" />
+                    <Button Grid.Column="1" Margin="15,0,0,0" Height="45" BorderBrush="{StaticResource AccentBrush}">
+                        <TextBlock FontSize="25" Foreground="{StaticResource AccentBrush}" Text="Изменить профиль" />
                     </Button>
                 </Grid>
             </Border>
@@ -89,7 +86,7 @@
                                     <StackPanel HorizontalAlignment="Left">
                                         
                                         <TextBlock>
-                                            <Run Foreground="{StaticResource AccentBrush}" FontSize="25" FontWeight="Bold" Text="{Binding ExamName}" />
+                                            <Run Foreground="Purple" FontSize="25" FontWeight="Bold" Text="{Binding ExamName}" />
                                             <LineBreak />
                                             <Run FontSize="22" Text="{Binding OpenDate, StringFormat={}{0:dd.MM.yyyy}}" /> 
                                             <Run FontSize="22" Text="{Binding OpenTime, StringFormat={}{0:HH:mm}}" />
@@ -108,16 +105,16 @@
                                     </StackPanel>
 
                                     <StackPanel HorizontalAlignment="Right" VerticalAlignment="Center">
-                                        <Button Command="{Binding DataContext.GoExamCommand, RelativeSource={RelativeSource AncestorType=UserControl}}" CommandParameter="{Binding}" Width="200" Margin="5" Background="Transparent" BorderBrush="{StaticResource AccentBrush}">
-                                            <TextBlock Foreground="{StaticResource AccentBrush}" Text="Просмотр" />
+                                        <Button Command="{Binding DataContext.GoExamCommand, RelativeSource={RelativeSource AncestorType=UserControl}}" CommandParameter="{Binding}" Width="200" Margin="5" Background="Transparent" BorderBrush="{StaticResource AccentBrush}" Height="35">
+                                            <TextBlock Foreground="{StaticResource AccentBrush}" Text="Просмотр" FontSize="20"/>
+                                        </Button>
+
+                                        <Button Command="{Binding DataContext.EditExamCommand, RelativeSource={RelativeSource AncestorType=UserControl}}" CommandParameter="{Binding}" Width="200" Margin="5" Background="Transparent" BorderBrush="{StaticResource AccentBrush}" Height="35">
+                                            <TextBlock Foreground="{StaticResource AccentBrush}" Text="Изменить" FontSize="20"/>
                                         </Button>
                                         
-                                        <Button Command="{Binding DataContext.EditExamCommand, RelativeSource={RelativeSource AncestorType=UserControl}}" CommandParameter="{Binding}" Width="200" Margin="5" Background="Transparent" BorderBrush="{StaticResource AccentBrush}">
-                                            <TextBlock Foreground="{StaticResource AccentBrush}" Text="Изменить" />
-                                        </Button>
-                                        
-                                        <Button Command="{Binding DataContext.RemoveExamCommand, RelativeSource={RelativeSource AncestorType=UserControl}}" CommandParameter="{Binding}" Width="200" Margin="5" Background="Transparent" BorderBrush="DarkRed">
-                                            <TextBlock Foreground="DarkRed" Text="Удалить" />
+                                        <Button Command="{Binding DataContext.RemoveExamCommand, RelativeSource={RelativeSource AncestorType=UserControl}}" CommandParameter="{Binding}" Width="200" Margin="5" Background="Transparent" BorderBrush="DarkRed" Height="35">
+                                            <TextBlock Foreground="DarkRed" Text="Удалить" FontSize="20"/>
                                         </Button>
                                     </StackPanel>
                                     

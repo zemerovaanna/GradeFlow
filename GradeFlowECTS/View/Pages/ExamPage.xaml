@@ -11,8 +11,8 @@
     <ScrollViewer Background="{StaticResource WindowBackgroundBrush}" Margin="2">
         <DockPanel>
 
-            <Button Click="BackButton_Click" Background="Transparent" BorderBrush="{StaticResource AccentBrush}" DockPanel.Dock="Top" HorizontalAlignment="Left" Margin="10" MinHeight="45">
-                <TextBlock FontSize="20" Foreground="{StaticResource AccentBrush}" Text="Назад" />
+            <Button Click="BackButton_Click" Background="Transparent" BorderBrush="{StaticResource AccentBrush}" DockPanel.Dock="Top" HorizontalAlignment="Left" Margin="10" Height="45" Width="150">
+                <TextBlock FontSize="25" Foreground="{StaticResource AccentBrush}" Text="Назад" />
             </Button>
 
             <StackPanel MaxWidth="700">

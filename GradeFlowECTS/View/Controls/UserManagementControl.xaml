@@ -5,8 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:GradeFlowECTS.View.Controls"
              mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="900" Background="{StaticResource WindowBackgroundBrush}">
-
+             d:DesignHeight="450" d:DesignWidth="1000" Background="{StaticResource WindowBackgroundBrush}">
 
     <Grid>
         <Grid.RowDefinitions>
@@ -14,50 +13,43 @@
             <RowDefinition />
         </Grid.RowDefinitions>
         <DockPanel>
-            <Button Command="{Binding CancelCommand}" DockPanel.Dock="Left" Margin="15,5,0,0" VerticalAlignment="Top" Background="Transparent" BorderBrush="{StaticResource AccentBrush}">
-                <TextBlock Text="Назад" VerticalAlignment="Top" Foreground="{StaticResource AccentBrush}" />
-            </Button>
+            <Border DockPanel.Dock="Left" VerticalAlignment="Top" BorderBrush="Purple" BorderThickness="1" CornerRadius="5" Padding="5" Margin="10">
+                <StackPanel>
+                <Button Command="{Binding CancelCommand}" Background="Transparent" BorderBrush="{StaticResource AccentBrush}" Height="45" Margin="10">
+                    <TextBlock Text="Вернуться" VerticalAlignment="Top" Foreground="{StaticResource AccentBrush}" FontSize="22" />
+                </Button>
+                <Button Click="StudentManagmentButton_Click" Grid.Column="0" Margin="5" Height="45" Width="280">
+                    <TextBlock Text="Управление студентами" Foreground="Purple" FontSize="22"/>
+                </Button>
 
-            <Grid DockPanel.Dock="Top" MaxWidth="750">
-                <Grid.RowDefinitions>
-                    <RowDefinition />
-                    <RowDefinition />
-                </Grid.RowDefinitions>
+                <Button Command="{Binding AddStudentCommand}" Grid.Column="0" Margin="5" Height="45">
+                    <TextBlock Text="Добавить пользователя" Foreground="Purple" FontSize="22"/>
+                </Button>
 
-                <Grid Grid.Row="0">
-                    <StackPanel>
-                        <Button Click="StudentManagmentButton_Click" Grid.Column="0" Margin="5">
-                            <TextBlock Text="Управление студентами" Foreground="Purple" />
-                        </Button>
-                        <Grid>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition />
-                        <ColumnDefinition />
-                    </Grid.ColumnDefinitions>
+                <Button Command="{Binding LoadStudentsCommand}" Grid.Column="1" Margin="5" Height="45">
+                    <TextBlock Text="Загрузить студентов" Foreground="Purple" FontSize="22"/>
+                </Button>
 
-                    <Button Command="{Binding AddStudentCommand}" Grid.Column="0" Margin="5">
-                        <TextBlock Text="Добавить пользователя" Foreground="Purple" />
-                    </Button>
+            </StackPanel>
+            </Border>
+            
 
-                    <Button Command="{Binding LoadStudentsCommand}" Grid.Column="1" Margin="5">
-                        <TextBlock Text="Загрузить студентов" Foreground="Purple" />
-                    </Button>
-                    </Grid>
-                    </StackPanel>
-                    
-                </Grid>
 
-                <Border Background="White" BorderBrush="{StaticResource AccentBrush}" BorderThickness="1" CornerRadius="6" Grid.Row="1" Margin="0,5,0,10" Padding="10">
-                    <Grid>
+            <StackPanel MaxWidth="950" VerticalAlignment="Center">
+                <Border BorderBrush="Purple" BorderThickness="1" CornerRadius="5" Margin="0,0,0,20" Padding="5" VerticalAlignment="Top">
+                    <TextBlock FontSize="30" Foreground="Purple" Text="Управление пользователями" TextAlignment="Center"/>
+                </Border>
+                <Border Background="White" BorderBrush="{StaticResource AccentBrush}" BorderThickness="1" CornerRadius="6" Margin="0,5,0,10" Padding="10" Grid.Row="0">
+                    <Grid HorizontalAlignment="Center">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="Auto" />
                             <ColumnDefinition Width="Auto" />
                         </Grid.ColumnDefinitions>
 
                         <StackPanel Grid.Column="0" Orientation="Horizontal">
-                            <TextBlock FontSize="20" HorizontalAlignment="Center" Margin="0,0,10,0" Text="Поиск" VerticalAlignment="Center" Foreground="{StaticResource AccentBrush}" />
+                            <TextBlock FontSize="25" HorizontalAlignment="Center" Margin="0,0,10,0" Text="Поиск" VerticalAlignment="Center" Foreground="{StaticResource AccentBrush}" />
 
-                            <TextBox MaxWidth="350" MinWidth="280" Margin="0,0,10,0" Text="{Binding SearchText, UpdateSourceTrigger=PropertyChanged}">
+                            <TextBox MaxWidth="400" MinWidth="400" Margin="0,0,10,0" Text="{Binding SearchText, UpdateSourceTrigger=PropertyChanged}">
                                 <TextBox.ToolTip>
                                     <ToolTip Background="White">
                                         Введите текст для поиска по ФИО или почте
@@ -66,7 +58,7 @@
                             </TextBox>
                         </StackPanel>
 
-                        <ComboBox DisplayMemberPath="RoleName" ItemsSource="{Binding Roles}" Margin="10,0,20,0" SelectedItem="{Binding SelectedRole}" SelectedValuePath="RoleId" Width="300" Grid.Column="1">
+                        <ComboBox FontSize="25" DisplayMemberPath="RoleName" ItemsSource="{Binding Roles}" Margin="10,0,20,0" SelectedItem="{Binding SelectedRole}" SelectedValuePath="RoleId" Width="300" Grid.Column="1">
                             <ComboBox.ToolTip>
                                 <ToolTip Background="White">
                                     Выберите роль для фильтрации
@@ -75,9 +67,9 @@
                         </ComboBox>
                     </Grid>
                 </Border>
-            </Grid>
+            </StackPanel>
         </DockPanel>
-        <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Visible" HorizontalAlignment="Center">
+        <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Visible" HorizontalAlignment="Right">
             <ItemsControl ItemsSource="{Binding UserListView}" Width="Auto">
                 <ItemsControl.ItemsPanel>
                     <ItemsPanelTemplate>
@@ -86,11 +78,10 @@
                 </ItemsControl.ItemsPanel>
                 <ItemsControl.ItemTemplate>
                     <DataTemplate>
-                        <Border Background="White" BorderBrush="{StaticResource AccentBrush}" BorderThickness="1" CornerRadius="5" Height="Auto" Margin="10" MaxHeight="300" MaxWidth="320" MinHeight="200" MinWidth="320" Padding="10" Width="Auto">
+                        <Border Background="White" BorderBrush="{StaticResource AccentBrush}" BorderThickness="1" CornerRadius="5" Height="Auto" Margin="10" MaxHeight="150" MaxWidth="320" MinHeight="150" MinWidth="320" Padding="10" Width="Auto">
                             <StackPanel>
                                 <StackPanel HorizontalAlignment="Center" Orientation="Horizontal">
                                     <TextBlock Text="{Binding Role.RoleName}" />
-                                    <CheckBox Margin="2" HorizontalAlignment="Center" IsChecked="{Binding Status}" IsEnabled="False" />
                                 </StackPanel>
 
                                 <TextBlock Margin="0,15,0,0" Text="{Binding FullName}" TextWrapping="Wrap" />
@@ -101,7 +92,7 @@
                                         <RowDefinition />
                                         <RowDefinition />
                                     </Grid.RowDefinitions>
-                                    <Button Command="{Binding DataContext.RemoveUserCommand, RelativeSource={RelativeSource AncestorType=UserControl}}" CommandParameter="{Binding}">
+                                    <Button Command="{Binding DataContext.RemoveUserCommand, RelativeSource={RelativeSource AncestorType=UserControl}}" CommandParameter="{Binding}" BorderBrush="DarkRed">
                                         <TextBlock Text="Удалить" Foreground="DarkRed"/>
                                     </Button>
                                 </Grid>

@@ -42,7 +42,9 @@
                                     </ItemsControl.ItemTemplate>
                                 </ItemsControl>
 
-                                <Button Content="Удалить" Click="DeleteCriterion_Click" Tag="{Binding}" Background="Tomato" Height="35" Margin="0 5"/>
+                                <Button Click="DeleteCriterion_Click" Tag="{Binding}" Margin="0 5" BorderBrush="DarkRed" Height="40">
+                                    <TextBlock Text="Удалить" Foreground="DarkRed" FontSize="25"/>
+                                </Button>
                             </StackPanel>
                         </Border>
                     </DataTemplate>
@@ -51,16 +53,19 @@
         </ScrollViewer>
 
 
-        <StackPanel HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="15">
-            <Button Content="Сохранить" 
-                Width="200" Height="40" Margin="5"
-                Click="SaveButton_Click"/>
-            <Button Content="Добавить" 
-                    Width="200" Height="40" Margin="5"
-                    Click="AddButton_Click"/>
-            <Button Content="Отмена" 
-                    Width="200" Height="40" Margin="5"
-                    Click="CancelButton_Click"/>
+        <StackPanel HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="18">
+            <Button Width="250" Height="40" Margin="5"
+                Click="SaveButton_Click" BorderBrush="Purple">
+                <TextBlock Text="Сохранить" Foreground="Purple" FontSize="23"/>
+            </Button>
+            <Button Width="250" Height="40" Margin="5"
+                    Click="AddButton_Click" BorderBrush="Purple">
+                <TextBlock Text="Добавить" Foreground="Purple" FontSize="23"/>
+            </Button>
+            <Button Width="250" Height="40" Margin="5"
+                    Click="CancelButton_Click" BorderBrush="{StaticResource AccentBrush}">
+                <TextBlock Text="Отмена" Foreground="{StaticResource AccentBrush}" FontSize="23"/>
+            </Button>
         </StackPanel>
     </Grid>
 </Window>

@@ -105,7 +105,7 @@
                     </Grid>
 
                     <Button Visibility="{Binding IsPasswordVisible}" Command="{Binding GeneratePasswordCommand}" Height="45" Margin="10,45,10,0" MinHeight="40">
-                        <TextBlock Foreground="Purple" Text="Сгенерировать пароль"/>
+                        <TextBlock Foreground="Purple" Text="Сгенерировать пароль" FontSize="23"/>
                     </Button>
 
                     <TextBlock x:Name="errorsText" FontSize="13" Foreground="DarkRed" Grid.Column="2" Margin="20,30,10,10" Text="{Binding ErrorMessage}" TextWrapping="Wrap" VerticalAlignment="Top"/>
@@ -115,11 +115,11 @@
             <StackPanel MaxWidth="750">
 
                 <Button Command="{Binding RegisterCommand}" Margin="0,20,0,0" MinHeight="45">
-                    <TextBlock FontSize="18" Foreground="Purple" Text="Зарегистрировать"/>
+                    <TextBlock FontSize="23" Foreground="Purple" Text="Зарегистрировать"/>
                 </Button>
 
                 <Button x:Name="cancelButton" BorderBrush="{StaticResource AccentBrush}" Command="{Binding CancelCommand}" Margin="0,15,0,15" MinHeight="45">
-                    <TextBlock FontSize="18" Foreground="{StaticResource AccentBrush}" Text="Отмена"/>
+                    <TextBlock FontSize="23" Foreground="{StaticResource AccentBrush}" Text="Отмена"/>
                 </Button>
             </StackPanel>
         </StackPanel>

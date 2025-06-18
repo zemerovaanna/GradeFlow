@@ -70,11 +70,11 @@
             </Border>
 
             <Button Grid.Row="8" Command="{Binding SaveExamCommand}" Height="45" Margin="5">
-                <TextBlock Foreground="Purple" Text="Создать экзамен"/>
+                <TextBlock Foreground="Purple" Text="Создать экзамен" FontSize="23"/>
             </Button>
 
             <Button Grid.Row="9" BorderBrush="{StaticResource AccentBrush}" Command="{Binding CancelCommand}" Height="45" Margin="5">
-                <TextBlock Foreground="{StaticResource AccentBrush}" Text="Отмена"/>
+                <TextBlock Foreground="{StaticResource AccentBrush}" Text="Отмена" FontSize="23"/>
             </Button>
         </Grid>
     </ScrollViewer>
