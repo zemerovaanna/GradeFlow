@@ -14,6 +14,8 @@ public partial class Exam
 
     public int OwnerTeacherId { get; set; }
 
+    public int PracticeTimeToComplete { get; set; }
+
     public virtual Discipline Discipline { get; set; } = null!;
 
     public virtual ICollection<ExamTest> ExamTests { get; set; } = new List<ExamTest>();

@@ -160,7 +160,8 @@ namespace GradeFlowECTS.ViewModel
                 ExamName = ExamName.Trim(),
                 OpenDate = DateOnly.FromDateTime(SelectedDate),
                 OpenTime = Time,
-                OwnerTeacherId = _userContext.CurrentUser.TeacherId ?? 1
+                OwnerTeacherId = _userContext.CurrentUser.TeacherId ?? 1,
+                PracticeTimeToComplete = 60
             };
 
             _examRepository.AddExam(exam);

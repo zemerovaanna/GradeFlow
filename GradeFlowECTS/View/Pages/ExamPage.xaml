@@ -23,6 +23,13 @@
 
                 <TextBlock FontSize="22" Margin="10,5,10,5" Text="{Binding OpenTime, StringFormat={}{0:HH:mm}}" TextAlignment="Center" />
 
+                <StackPanel Grid.Column="0" Orientation="Horizontal" x:Name="ObosraniContainer">
+                    <TextBlock FontSize="24" Foreground="Purple" Text="Минуты на прохождение практической части:" TextAlignment="Center" VerticalAlignment="Center" Width="300"/>
+                    <StackPanel HorizontalAlignment="Left" Orientation="Horizontal">
+                        <TextBox BorderBrush="{Binding TimeBorderBrush}" FontSize="25" FontWeight="Medium" MaxLength="2" PreviewTextInput="NumberOnly_PreviewTextInput" x:Name="TimeToCompleteOkDa" Width="50"/>
+                    </StackPanel>
+                </StackPanel>
+                
                 <StackPanel Margin="0,20,0,0" x:Name="TeacherMDK">
 
                     <TextBlock FontSize="25" Foreground="Purple" Margin="5" Text="Управление тестовой частью" />

@@ -1,5 +1,8 @@
-﻿using System.Windows;
+﻿using System.Diagnostics;
+using System.Text.RegularExpressions;
+using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Input;
 using GradeFlowECTS.Infrastructure;
 using GradeFlowECTS.Interfaces;
 using GradeFlowECTS.Models;
@@ -15,7 +18,7 @@ namespace GradeFlowECTS.View.Pages
         private readonly ExamRepository _examRepository;
         private readonly Exam _exam;
         private readonly IUserContext _userContext;
-
+        GradeFlowContext context;
 
         public ExamPage()
         {
@@ -28,7 +31,7 @@ namespace GradeFlowECTS.View.Pages
 
             _userContext = App.Current.ServiceProvider.GetRequiredService<IUserContext>();
             int roleId = _userContext.CurrentUser.RoleId;
-            GradeFlowContext context = App.Current.ServiceProvider.GetRequiredService<GradeFlowContext>();
+            context = App.Current.ServiceProvider.GetRequiredService<GradeFlowContext>();
             AesGcmCryptographyService cryptographyService = new AesGcmCryptographyService();
             FileService fileService = new FileService("GradeFlow");
             UserSettingsService userSettingsService = new UserSettingsService(fileService);
@@ -56,6 +59,7 @@ namespace GradeFlowECTS.View.Pages
                     }
                 case "Студент":
                     {
+                        ObosraniContainer.Visibility = Visibility.Collapsed;
                         if (_exam.Discipline.DisciplineName != "Квалификационный экзамен")
                         {
                             StudentMDK.Visibility = Visibility.Visible;
@@ -69,8 +73,30 @@ namespace GradeFlowECTS.View.Pages
             }
         }
 
+        public void UpdateExam(Exam updatedExam)
+        {
+            try
+            {
+                updatedExam.PracticeTimeToComplete = Convert.ToInt32(TimeToCompleteOkDa.Text);
+                var existingExam = context.Exams
+                    .FirstOrDefault(et => et.ExamId == updatedExam.ExamId);
+
+                if (existingExam != null)
+                {
+                    existingExam.PracticeTimeToComplete = updatedExam.PracticeTimeToComplete;
+                    context.SaveChanges();
+                }
+
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine($"[UpdateExam] Ошибка: {ex.Message}");
+            }
+        }
+
         private void BackButton_Click(object sender, RoutedEventArgs e)
         {
+            UpdateExam(_exam);
             Window? window = Window.GetWindow(this);
             window?.Close();
         }
@@ -140,6 +166,12 @@ namespace GradeFlowECTS.View.Pages
         {
             StudentQualWindow window = new StudentQualWindow(_userContext.CurrentUser.StudentId ?? 0, _exam.ExamId);
             window.ShowDialog();
+        }
+
+        private static readonly Regex NumberOnly = new Regex("^[0-9]+$");
+        private void NumberOnly_PreviewTextInput(object sender, TextCompositionEventArgs e)
+        {
+            e.Handled = !NumberOnly.IsMatch(e.Text);
         }
     }
 }
