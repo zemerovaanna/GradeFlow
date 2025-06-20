@@ -3,9 +3,11 @@ using System.Windows;
 using System.Windows.Input;
 using System.Windows.Media;
 using GradeFlowECTS.Core;
+using GradeFlowECTS.Infrastructure;
 using GradeFlowECTS.Interfaces;
 using GradeFlowECTS.Models;
 using GradeFlowECTS.ViewModel.Items;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace GradeFlowECTS.ViewModel
 {
@@ -161,11 +163,13 @@ namespace GradeFlowECTS.ViewModel
                 OpenDate = DateOnly.FromDateTime(SelectedDate),
                 OpenTime = Time,
                 OwnerTeacherId = _userContext.CurrentUser.TeacherId ?? 1,
-                PracticeTimeToComplete = 60
+                //PracticeTimeToComplete = 60
             };
 
             _examRepository.AddExam(exam);
             _groupsExamRepository.AddGroupsExam(SelectedGroups.ToList(), exam.ExamId);
+            var context = App.Current.ServiceProvider.GetRequiredService<GradeFlowContext>();
+            context.ExamPractices.Add(new ExamPractice { ExamId = exam.ExamId, PracticeTimeToComplete = 40 });
             _navigationService.NavigateTo<TeacherHomeViewModel>();
         }
 

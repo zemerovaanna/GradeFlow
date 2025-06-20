@@ -31,7 +31,7 @@ namespace GradeFlowECTS.Analyzers.MDK01
                 MatrixAnalyzer.CriteriaDetails.Add("❌ Не обнаружена логика поиска строки с максимальной суммой");
             }
 
-            return ($"{MatrixAnalyzer.MetCriteria}/{MatrixAnalyzer.TotalCriteria}", MatrixAnalyzer.PrintResults());
+            return ($"{MatrixAnalyzer.MetCriteria}/{MatrixAnalyzer.TotalCriteria+1}", MatrixAnalyzer.PrintResults());
         }
     }
 }

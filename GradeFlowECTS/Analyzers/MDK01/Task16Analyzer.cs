@@ -9,7 +9,7 @@ namespace GradeFlowECTS.Analyzers.MDK01
         {
             ArrayAnalyzer.Analyze(root);
             CheckExcludeMultiplesOfThree(root);
-            return ($"{ArrayAnalyzer.MetCriteria}/{ArrayAnalyzer.TotalCriteria}", ArrayAnalyzer.PrintResults());
+            return ($"{ArrayAnalyzer.MetCriteria}/{ArrayAnalyzer.TotalCriteria+1}", ArrayAnalyzer.PrintResults());
         }
 
         private static void CheckExcludeMultiplesOfThree(SyntaxNode root)

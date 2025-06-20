@@ -73,17 +73,17 @@ namespace GradeFlowECTS.View.Pages
             }
         }
 
-        public void UpdateExam(Exam updatedExam)
+        public void UpdateExam()
         {
             try
             {
-                updatedExam.PracticeTimeToComplete = Convert.ToInt32(TimeToCompleteOkDa.Text);
-                var existingExam = context.Exams
-                    .FirstOrDefault(et => et.ExamId == updatedExam.ExamId);
+                //updatedExam.PracticeTimeToComplete = Convert.ToInt32(TimeToCompleteOkDa.Text);
+                var existingExam = context.ExamPractices
+                    .FirstOrDefault(et => et.ExamId == _exam.ExamId);
 
                 if (existingExam != null)
                 {
-                    existingExam.PracticeTimeToComplete = updatedExam.PracticeTimeToComplete;
+                    existingExam.PracticeTimeToComplete = Convert.ToInt32(TimeToCompleteOkDa.Text);
                     context.SaveChanges();
                 }
 
@@ -96,7 +96,7 @@ namespace GradeFlowECTS.View.Pages
 
         private void BackButton_Click(object sender, RoutedEventArgs e)
         {
-            UpdateExam(_exam);
+            UpdateExam();
             Window? window = Window.GetWindow(this);
             window?.Close();
         }
@@ -144,28 +144,52 @@ namespace GradeFlowECTS.View.Pages
 
         private void TakeTestButton_Click(object sender, RoutedEventArgs e)
         {
+            var context = new GradeFlowContext();
+            if(context.StudentExamResults.Where(s => s.ExamId == _exam.ExamId).Select(s => s.TestTotalScore) != null)
+            {
             StudentTestWindow window = new StudentTestWindow(_examRepository, _exam);
             window.ShowDialog();
+            }
+            else
+            {
+                MessageBox.Show("Тест уже пройден.");
+            }
         }
 
         private void CompletePracticalTaskButton_Click(object sender, RoutedEventArgs e)
         {
-            if(_exam.Discipline.DisciplineName == "МДК 01.01")
+            var context = new GradeFlowContext();
+            if (context.StudentExamResults.Where(s => s.ExamId == _exam.ExamId).Select(s => s.PracticeTotalScore) != null)
             {
-                StudentMDK01Window window = new StudentMDK01Window(_userContext.CurrentUser.StudentId ?? 0, _exam.ExamId);
-                window.ShowDialog();
+                if (_exam.Discipline.DisciplineName == "МДК 01.01")
+                {
+                    StudentMDK01Window window = new StudentMDK01Window(_userContext.CurrentUser.StudentId ?? 0, _exam.ExamId);
+                    window.ShowDialog();
+                }
+                else if (_exam.Discipline.DisciplineName == "МДК 01.02")
+                {
+                    StudentMDK02Window window = new StudentMDK02Window(_userContext.CurrentUser.StudentId ?? 0, _exam.ExamId);
+                    window.ShowDialog();
+                }
             }
-            else if(_exam.Discipline.DisciplineName == "МДК 01.02")
+            else
             {
-                StudentMDK02Window window = new StudentMDK02Window(_userContext.CurrentUser.StudentId ?? 0, _exam.ExamId);
-                window.ShowDialog();
+                MessageBox.Show("Практическое задание уже пройдено.");
             }
         }
 
         private void TakeQualificationExamButton_Click(object sender, RoutedEventArgs e)
         {
-            StudentQualWindow window = new StudentQualWindow(_userContext.CurrentUser.StudentId ?? 0, _exam.ExamId);
-            window.ShowDialog();
+            var context = new GradeFlowContext();
+            if (context.StudentExamResults.Where(s => s.ExamId == _exam.ExamId).Select(s => s.QualCriteria) != null)
+            {
+                StudentQualWindow window = new StudentQualWindow(_userContext.CurrentUser.StudentId ?? 0, _exam.ExamId);
+                window.ShowDialog();
+            }
+            else
+            {
+                MessageBox.Show("Уже пройдено.");
+            }
         }
 
         private static readonly Regex NumberOnly = new Regex("^[0-9]+$");

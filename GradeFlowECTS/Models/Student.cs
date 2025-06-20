@@ -1,4 +1,7 @@
-﻿namespace GradeFlowECTS.Models;
+﻿using System;
+using System.Collections.Generic;
+
+namespace GradeFlowECTS.Models;
 
 public partial class Student
 {
@@ -9,6 +12,8 @@ public partial class Student
     public Guid UserId { get; set; }
 
     public virtual Group Group { get; set; } = null!;
+
+    public virtual ICollection<StudentAttempt> StudentAttempts { get; set; } = new List<StudentAttempt>();
 
     public virtual ICollection<StudentExamResult> StudentExamResults { get; set; } = new List<StudentExamResult>();
 

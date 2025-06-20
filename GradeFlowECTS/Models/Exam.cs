@@ -1,4 +1,7 @@
-﻿namespace GradeFlowECTS.Models;
+﻿using System;
+using System.Collections.Generic;
+
+namespace GradeFlowECTS.Models;
 
 public partial class Exam
 {
@@ -14,8 +17,6 @@ public partial class Exam
 
     public int OwnerTeacherId { get; set; }
 
-    public int PracticeTimeToComplete { get; set; }
-
     public virtual Discipline Discipline { get; set; } = null!;
 
     public virtual ICollection<ExamTest> ExamTests { get; set; } = new List<ExamTest>();
@@ -23,6 +24,8 @@ public partial class Exam
     public virtual ICollection<GroupsExam> GroupsExams { get; set; } = new List<GroupsExam>();
 
     public virtual Teacher OwnerTeacher { get; set; } = null!;
+
+    public virtual ICollection<StudentAttempt> StudentAttempts { get; set; } = new List<StudentAttempt>();
 
     public virtual ICollection<StudentExamResult> StudentExamResults { get; set; } = new List<StudentExamResult>();
 }

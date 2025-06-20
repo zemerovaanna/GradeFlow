@@ -1,34 +1,51 @@
-﻿using System.Collections.ObjectModel;
-using System.Security.Cryptography;
+﻿using System.Security.Cryptography;
 using System.Text;
 using System.Windows;
-using System.Windows.Controls;
 using GradeFlowECTS.Infrastructure;
 using GradeFlowECTS.Models;
-using GradeFlowECTS.ViewModel.Items;
-using Microsoft.EntityFrameworkCore;
 
 namespace GradeFlowECTS.View.Windows
 {
-    public partial class VariantManagmentWindow : Window
+    public partial class AddVariantWindow : Window
     {
-        public ObservableCollection<Variant> Variants { get; set; }
-
-        public VariantManagmentWindow()
+        public AddVariantWindow()
         {
             InitializeComponent();
-            LoadOkDa();
-            aaaa.ItemsSource = Variants;
+            One.Text = "Поля и функция \"качества\" Q базового класса:\n";
+            Two.Text = "Поля и функция \"качества\" Qp класса потомка:\n";
         }
 
-        private void LoadOkDa()
+        private void Button_Click(object sender, RoutedEventArgs e)
         {
-            var context = new GradeFlowContext();
-            Variants = new ObservableCollection<Variant>(context.Variants.AsNoTracking().ToList().Select(v =>
+            Close();
+        }
+
+        private void Button_Click1(object sender, RoutedEventArgs e)
+        {
+            // Проверяем, что текст варианта не пустой
+            if (string.IsNullOrWhiteSpace(OneText.Text) || string.IsNullOrWhiteSpace(TwoText.Text))
             {
-                v.VariantText = LOL.Decrypt(v.VariantText);
-                return v;
-            }).ToList());
+                MessageBox.Show("Все поля должны быть заполнены.");
+            }
+
+            // Получаем последний номер варианта
+            var context = new GradeFlowContext();
+            byte? lastVariantNumber = context.Variants
+                .OrderByDescending(v => v.VariantNumber)
+                .Select(v => v.VariantNumber)
+                .FirstOrDefault();
+
+            // Создаем новый вариант
+            var newVariant = new Variant
+            {
+                VariantText = LOL.Encrypt(One.Text + OneText + Two.Text + TwoText.Text),
+                VariantNumber = (byte)(lastVariantNumber + 1)
+            };
+
+            // Добавляем в контекст и сохраняем
+            context.Variants.Add(newVariant);
+            context.SaveChanges();
+            DialogResult = true;
         }
 
         static class LOL
@@ -149,62 +166,6 @@ namespace GradeFlowECTS.View.Windows
                 if (n <= 1) return 1;
                 return n * Factorial(n - 1);
             }
-        }
-
-        private void DeleteVariant_Click(object sender, RoutedEventArgs e)
-        {
-            if (sender is Button button && button.Tag is Variant variant)
-            {
-                var messageBoxResult = MessageBox.Show(
-                    $"Удалить вариант №{variant.VariantNumber}?",
-                    "Подтверждение удаления",
-                    MessageBoxButton.YesNo,
-                    MessageBoxImage.Warning
-                    );
-
-                if (messageBoxResult != MessageBoxResult.Yes)
-                    return;
-
-                // Проверка: хотя бы один должен остаться
-                if (Variants.Count <= 1)
-                {
-                    MessageBox.Show("Должен остаться хотя бы один вариант.");
-                    return;
-                }
-
-                var _context = new GradeFlowContext();
-
-                // Обновление StudentExamResult, где VariantNumber = удаляемый
-                var affectedResults = _context.StudentExamResults
-                    .Where(r => r.VariantNumber == variant.VariantNumber)
-                    .ToList();
-
-                foreach (var result in affectedResults)
-                {
-                    result.VariantNumber = null;
-                }
-
-                // Удаление варианта
-                _context.Variants.Remove(variant);
-                _context.SaveChanges();
-
-                // Локально убрать из коллекции (если привязка к UI)
-                Variants.Remove(variant);
-            }
-        }
-
-        private void AddButton_Click(object sender, RoutedEventArgs e)
-        {
-            var window = new AddVariantWindow();
-            if(window.ShowDialog() == true)
-            {
-                LoadOkDa();
-            }
-        }
-
-        private void CancelButton_Click(object sender, RoutedEventArgs e)
-        {
-            Close();
         }
     }
 }

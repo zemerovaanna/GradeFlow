@@ -31,7 +31,7 @@ namespace GradeFlowECTS.Analyzers.MDK01
                 MatrixAnalyzer.CriteriaDetails.Add("❌ Замена столбцов K и L не найдена");
             }
 
-            return ($"{MatrixAnalyzer.MetCriteria}/{MatrixAnalyzer.TotalCriteria}", MatrixAnalyzer.PrintResults());
+            return ($"{MatrixAnalyzer.MetCriteria}/{MatrixAnalyzer.TotalCriteria+1}", MatrixAnalyzer.PrintResults());
         }
     }
 }

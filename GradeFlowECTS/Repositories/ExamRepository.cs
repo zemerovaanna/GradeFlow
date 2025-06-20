@@ -317,6 +317,9 @@ namespace GradeFlowECTS.Repositories
 
                 Debug.WriteLine("[RemoveExam] Экзамен найден.");
 
+                var examPr = _context.ExamPractices.Where(e => e.ExamId == examId).FirstOrDefault();
+                _context.ExamPractices.Remove(examPr);
+
                 // Удаляем результаты студентов
                 if (exam.StudentExamResults.Any())
                 {

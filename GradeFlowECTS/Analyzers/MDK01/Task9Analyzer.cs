@@ -9,7 +9,7 @@ namespace GradeFlowECTS.Analyzers.MDK01
         {
             MatrixAnalyzer.Analyze(root);
             CheckColumnOutput(root);
-            return ($"{MatrixAnalyzer.MetCriteria}/{MatrixAnalyzer.TotalCriteria}", MatrixAnalyzer.PrintResults());
+            return ($"{MatrixAnalyzer.MetCriteria}/{MatrixAnalyzer.TotalCriteria+1}", MatrixAnalyzer.PrintResults());
         }
 
         private static void CheckColumnOutput(SyntaxNode root)

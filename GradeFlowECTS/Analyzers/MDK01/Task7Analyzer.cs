@@ -59,7 +59,7 @@ namespace GradeFlowECTS.Analyzers.MDK01
                 "Используется ручная сортировка",
                 "Обнаружены встроенные методы сортировки");
 
-            return ($"{metCriteria}/{totalCriteria}", $"Выполнено критериев: {metCriteria} из {totalCriteria}\nДетали:\n{string.Join("\n", criteriaDetails)}");
+            return ($"{metCriteria}/{totalCriteria+1}", $"Выполнено критериев: {metCriteria} из {totalCriteria}\nДетали:\n{string.Join("\n", criteriaDetails)}");
         }
 
         private static bool HasArraySizeInput(SyntaxNode root, SemanticModel model)

@@ -1,4 +1,5 @@
-﻿using System.Windows.Controls;
+﻿using System.Windows;
+using System.Windows.Controls;
 using GradeFlowECTS.ViewModel;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -19,6 +20,12 @@ namespace GradeFlowECTS.View.Dialogs
             };
 
             DataContext = _mailVerificationViewModel;
+        }
+
+        private void Button_Click(object sender, System.Windows.RoutedEventArgs e)
+        {
+            Window? window = Window.GetWindow(this);
+            window?.Close();
         }
     }
 }

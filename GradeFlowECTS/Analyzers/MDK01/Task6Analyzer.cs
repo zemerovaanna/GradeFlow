@@ -60,7 +60,7 @@ namespace GradeFlowECTS.Analyzers.MDK01
                     : "✅ Не используется запрещённая сортировка"
             };
 
-            return ($"{ArrayAnalyzer.MetCriteria}/{ArrayAnalyzer.TotalCriteria}", string.Join(Environment.NewLine, results));
+            return ($"{ArrayAnalyzer.MetCriteria}/{ArrayAnalyzer.TotalCriteria+1}", string.Join(Environment.NewLine, results));
         }
 
         private static bool HasArraySizeInput(SyntaxNode root, SemanticModel semanticModel)

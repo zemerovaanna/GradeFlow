@@ -11,7 +11,7 @@ namespace GradeFlowECTS.Analyzers.MDK01
 
             CheckColumnAverageCalculation(root);
 
-            return ($"{MatrixAnalyzer.MetCriteria}/{MatrixAnalyzer.TotalCriteria}", MatrixAnalyzer.PrintResults());
+            return ($"{MatrixAnalyzer.MetCriteria}/{MatrixAnalyzer.TotalCriteria+1}", MatrixAnalyzer.PrintResults());
         }
 
         private static void CheckColumnAverageCalculation(SyntaxNode root)

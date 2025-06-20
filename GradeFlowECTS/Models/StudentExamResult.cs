@@ -1,4 +1,7 @@
-﻿namespace GradeFlowECTS.Models;
+﻿using System;
+using System.Collections.Generic;
+
+namespace GradeFlowECTS.Models;
 
 public partial class StudentExamResult
 {
@@ -28,9 +31,9 @@ public partial class StudentExamResult
 
     public byte? TaskNumber { get; set; }
 
+    public int? VariantNumber { get; set; }
+
     public virtual Exam Exam { get; set; } = null!;
 
     public virtual Student Student { get; set; } = null!;
-
-    public int? VariantNumber { get; set; }
 }

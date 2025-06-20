@@ -7,12 +7,11 @@ public partial class GradeFlowContext : DbContext
 {
     public GradeFlowContext()
     {
-
     }
 
-    public GradeFlowContext(DbContextOptions<GradeFlowContext> options) : base(options)
+    public GradeFlowContext(DbContextOptions<GradeFlowContext> options)
+        : base(options)
     {
-
     }
 
     public virtual DbSet<Criterion> Criteria { get; set; }
@@ -43,6 +42,8 @@ public partial class GradeFlowContext : DbContext
 
     public virtual DbSet<Student> Students { get; set; }
 
+    public virtual DbSet<StudentAttempt> StudentAttempts { get; set; }
+
     public virtual DbSet<StudentExamResult> StudentExamResults { get; set; }
 
     public virtual DbSet<Teacher> Teachers { get; set; }
@@ -58,20 +59,20 @@ public partial class GradeFlowContext : DbContext
     public virtual DbSet<Variant> Variants { get; set; }
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+#warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see https://go.microsoft.com/fwlink/?LinkId=723263.
         => optionsBuilder.UseSqlServer("Server=Home-PC;Database=GradeFlow;Trusted_Connection=true;MultipleActiveResultSets=true;TrustServerCertificate=true;");
-
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.Entity<Criterion>(entity =>
         {
-            entity.HasKey(e => e.CriterionId).HasName("PK__Criteria__647C3BB1B6F756FB");
+            entity.HasKey(e => e.CriterionId).HasName("PK__Criteria__647C3BB1887AE46A");
 
             entity.Property(e => e.CriterionTitle).HasMaxLength(255);
 
             entity.HasOne(d => d.Module).WithMany(p => p.Criteria)
                 .HasForeignKey(d => d.ModuleId)
-                .HasConstraintName("FK__Criteria__Module__71D1E811");
+                .HasConstraintName("FK__Criteria__Module__73BA3083");
         });
 
         modelBuilder.Entity<Exam>(entity =>
@@ -92,16 +93,6 @@ public partial class GradeFlowContext : DbContext
                 .HasForeignKey(d => d.OwnerTeacherId)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK_Exams_Teachers");
-        });
-
-        modelBuilder.Entity<ExamPractice>(entity =>
-        {
-            entity.HasIndex(e => e.DisciplineId, "IX_ExamPractices_DisciplineId");
-
-            entity.HasOne(d => d.Discipline).WithMany(p => p.ExamPractices)
-                .HasForeignKey(d => d.DisciplineId)
-                .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK_ExamPractices_Disciplines");
         });
 
         modelBuilder.Entity<ExamTest>(entity =>
@@ -135,7 +126,7 @@ public partial class GradeFlowContext : DbContext
 
         modelBuilder.Entity<Module>(entity =>
         {
-            entity.HasKey(e => e.ModuleId).HasName("PK__Modules__2B7477A73301393D");
+            entity.HasKey(e => e.ModuleId).HasName("PK__Modules__2B7477A72FFA870B");
 
             entity.Property(e => e.ModuleName).HasMaxLength(100);
         });
@@ -176,13 +167,13 @@ public partial class GradeFlowContext : DbContext
 
         modelBuilder.Entity<ScoreOption>(entity =>
         {
-            entity.HasKey(e => e.ScoreOptionIdId).HasName("PK__ScoreOpt__7731FCCAB33EBFB9");
+            entity.HasKey(e => e.ScoreOptionIdId).HasName("PK__ScoreOpt__7731FCCA8BD598E0");
 
             entity.Property(e => e.Description).HasMaxLength(500);
 
             entity.HasOne(d => d.Criterion).WithMany(p => p.ScoreOptions)
                 .HasForeignKey(d => d.CriterionId)
-                .HasConstraintName("FK__ScoreOpti__Crite__7C4F7684");
+                .HasConstraintName("FK__ScoreOpti__Crite__7E37BEF6");
         });
 
         modelBuilder.Entity<Student>(entity =>
@@ -202,6 +193,22 @@ public partial class GradeFlowContext : DbContext
                 .HasConstraintName("FK_Students_Users");
         });
 
+        modelBuilder.Entity<StudentAttempt>(entity =>
+        {
+            entity.HasIndex(e => e.ExamId, "IX_StudentAttempts_ExamId");
+
+            entity.HasIndex(e => e.StudentId, "IX_StudentAttempts_StudentId");
+
+            entity.HasOne(d => d.Exam).WithMany(p => p.StudentAttempts)
+                .HasForeignKey(d => d.ExamId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_StudentAttempts_Exams");
+
+            entity.HasOne(d => d.Student).WithMany(p => p.StudentAttempts)
+                .HasForeignKey(d => d.StudentId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_StudentAttempts_Students");
+        });
 
         modelBuilder.Entity<StudentExamResult>(entity =>
         {

@@ -1,4 +1,7 @@
-﻿namespace GradeFlowECTS.Models;
+﻿using System;
+using System.Collections.Generic;
+
+namespace GradeFlowECTS.Models;
 
 public partial class Group
 {

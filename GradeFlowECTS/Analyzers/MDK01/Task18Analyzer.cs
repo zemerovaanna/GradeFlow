@@ -11,7 +11,7 @@ namespace GradeFlowECTS.Analyzers.MDK01
 
             CheckRowSumCalculation(root);
 
-            return ($"{MatrixAnalyzer.MetCriteria}/{MatrixAnalyzer.TotalCriteria}", MatrixAnalyzer.PrintResults());
+            return ($"{MatrixAnalyzer.MetCriteria}/{MatrixAnalyzer.TotalCriteria+1}", MatrixAnalyzer.PrintResults());
         }
 
         private static void CheckRowSumCalculation(SyntaxNode root)

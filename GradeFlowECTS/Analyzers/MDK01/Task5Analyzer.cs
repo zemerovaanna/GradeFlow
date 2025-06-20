@@ -18,7 +18,7 @@ namespace GradeFlowECTS.Analyzers.MDK01
 
             ArrayAnalyzer.Analyze(root);
             CheckSpecificConditions(root, semanticModel);
-            return ($"{ArrayAnalyzer.MetCriteria}/{ArrayAnalyzer.TotalCriteria}", ArrayAnalyzer.PrintResults());
+            return ($"{ArrayAnalyzer.MetCriteria}/{ArrayAnalyzer.TotalCriteria+1}", ArrayAnalyzer.PrintResults());
         }
 
         private static void CheckSpecificConditions(SyntaxNode root, SemanticModel semanticModel)

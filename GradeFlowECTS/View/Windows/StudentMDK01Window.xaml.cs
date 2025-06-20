@@ -1,6 +1,7 @@
 ﻿using System.Security.Cryptography;
 using System.Text;
 using System.Windows;
+using System.Windows.Threading;
 using GradeFlowECTS.Analyzers.MDK01;
 using GradeFlowECTS.Infrastructure;
 using GradeFlowECTS.Models;
@@ -15,6 +16,7 @@ namespace GradeFlowECTS.View.Windows
         private (byte Number, string TaskText) _task;
         private int _studentId;
         private Guid _examId;
+        private readonly int _windowCloseTimeoutMinutes;
 
         public StudentMDK01Window(int studentId, Guid examId)
         {
@@ -64,6 +66,36 @@ namespace GradeFlowECTS.View.Windows
             int index = random.Next(_tasks.Count);
             _task = _tasks[index];
             TaskText.Text = $"{_task.Number}. " + _task.TaskText;
+
+            var context = new GradeFlowContext();
+
+            _windowCloseTimeoutMinutes = context.ExamPractices.Where(e => e.ExamId == _examId).Select(e => e.PracticeTimeToComplete).FirstOrDefault();
+
+            var existingResult = context.StudentExamResults.FirstOrDefault(r =>
+                r.StudentId == _studentId &&
+                r.ExamId == _examId);
+
+            if (existingResult != null)
+            {
+                // Обновляем существующий результат
+                existingResult.TaskNumber = _task.Number;
+
+                context.StudentExamResults.Update(existingResult);
+            }
+            else
+            {
+                // Добавляем новый результат
+                var studentExamResult = new StudentExamResult
+                {
+                    StudentId = _studentId,
+                    ExamId = _examId,
+                    TaskNumber = _task.Number
+                };
+
+                context.StudentExamResults.Add(studentExamResult);
+            }
+
+            context.SaveChanges();
         }
 
         private (string totalScore, string criteria) AnalyzeCode(string code, int taskNumber)
@@ -184,7 +216,7 @@ namespace GradeFlowECTS.View.Windows
             TimeOnly currentTime = TimeOnly.FromDateTime(now);
             DateOnly currentDate = DateOnly.FromDateTime(now);
 
-            using var context = new GradeFlowContext();
+            var context = new GradeFlowContext();
 
             var existingResult = context.StudentExamResults.FirstOrDefault(r =>
                 r.StudentId == _studentId &&

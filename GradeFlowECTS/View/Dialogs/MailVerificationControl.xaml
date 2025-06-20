@@ -26,6 +26,9 @@
             <Button Command="{Binding ResendCommand}" Margin="0,15,0,0" MinHeight="45">
                 <TextBlock Foreground="Purple" Text="Отправить снова" FontSize="25"/>
             </Button>
+            <Button Click="Button_Click" Margin="0,15,0,0" MinHeight="45" BorderBrush="{StaticResource AccentBrush}">
+                <TextBlock Foreground="{StaticResource AccentBrush}" Text="Отмена" FontSize="25"/>
+            </Button>
         </StackPanel>
     </Grid>
 

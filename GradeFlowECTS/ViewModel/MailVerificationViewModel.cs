@@ -80,8 +80,10 @@ namespace GradeFlowECTS.ViewModel
             if (SecurityHelper.VerifyCode(_mail, Code!.ToUpper()))
             {
                 _windowService.CloseWindow<InterludeWindow>();
-                var windowManager = _serviceProvider.GetRequiredService<IWindowManager>();
-                windowManager.ShowWindow<InterludeViewModel, PasswordResetViewModel>();
+                var window = new PasswordResetWindow(_mail);
+                window.ShowDialog();
+/*                var windowManager = _serviceProvider.GetRequiredService<IWindowManager>();
+                windowManager.ShowWindow<InterludeViewModel, PasswordResetViewModel>();*/
             }
             else
             {

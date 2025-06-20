@@ -70,9 +70,7 @@ namespace GradeFlowECTS.Infrastructure
                         await client.DisconnectAsync(true);
 
                         Debug.WriteLine($"{methodName} Сообщение успешно отправлено");
-                        _messageBoxService.ShowInformation(
-                            "Сообщение отправлено на вашу почту. Если сообщения нет, попробуйте проверить папку Спам.",
-                            "Уведомление");
+                        //_messageBoxService.ShowInformation("Сообщение отправлено на вашу почту. Если сообщения нет, попробуйте проверить папку Спам.","Уведомление");
                     }
                     catch (SmtpCommandException ex)
                     {
