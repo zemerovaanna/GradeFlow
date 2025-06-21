@@ -318,7 +318,7 @@ namespace GradeFlowECTS.Repositories
                 Debug.WriteLine("[RemoveExam] Экзамен найден.");
 
                 var examPr = _context.ExamPractices.Where(e => e.ExamId == examId).FirstOrDefault();
-                _context.ExamPractices.Remove(examPr);
+                if (examPr != null) _context.ExamPractices.Remove(examPr);
 
                 // Удаляем результаты студентов
                 if (exam.StudentExamResults.Any())
@@ -449,6 +449,19 @@ namespace GradeFlowECTS.Repositories
             {
                 Debug.WriteLine($"[GetTopicsWithQuestionsByDisciplineId] Ошибка: {ex.Message}");
                 return new List<TopicsDiscipline>();
+            }
+        }
+
+        public TopicsDiscipline GetQuestionsByTopicId(int topicId)
+        {
+            try
+            {
+                return (TopicsDiscipline)_context.TopicsDisciplines.AsNoTracking().Include(t => t.Questions).ThenInclude(q => q.QuestionAnswers).Where(t => t.TopicDisciplinesId == topicId);
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine($"[GetTopicsWithQuestionsByDisciplineId] Ошибка: {ex.Message}");
+                return new TopicsDiscipline();
             }
         }
 

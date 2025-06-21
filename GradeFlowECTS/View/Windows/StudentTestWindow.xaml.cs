@@ -118,6 +118,7 @@ namespace GradeFlowECTS.View.Windows
                     existingResult.TestTotalScore = LOL.Encrypt(result.Score);
                     existingResult.TestCriteria = LOL.Encrypt(resulttxt);
                     existingResult.TestTimeSpent = LOL.Encrypt(result.TimeSpent.ToString());
+                    existingResult.TestStart = true;
 
                     context.StudentExamResults.Update(existingResult);
                 }
@@ -132,7 +133,8 @@ namespace GradeFlowECTS.View.Windows
                         DateEnded = currentDate,
                         TestTotalScore = LOL.Encrypt(result.Score),
                         TestCriteria = LOL.Encrypt(resulttxt),
-                        TestTimeSpent = LOL.Encrypt(result.TimeSpent.ToString())
+                        TestTimeSpent = LOL.Encrypt(result.TimeSpent.ToString()),
+                        TestStart = true
                     };
 
                     context.StudentExamResults.Add(newResult);

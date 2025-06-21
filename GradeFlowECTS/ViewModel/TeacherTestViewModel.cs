@@ -50,6 +50,8 @@ namespace GradeFlowECTS.ViewModel
         public ICommand PreviousCommand { get; }
         public ICommand FinishCommand { get; }
 
+        public Action LOLOL { get; set; }
+
         public string TimeRemainingText => _timeRemaining.ToString(@"mm\:ss");
 
         private void LoadTest(Guid examId)
@@ -67,6 +69,11 @@ namespace GradeFlowECTS.ViewModel
                 .Where(q => q.IsSelected == true)
                 .OrderBy(_ => Guid.NewGuid())
                 .ToList();
+
+            if (_examTest.Exam.Discipline.DisciplineName == "МДК 01.02")
+            {
+                _questions = _questions.Take(30).ToList();
+            }
 
             if (_questions.Count == 0)
             {
@@ -159,13 +166,16 @@ namespace GradeFlowECTS.ViewModel
                     Mark = mark.ToString(),
                     TimeSpent = timeSpent.ToString(@"mm\:ss")
                 };
-
             }
             else
             {
                 MessageBox.Show($"{Math.Round(percent)} %\nБаллы: {score}/{total}\nОценка: {mark}", "Результат", MessageBoxButton.OK);
             }
+
+            LOLOL?.Invoke();
         }
+
+
 
         int studentId;
         Result result;

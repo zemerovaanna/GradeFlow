@@ -218,12 +218,23 @@ namespace GradeFlowECTS.View.Windows
             _editingQuestion.TopicId = ((TopicsDiscipline)TopicsComboBox.SelectedItem).TopicDisciplinesId;
             _editingQuestion.QuestionText = QuestionTextBox.Text;
             _editingQuestion.FileData = ConvertImageToBytes(QuestionImage.Source);
+            _editingQuestion.Topic.TopicName = LOL.Encrypt(_editingQuestion.Topic.TopicName);
 
             // Обновление ответов
             _editingQuestion.QuestionAnswers.Clear();
             foreach (var answerVM in _answers)
             {
+                answerVM.AnswerText = LOL.Encrypt(answerVM.AnswerText);
                 _editingQuestion.QuestionAnswers.Add(answerVM.ToModel());
+            }
+
+            foreach (var q in _editingQuestion.Topic.Questions)
+            {
+                q.QuestionText = LOL.Encrypt(q.QuestionText);
+                foreach (var a in q.QuestionAnswers)
+                {
+                    a.QuestionAnswerText = LOL.Encrypt(a.QuestionAnswerText);
+                }
             }
 
             // Сохранение

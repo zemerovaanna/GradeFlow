@@ -1,6 +1,7 @@
 ﻿using System.Security.Cryptography;
 using System.Text;
 using System.Windows;
+using System.Windows.Threading;
 using GradeFlowECTS.Analyzers;
 using GradeFlowECTS.Infrastructure;
 using GradeFlowECTS.Interfaces;
@@ -13,10 +14,19 @@ namespace GradeFlowECTS.View.Windows
     {
         AnalyzerViewModel _vm;
         Variant _variant;
+        private readonly int? _windowCloseTimeoutMinutes;
+        private TimeSpan _remainingTime;
+        private readonly DispatcherTimer _countdownTimer;
+        private int? было;
+        private int _STUDENT_ID;
+        private Guid _EXAM_ID;
 
         public StudentQualWindow(int studentId, Guid examId)
         {
             InitializeComponent();
+
+            _STUDENT_ID = studentId;
+            _EXAM_ID = examId;
             _vm = new AnalyzerViewModel(studentId, examId);
             DataContext = _vm;
 
@@ -27,6 +37,117 @@ namespace GradeFlowECTS.View.Windows
                 _variant = context.Variants.Where(v => v.VariantNumber == temp.VariantNumber).FirstOrDefault();
                 TaskText.Text = LOL.Decrypt(_variant.VariantText);
             }
+
+            _windowCloseTimeoutMinutes = context.ExamPractices.Where(e => e.ExamId == examId).Select(e => e.PracticeTimeToComplete).FirstOrDefault();
+            было = _windowCloseTimeoutMinutes;
+
+            var existingResult = context.StudentExamResults.FirstOrDefault(r =>
+                r.StudentId == studentId &&
+                r.ExamId == examId);
+
+            if (existingResult != null)
+            {
+                // Обновляем существующий результат
+                existingResult.VariantNumber = _variant.VariantNumber;
+                existingResult.PracticeTimeSpent = LOL.Encrypt("00:00");
+
+                context.StudentExamResults.Update(existingResult);
+            }
+            else
+            {
+                // Добавляем новый результат
+                var studentExamResult = new StudentExamResult
+                {
+                    StudentId = studentId,
+                    ExamId = examId,
+                    VariantNumber = _variant.VariantNumber,
+                    PracticeTimeSpent = LOL.Encrypt("00:00")
+                };
+
+                context.StudentExamResults.Add(studentExamResult);
+            }
+
+            context.SaveChanges();
+
+            if (_windowCloseTimeoutMinutes != 0 && _windowCloseTimeoutMinutes != null)
+            {
+                _remainingTime = TimeSpan.FromMinutes(Convert.ToDouble(_windowCloseTimeoutMinutes));
+
+                _countdownTimer = new DispatcherTimer
+                {
+                    Interval = TimeSpan.FromSeconds(1)
+                };
+                _countdownTimer.Tick += CountdownTimer_Tick;
+                _countdownTimer.Start();
+
+                UpdateCountdownDisplay();
+            }
+            else
+            {
+                CountdownLabel.Visibility = Visibility.Collapsed;
+            }
+        }
+
+        private void CountdownTimer_Tick(object sender, EventArgs e)
+        {
+            _remainingTime = _remainingTime.Subtract(TimeSpan.FromSeconds(1));
+            UpdateCountdownDisplay();
+
+            if (_remainingTime <= TimeSpan.Zero)
+            {
+                _countdownTimer.Stop();
+
+                DateTime now = DateTime.Now;
+                TimeOnly currentTime = TimeOnly.FromDateTime(now);
+                DateOnly currentDate = DateOnly.FromDateTime(now);
+
+                var context = new GradeFlowContext();
+
+                var existingResult = context.StudentExamResults.FirstOrDefault(r =>
+                    r.StudentId == _STUDENT_ID &&
+                    r.ExamId == _EXAM_ID);
+
+                TimeSpan elapsed = TimeSpan.FromMinutes(Convert.ToDouble(_windowCloseTimeoutMinutes)) - _remainingTime;
+                string timeResult = elapsed.ToString(@"mm\:ss") + $"/{было}:00";
+
+                if (existingResult != null)
+                {
+                    // Обновляем существующий результат
+                    existingResult.TimeEnded = currentTime;
+                    existingResult.DateEnded = currentDate;
+                    existingResult.VariantNumber = _variant.VariantNumber;
+                    existingResult.PracticeTimeSpent = LOL.Encrypt(timeResult);
+
+                    context.StudentExamResults.Update(existingResult);
+                }
+                else
+                {
+                    // Добавляем новый результат
+                    var studentExamResult = new StudentExamResult
+                    {
+                        StudentId = _STUDENT_ID,
+                        ExamId = _EXAM_ID,
+                        TimeEnded = currentTime,
+                        DateEnded = currentDate,
+                        VariantNumber = _variant.VariantNumber,
+                        PracticeTimeSpent = LOL.Encrypt(timeResult)
+                    };
+
+                    context.StudentExamResults.Add(studentExamResult);
+                }
+
+                context.SaveChanges();
+
+
+
+
+                Close(); // или Application.Current.Shutdown(), если ты хочешь всё завершить
+            }
+        }
+
+        private void UpdateCountdownDisplay()
+        {
+            CountdownLabel.Content = _remainingTime.ToString(@"mm\:ss");
         }
 
         static class LOL
@@ -177,6 +298,9 @@ namespace GradeFlowECTS.View.Windows
                 var examId = result.ExamId;
 
                 var existingResult = context.StudentExamResults.FirstOrDefault(r => r.StudentId == studentId && r.ExamId == examId);
+                
+                TimeSpan elapsed = TimeSpan.FromMinutes(Convert.ToDouble(_windowCloseTimeoutMinutes)) - _remainingTime;
+                string timeResult = elapsed.ToString(@"mm\:ss") + $"/{было}:00";
 
                 if (existingResult != null)
                 {
@@ -186,12 +310,14 @@ namespace GradeFlowECTS.View.Windows
                     existingResult.QualCriteria = result.QualCriteria;
                     existingResult.PracticeTotalScore = result.PracticeTotalScore;
                     existingResult.VariantNumber = result.VariantNumber;
+                    existingResult.PracticeTimeSpent = LOL.Encrypt(timeResult);
 
                     context.StudentExamResults.Update(existingResult);
                 }
                 else
                 {
                     // Добавление нового результата
+                    result.PracticeTimeSpent = LOL.Encrypt(timeResult);
                     context.StudentExamResults.Add(result);
                 }
 

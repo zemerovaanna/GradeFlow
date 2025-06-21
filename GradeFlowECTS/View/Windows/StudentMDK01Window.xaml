@@ -16,6 +16,7 @@
             </Grid.RowDefinitions>
 
             <StackPanel Grid.Row="0" Margin="5">
+                <Label x:Name="CountdownLabel" FontSize="30" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="Purple"/>
                 <TextBlock FontSize="20">
                     <Run Text="Примечание: " Foreground="{StaticResource AccentBrush}" FontWeight="Bold"/>
                     <Run Text="проверка происходит по заданию с учётом входных и выходных данных."/>

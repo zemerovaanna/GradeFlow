@@ -79,6 +79,7 @@ namespace GradeFlowECTS.ViewModel
             public string? DateEnded { get; set; }
             public string? TimeEnded { get; set; }
             public string? TotalScore { get; set; }
+            public string? myPracticeTimeSpent { get; set; }
         }
 
         public class GroupResultsViewModel
@@ -104,7 +105,8 @@ namespace GradeFlowECTS.ViewModel
                                 StudentName = $"{LOL.Decrypt(student.User.LastName)} {LOL.Decrypt(student.User.FirstName)}",
                                 DateEnded = result.DateEnded.ToString(),
                                 TimeEnded = result.TimeEnded.ToString(),
-                                TotalScore = LOL.Decrypt(result.PracticeTotalScore)
+                                TotalScore = LOL.Decrypt(result.PracticeTotalScore),
+                                myPracticeTimeSpent = LOL.Decrypt(result.PracticeTimeSpent)
                             }))
                 });
 

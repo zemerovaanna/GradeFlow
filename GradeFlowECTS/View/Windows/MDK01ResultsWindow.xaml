@@ -42,6 +42,7 @@
                                     </TextBlock>
                                     <TextBlock Text="{Binding StudentName}" />
                                     <TextBlock Text="{Binding TotalScore, StringFormat='Баллы: {0}'}" />
+                                    <TextBlock Text="{Binding myPracticeTimeSpent, StringFormat='Время: {0}'}" />
                                 </StackPanel>
 
                                 <!-- Правая часть -->

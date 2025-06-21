@@ -39,9 +39,9 @@
                     <ColumnDefinition Width="Auto" />
                 </Grid.ColumnDefinitions>
 
-                <PasswordBox x:Name="userPassword" BorderBrush="{Binding PasswordBorderBrush}" Grid.Column="0" infrastructure:PasswordBoxService.BoundPassword="{Binding TeacherPassword, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" MaxLength="255" />
+                <PasswordBox x:Name="userPassword" BorderBrush="{Binding PasswordBorderBrush}" Grid.Column="0" infrastructure:PasswordBoxService.BoundPassword="{Binding TeacherPassword, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" MaxLength="255"/>
 
-                <TextBox x:Name="userPasswordInput" Grid.Column="0" MaxLength="255" Text="{Binding TeacherPassword, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Visibility="Collapsed" />
+                <TextBox x:Name="userPasswordInput" Grid.Column="0" MaxLength="255" Text="{Binding TeacherPassword, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Visibility="Collapsed"/>
 
                 <Button Click="TogglePasswordVisibility" Background="Transparent" BorderBrush="Transparent" Content="😎" Grid.Column="1" />
             </Grid>

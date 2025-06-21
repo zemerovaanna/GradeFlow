@@ -10,6 +10,7 @@ using GradeFlowECTS.Repositories;
 using GradeFlowECTS.Services;
 using GradeFlowECTS.View.Windows;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.IdentityModel.Tokens;
 
 namespace GradeFlowECTS.View.Pages
 {
@@ -41,6 +42,8 @@ namespace GradeFlowECTS.View.Pages
             IExamContext examContext = App.Current.ServiceProvider.GetRequiredService<IExamContext>();
             _exam = _examRepository.GetExamById(examContext.CurrentExamId);
             DataContext = _exam;
+
+            TimeToCompleteOkDa.Text = Convert.ToString(context.ExamPractices.Where(e => e.ExamId == _exam.ExamId).Select(e => e.PracticeTimeToComplete).FirstOrDefault());
 
             string roleName = userRoleRepository.GetRoleNameById(roleId);
             switch (roleName)
@@ -81,12 +84,11 @@ namespace GradeFlowECTS.View.Pages
                 var existingExam = context.ExamPractices
                     .FirstOrDefault(et => et.ExamId == _exam.ExamId);
 
-                if (existingExam != null)
+                if (existingExam != null && !TimeToCompleteOkDa.Text.IsNullOrEmpty())
                 {
                     existingExam.PracticeTimeToComplete = Convert.ToInt32(TimeToCompleteOkDa.Text);
                     context.SaveChanges();
                 }
-
             }
             catch (Exception ex)
             {
@@ -145,10 +147,53 @@ namespace GradeFlowECTS.View.Pages
         private void TakeTestButton_Click(object sender, RoutedEventArgs e)
         {
             var context = new GradeFlowContext();
-            if(context.StudentExamResults.Where(s => s.ExamId == _exam.ExamId).Select(s => s.TestTotalScore) != null)
+            var mhm = context.StudentExamResults.Where(s => s.ExamId == _exam.ExamId).FirstOrDefault();
+            if (mhm == null || mhm.TestStart == false)
             {
-            StudentTestWindow window = new StudentTestWindow(_examRepository, _exam);
-            window.ShowDialog();
+                var user = App.Current.ServiceProvider.GetRequiredService<IUserContext>();
+                var student = context.Students.FirstOrDefault(s => s.StudentId == user.CurrentUser.StudentId);
+
+                if (student != null)
+                {
+                    DateTime now = DateTime.Now;
+                    TimeOnly currentTime = TimeOnly.FromDateTime(now);
+                    DateOnly currentDate = DateOnly.FromDateTime(now);
+
+                    // Поиск существующего результата
+                    Guid examId = _exam.ExamId;
+
+                    var existingResult = context.StudentExamResults
+                        .FirstOrDefault(r => r.StudentId == student.StudentId && r.ExamId == examId);
+
+                    if (existingResult != null)
+                    {
+                        // Обновление существующего результата
+                        existingResult.TimeEnded = currentTime;
+                        existingResult.DateEnded = currentDate;
+                        existingResult.TestStart = true;
+
+                        context.StudentExamResults.Update(existingResult);
+                    }
+                    else
+                    {
+                        // Создание нового результата
+                        StudentExamResult newResult = new StudentExamResult
+                        {
+                            StudentId = student.StudentId,
+                            ExamId = _exam.ExamId,
+                            TimeEnded = currentTime,
+                            DateEnded = currentDate,
+                            TestStart = true
+                        };
+
+                        context.StudentExamResults.Add(newResult);
+                    }
+
+                    context.SaveChanges();
+
+                    StudentTestWindow window = new StudentTestWindow(_examRepository, _exam);
+                    window.ShowDialog();
+                }
             }
             else
             {
@@ -159,7 +204,8 @@ namespace GradeFlowECTS.View.Pages
         private void CompletePracticalTaskButton_Click(object sender, RoutedEventArgs e)
         {
             var context = new GradeFlowContext();
-            if (context.StudentExamResults.Where(s => s.ExamId == _exam.ExamId).Select(s => s.PracticeTotalScore) != null)
+            var mhm = context.StudentExamResults.Where(s => s.ExamId == _exam.ExamId).FirstOrDefault();
+            if (mhm == null || mhm.PracticeTimeSpent.IsNullOrEmpty())
             {
                 if (_exam.Discipline.DisciplineName == "МДК 01.01")
                 {
@@ -181,7 +227,8 @@ namespace GradeFlowECTS.View.Pages
         private void TakeQualificationExamButton_Click(object sender, RoutedEventArgs e)
         {
             var context = new GradeFlowContext();
-            if (context.StudentExamResults.Where(s => s.ExamId == _exam.ExamId).Select(s => s.QualCriteria) != null)
+            var mhm = context.StudentExamResults.Where(s => s.ExamId == _exam.ExamId).FirstOrDefault();
+            if (mhm == null || mhm.PracticeTimeSpent.IsNullOrEmpty())
             {
                 StudentQualWindow window = new StudentQualWindow(_userContext.CurrentUser.StudentId ?? 0, _exam.ExamId);
                 window.ShowDialog();

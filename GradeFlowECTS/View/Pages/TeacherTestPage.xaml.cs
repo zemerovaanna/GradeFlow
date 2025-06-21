@@ -10,7 +10,13 @@ namespace GradeFlowECTS.View.Pages
         public TeacherTestPage(ExamRepository examRepository)
         {
             InitializeComponent();
-            DataContext = new TeacherTestViewModel(examRepository);
+            var l = new TeacherTestViewModel(examRepository);
+            l.LOLOL = () =>
+            {
+                Window? window = Window.GetWindow(this);
+                window?.Close();
+            };
+            DataContext = l;
         }
 
         private void CheckBox_Checked(object sender, RoutedEventArgs e)

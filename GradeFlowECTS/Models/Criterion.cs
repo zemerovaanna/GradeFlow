@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-
-namespace GradeFlowECTS.Models;
+﻿namespace GradeFlowECTS.Models;
 
 public partial class Criterion
 {

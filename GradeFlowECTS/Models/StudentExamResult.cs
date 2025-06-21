@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-
-namespace GradeFlowECTS.Models;
+﻿namespace GradeFlowECTS.Models;
 
 public partial class StudentExamResult
 {
@@ -16,6 +13,8 @@ public partial class StudentExamResult
     public DateOnly? DateEnded { get; set; }
 
     public string? TestTimeSpent { get; set; }
+
+    public string? PracticeTimeSpent { get; set; }
 
     public string? Mdkcode { get; set; }
 
@@ -32,6 +31,8 @@ public partial class StudentExamResult
     public byte? TaskNumber { get; set; }
 
     public int? VariantNumber { get; set; }
+
+    public bool? TestStart { get; set; } = false;
 
     public virtual Exam Exam { get; set; } = null!;
 
