@@ -1,6 +1,6 @@
 USE [master]
 GO
-/****** Object:  Database [GradeFlow]    Script Date: 18.06.2025 7:38:12 ******/
+/****** Object:  Database [GradeFlow]    Script Date: 21.06.2025 17:06:10 ******/
 CREATE DATABASE [GradeFlow]
 GO
 IF (1 = FULLTEXTSERVICEPROPERTY('IsFullTextInstalled'))
@@ -76,7 +76,7 @@ ALTER DATABASE [GradeFlow] SET QUERY_STORE (OPERATION_MODE = READ_WRITE, CLEANUP
 GO
 USE [GradeFlow]
 GO
-/****** Object:  Table [dbo].[Criteria]    Script Date: 18.06.2025 7:38:12 ******/
+/****** Object:  Table [dbo].[Criteria]    Script Date: 21.06.2025 17:06:10 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -93,7 +93,7 @@ PRIMARY KEY CLUSTERED
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[Disciplines]    Script Date: 18.06.2025 7:38:12 ******/
+/****** Object:  Table [dbo].[Disciplines]    Script Date: 21.06.2025 17:06:10 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -107,23 +107,22 @@ CREATE TABLE [dbo].[Disciplines](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[ExamPractices]    Script Date: 18.06.2025 7:38:12 ******/
+/****** Object:  Table [dbo].[ExamPractices]    Script Date: 21.06.2025 17:06:10 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
 GO
 CREATE TABLE [dbo].[ExamPractices](
 	[ExamPracticeId] [int] IDENTITY(1,1) NOT NULL,
-	[DisciplineId] [int] NOT NULL,
-	[ExamPracticeNumber] [tinyint] NULL,
-	[ExamPracticeText] [nvarchar](max) NULL,
+	[ExamId] [uniqueidentifier] NOT NULL,
+	[PracticeTimeToComplete] [int] NOT NULL,
  CONSTRAINT [PK_ExamPractices] PRIMARY KEY CLUSTERED 
 (
 	[ExamPracticeId] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
-) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
+) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[Exams]    Script Date: 18.06.2025 7:38:12 ******/
+/****** Object:  Table [dbo].[Exams]    Script Date: 21.06.2025 17:06:10 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -141,7 +140,7 @@ CREATE TABLE [dbo].[Exams](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[ExamTests]    Script Date: 18.06.2025 7:38:12 ******/
+/****** Object:  Table [dbo].[ExamTests]    Script Date: 21.06.2025 17:06:10 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -157,7 +156,7 @@ CREATE TABLE [dbo].[ExamTests](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[Groups]    Script Date: 18.06.2025 7:38:12 ******/
+/****** Object:  Table [dbo].[Groups]    Script Date: 21.06.2025 17:06:10 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -172,7 +171,7 @@ CREATE TABLE [dbo].[Groups](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[GroupsExams]    Script Date: 18.06.2025 7:38:12 ******/
+/****** Object:  Table [dbo].[GroupsExams]    Script Date: 21.06.2025 17:06:10 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -187,7 +186,7 @@ CREATE TABLE [dbo].[GroupsExams](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[Modules]    Script Date: 18.06.2025 7:38:12 ******/
+/****** Object:  Table [dbo].[Modules]    Script Date: 21.06.2025 17:06:10 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -201,7 +200,7 @@ PRIMARY KEY CLUSTERED
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[QualificationExamScores]    Script Date: 18.06.2025 7:38:12 ******/
+/****** Object:  Table [dbo].[QualificationExamScores]    Script Date: 21.06.2025 17:06:10 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -217,7 +216,7 @@ CREATE TABLE [dbo].[QualificationExamScores](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[QuestionAnswers]    Script Date: 18.06.2025 7:38:12 ******/
+/****** Object:  Table [dbo].[QuestionAnswers]    Script Date: 21.06.2025 17:06:10 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -235,7 +234,7 @@ CREATE TABLE [dbo].[QuestionAnswers](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[Questions]    Script Date: 18.06.2025 7:38:12 ******/
+/****** Object:  Table [dbo].[Questions]    Script Date: 21.06.2025 17:06:10 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -255,7 +254,7 @@ CREATE TABLE [dbo].[Questions](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[QuestionTypes]    Script Date: 18.06.2025 7:38:12 ******/
+/****** Object:  Table [dbo].[QuestionTypes]    Script Date: 21.06.2025 17:06:10 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -270,7 +269,7 @@ CREATE TABLE [dbo].[QuestionTypes](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[ScoreOptions]    Script Date: 18.06.2025 7:38:12 ******/
+/****** Object:  Table [dbo].[ScoreOptions]    Script Date: 21.06.2025 17:06:10 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -286,7 +285,7 @@ PRIMARY KEY CLUSTERED
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[StudentAttempts]    Script Date: 18.06.2025 7:38:12 ******/
+/****** Object:  Table [dbo].[StudentAttempts]    Script Date: 21.06.2025 17:06:10 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -302,7 +301,7 @@ CREATE TABLE [dbo].[StudentAttempts](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[StudentExamResults]    Script Date: 18.06.2025 7:38:12 ******/
+/****** Object:  Table [dbo].[StudentExamResults]    Script Date: 21.06.2025 17:06:10 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -314,6 +313,7 @@ CREATE TABLE [dbo].[StudentExamResults](
 	[TimeEnded] [time](0) NULL,
 	[DateEnded] [date] NULL,
 	[TestTimeSpent] [nvarchar](max) NULL,
+	[PracticeTimeSpent] [nvarchar](max) NULL,
 	[MDKCode] [nvarchar](max) NULL,
 	[MDKCriteria] [nvarchar](max) NULL,
 	[QualCriteria] [nvarchar](max) NULL,
@@ -322,13 +322,14 @@ CREATE TABLE [dbo].[StudentExamResults](
 	[PracticeTotalScore] [nvarchar](max) NULL,
 	[TaskNumber] [tinyint] NULL,
 	[VariantNumber] [int] NULL,
+	[TestStart] [bit] NULL,
  CONSTRAINT [PK_StudentExam] PRIMARY KEY CLUSTERED 
 (
 	[StudentExamId] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[Students]    Script Date: 18.06.2025 7:38:12 ******/
+/****** Object:  Table [dbo].[Students]    Script Date: 21.06.2025 17:06:10 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -343,7 +344,7 @@ CREATE TABLE [dbo].[Students](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[Teachers]    Script Date: 18.06.2025 7:38:12 ******/
+/****** Object:  Table [dbo].[Teachers]    Script Date: 21.06.2025 17:06:10 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -358,7 +359,7 @@ CREATE TABLE [dbo].[Teachers](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[TopicsDisciplines]    Script Date: 18.06.2025 7:38:12 ******/
+/****** Object:  Table [dbo].[TopicsDisciplines]    Script Date: 21.06.2025 17:06:10 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -373,7 +374,7 @@ CREATE TABLE [dbo].[TopicsDisciplines](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[TopicsExamTest]    Script Date: 18.06.2025 7:38:12 ******/
+/****** Object:  Table [dbo].[TopicsExamTest]    Script Date: 21.06.2025 17:06:10 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -389,7 +390,7 @@ CREATE TABLE [dbo].[TopicsExamTest](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[UserRoles]    Script Date: 18.06.2025 7:38:12 ******/
+/****** Object:  Table [dbo].[UserRoles]    Script Date: 21.06.2025 17:06:10 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -403,7 +404,7 @@ CREATE TABLE [dbo].[UserRoles](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[Users]    Script Date: 18.06.2025 7:38:12 ******/
+/****** Object:  Table [dbo].[Users]    Script Date: 21.06.2025 17:06:10 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -423,7 +424,7 @@ CREATE TABLE [dbo].[Users](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[Variants]    Script Date: 18.06.2025 7:38:12 ******/
+/****** Object:  Table [dbo].[Variants]    Script Date: 21.06.2025 17:06:10 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -466,11 +467,21 @@ INSERT [dbo].[Disciplines] ([DisciplineId], [DisciplineName]) VALUES (3, N'dmi88
 GO
 SET IDENTITY_INSERT [dbo].[Disciplines] OFF
 GO
-INSERT [dbo].[Exams] ([ExamId], [ExamName], [OpenDate], [OpenTime], [DisciplineId], [OwnerTeacherId]) VALUES (N'5207b3b5-c78a-4888-890f-e931308fb5bf', N'5yKQWmQyCim3ySVRAD/Me/h6nP4Sl5VuEFJAJasyd9ZgVVAuOgJ9R2dMGc6Bcl9g', CAST(N'2025-06-18' AS Date), CAST(N'10:00:00' AS Time), 1, 1)
+SET IDENTITY_INSERT [dbo].[ExamPractices] ON 
+GO
+INSERT [dbo].[ExamPractices] ([ExamPracticeId], [ExamId], [PracticeTimeToComplete]) VALUES (2, N'751c98fe-19d7-431a-9266-9716837a5d0a', 40)
+GO
+INSERT [dbo].[ExamPractices] ([ExamPracticeId], [ExamId], [PracticeTimeToComplete]) VALUES (3, N'5207b3b5-c78a-4888-890f-e931308fb5bf', 1)
+GO
+SET IDENTITY_INSERT [dbo].[ExamPractices] OFF
+GO
+INSERT [dbo].[Exams] ([ExamId], [ExamName], [OpenDate], [OpenTime], [DisciplineId], [OwnerTeacherId]) VALUES (N'751c98fe-19d7-431a-9266-9716837a5d0a', N'ZlHj2EYUtwFtWNLrUo3JfFsTD1cuEnUKzM2ZWtnCr9QJJPBwlywy5w==', CAST(N'2025-06-21' AS Date), CAST(N'10:00:00' AS Time), 2, 1)
+GO
+INSERT [dbo].[Exams] ([ExamId], [ExamName], [OpenDate], [OpenTime], [DisciplineId], [OwnerTeacherId]) VALUES (N'5207b3b5-c78a-4888-890f-e931308fb5bf', N'8+g+rskiApHokyOl761mHetGr7i3V2Xe7YBLn9Pk9R1HEOuD14xiUQ==', CAST(N'2025-06-21' AS Date), CAST(N'10:00:00' AS Time), 1, 1)
 GO
 SET IDENTITY_INSERT [dbo].[ExamTests] ON 
 GO
-INSERT [dbo].[ExamTests] ([ExamTestId], [ExamId], [TimeToComplete], [TotalPoints]) VALUES (1, N'5207b3b5-c78a-4888-890f-e931308fb5bf', 60, 21)
+INSERT [dbo].[ExamTests] ([ExamTestId], [ExamId], [TimeToComplete], [TotalPoints]) VALUES (1, N'5207b3b5-c78a-4888-890f-e931308fb5bf', 60, 24)
 GO
 SET IDENTITY_INSERT [dbo].[ExamTests] OFF
 GO
@@ -496,13 +507,21 @@ SET IDENTITY_INSERT [dbo].[Groups] OFF
 GO
 SET IDENTITY_INSERT [dbo].[GroupsExams] ON 
 GO
-INSERT [dbo].[GroupsExams] ([GroupExamId], [GroupId], [ExamId]) VALUES (6, 1, N'5207b3b5-c78a-4888-890f-e931308fb5bf')
+INSERT [dbo].[GroupsExams] ([GroupExamId], [GroupId], [ExamId]) VALUES (26, 1, N'751c98fe-19d7-431a-9266-9716837a5d0a')
 GO
-INSERT [dbo].[GroupsExams] ([GroupExamId], [GroupId], [ExamId]) VALUES (7, 2, N'5207b3b5-c78a-4888-890f-e931308fb5bf')
+INSERT [dbo].[GroupsExams] ([GroupExamId], [GroupId], [ExamId]) VALUES (27, 2, N'751c98fe-19d7-431a-9266-9716837a5d0a')
 GO
-INSERT [dbo].[GroupsExams] ([GroupExamId], [GroupId], [ExamId]) VALUES (8, 3, N'5207b3b5-c78a-4888-890f-e931308fb5bf')
+INSERT [dbo].[GroupsExams] ([GroupExamId], [GroupId], [ExamId]) VALUES (28, 3, N'751c98fe-19d7-431a-9266-9716837a5d0a')
 GO
-INSERT [dbo].[GroupsExams] ([GroupExamId], [GroupId], [ExamId]) VALUES (9, 4, N'5207b3b5-c78a-4888-890f-e931308fb5bf')
+INSERT [dbo].[GroupsExams] ([GroupExamId], [GroupId], [ExamId]) VALUES (29, 4, N'751c98fe-19d7-431a-9266-9716837a5d0a')
+GO
+INSERT [dbo].[GroupsExams] ([GroupExamId], [GroupId], [ExamId]) VALUES (30, 1, N'5207b3b5-c78a-4888-890f-e931308fb5bf')
+GO
+INSERT [dbo].[GroupsExams] ([GroupExamId], [GroupId], [ExamId]) VALUES (31, 2, N'5207b3b5-c78a-4888-890f-e931308fb5bf')
+GO
+INSERT [dbo].[GroupsExams] ([GroupExamId], [GroupId], [ExamId]) VALUES (32, 3, N'5207b3b5-c78a-4888-890f-e931308fb5bf')
+GO
+INSERT [dbo].[GroupsExams] ([GroupExamId], [GroupId], [ExamId]) VALUES (33, 4, N'5207b3b5-c78a-4888-890f-e931308fb5bf')
 GO
 SET IDENTITY_INSERT [dbo].[GroupsExams] OFF
 GO
@@ -524,21 +543,21 @@ INSERT [dbo].[QuestionAnswers] ([QuestionAnswerId], [QuestionId], [IsCorrect], [
 GO
 INSERT [dbo].[QuestionAnswers] ([QuestionAnswerId], [QuestionId], [IsCorrect], [QuestionAnswerText], [FileName], [FileData]) VALUES (4, 1, 0, N'8k/6++i/sbipfK4iGllp+wMtEHVgIAeGN9VSLgjOn5+DQkGrcx3z7lfbiziHtG2Es6lblB5bb5dITIhf5Rywo6c5BEDfjIpn2UlDNEjOTw==', NULL, NULL)
 GO
-INSERT [dbo].[QuestionAnswers] ([QuestionAnswerId], [QuestionId], [IsCorrect], [QuestionAnswerText], [FileName], [FileData]) VALUES (5, 2, 0, N'Zmv44SAl3S9yvW/K8QBhREWzJaoIWCf87AUj1Xfywg==', NULL, NULL)
+INSERT [dbo].[QuestionAnswers] ([QuestionAnswerId], [QuestionId], [IsCorrect], [QuestionAnswerText], [FileName], [FileData]) VALUES (5, 2, 0, N'dwgnlrbBmhKLOrY05kkRQvUVyw3KqmEhnEn3oya2LSqlmJe9aT9J36snOjC1Mv2qhDiKTW0z36S5Qdxf0R19WDbGVDW1zeAeqH8VcRLiA12ikAg1lz3vl9hlEBit7ieS413A1oux75A0SwqKclMEvFjAGadnkfNL07nqIQ==', NULL, NULL)
 GO
-INSERT [dbo].[QuestionAnswers] ([QuestionAnswerId], [QuestionId], [IsCorrect], [QuestionAnswerText], [FileName], [FileData]) VALUES (6, 2, 0, N'A2pqXyK3cfQMEdV8VEXAm6t0mqZocd/qo6hASavgp1Q=', NULL, NULL)
+INSERT [dbo].[QuestionAnswers] ([QuestionAnswerId], [QuestionId], [IsCorrect], [QuestionAnswerText], [FileName], [FileData]) VALUES (6, 2, 0, N'nuW8A2OMBVysx8ixPhns/G67iu3/08IfT3BljACpe9ccQ0zySCrmagp6U28o0792u+Qx6YT8t7eCds0S8NXtzz8Yp4uRbwyb1AbFcSy1Rpl/EM/EzkYQQrmFF9FhGajcdonYlUspvbVf4c9PGO++1oQtLeI3xQh1WSAjhA==', NULL, NULL)
 GO
-INSERT [dbo].[QuestionAnswers] ([QuestionAnswerId], [QuestionId], [IsCorrect], [QuestionAnswerText], [FileName], [FileData]) VALUES (7, 2, 1, N'q3Llj4jqzaIOL8w925u3j+pB+w77fO6stcs85qHRMd7kDWpJsg==', NULL, NULL)
+INSERT [dbo].[QuestionAnswers] ([QuestionAnswerId], [QuestionId], [IsCorrect], [QuestionAnswerText], [FileName], [FileData]) VALUES (7, 2, 1, N'DSkKq2pRG5bi+r5sOrAk6IBJeScYkNqcbL31jjZzkrsxPjeW646WP/6hiKvHkxZUUdwVKRmrn15Q8My0hC74QFVqrxGxTj7byYmUCZ5poUte4R0CucdEZrou4Hy7liNlsS2jHeIhG35JciwziwP8y9FylUfy4Sg2i6WaIplSVqhEW0UmIQjnww==', NULL, NULL)
 GO
-INSERT [dbo].[QuestionAnswers] ([QuestionAnswerId], [QuestionId], [IsCorrect], [QuestionAnswerText], [FileName], [FileData]) VALUES (8, 2, 0, N'dtu3hQE1qpa+Joda1YOoYchcdS1Z0hkU7eperFMAwe7rdA==', NULL, NULL)
+INSERT [dbo].[QuestionAnswers] ([QuestionAnswerId], [QuestionId], [IsCorrect], [QuestionAnswerText], [FileName], [FileData]) VALUES (8, 2, 0, N'BgkrHMFesgwpx1CtLq8NXbbgkE6tWCBxKCbXvpSQqtlGe+RYSaR3uxwNC5dPX5xPF73NnPLZbUEUoMecp/ob4lvEndRNoYRnZK70yiYewlzW1kGX213pA/gTDYKdtdbE36sYwbEPjhprOTzJ37Z2ZG5L8hZyB+p0PDLDT8618oBJbs0y', NULL, NULL)
 GO
-INSERT [dbo].[QuestionAnswers] ([QuestionAnswerId], [QuestionId], [IsCorrect], [QuestionAnswerText], [FileName], [FileData]) VALUES (9, 3, 0, N'QWHJvXcDKr476ju2YaakWGXSzQhjGNCBMwOqQFpUvpB9z5fEz9Q/pz/0jl6HSgZ6rzAoZeeLIjmNMXMBk+h8vkzaxsy6bDXBBJh/eE4DNf88nTKuV77QFtIn', NULL, NULL)
+INSERT [dbo].[QuestionAnswers] ([QuestionAnswerId], [QuestionId], [IsCorrect], [QuestionAnswerText], [FileName], [FileData]) VALUES (9, 3, 0, N'/2tN49IOVg3XDiN1nrJfwf6oBZs7maeqPSmyXFAdiv0KRwOGv8BABJz0zTOiunPOGXmmp2LxuF4y1EXhPI85mJCyS1Uzq1Mp3tLMMujuqDsoZHdv4G5W104078soXtD7aL5Xjx7kEvloAJ8zNbIqXdsT6mY4h1hkf6OfwCUVYOaTuoDe84MwS6mla3oObjv48C3KqQ1EhaaBLJUCMjPvnL9/8kEqw8I54srEI3mtHp/rnIx7TySLPXrD2nxxeRVyA+CKgBTfAwrtlXqlHm4yZGqei3FhIyhhyjd9iRTstJwKv8yd', NULL, NULL)
 GO
-INSERT [dbo].[QuestionAnswers] ([QuestionAnswerId], [QuestionId], [IsCorrect], [QuestionAnswerText], [FileName], [FileData]) VALUES (10, 3, 1, N'MJ1pmrRxmRuqFAVhWqxLs7Puz3R1Hh6yI+Zkat/I296OGCRoE7YU5PTI4nlRG1SG2nP80zdzUb3W0erCo81pcdzQq25exYcHzheo84yZAhCQBd+MP2srLde59nQbzBhiBD5JoGLfuAvo7pN2a5FC9jy0bJsq9ikN', NULL, NULL)
+INSERT [dbo].[QuestionAnswers] ([QuestionAnswerId], [QuestionId], [IsCorrect], [QuestionAnswerText], [FileName], [FileData]) VALUES (10, 3, 1, N'o/TQgVhUZ3FZCpwgj7sJUSmL4K1hN9B7z/1p5PS7VOuN6Ubs+wkdYZqUjUfkyBZTieOst4b6E4sd1UX26gDdrYZk7aXIBZIKWjOFGYkSXYLtQ2F6SiSSmM0Hzedo5CCXmdW5U2fifBPvbUIz3RI6eNMx0n1KoNtOo7k7SL51u7XRIBKYn7zomPBh4SHb8RrmZO3H0uTeA29aEVksBzWr9C91xhxMp+qjgO8cE//lPN80il1PLXrauufPIbo7eYDxcEzB09Is9NBVwpCCmrVxF0zAUCiHwFttC7jQtP3V0d0VvLT3GRoFTZg2iqUdcJIe9s1XFhmiw96yTLNDoI+4StBo4P3C9Z0DDJcL2JAl3/RuzqdqrHD9gg==', NULL, NULL)
 GO
-INSERT [dbo].[QuestionAnswers] ([QuestionAnswerId], [QuestionId], [IsCorrect], [QuestionAnswerText], [FileName], [FileData]) VALUES (11, 3, 0, N'q7aC4azUviPywtOKkHLQkdJCaUK6Ve04QfewKn9FfGfc+LVs3V8ZugWsnQHCiKpqp8Ib16T+KtxtVE6mzfReNN6ka4e0', NULL, NULL)
+INSERT [dbo].[QuestionAnswers] ([QuestionAnswerId], [QuestionId], [IsCorrect], [QuestionAnswerText], [FileName], [FileData]) VALUES (11, 3, 0, N'bea8TZzjcv067U5q+gfZntDRZeS2Zw0Add41OMpJ9uGZnkYVW1bC8ate6s5RxKgUr4gO8tlDesQ8E/yyDEac2FrfD2PNNUvfKtjy83Ji3THEtiFbAVL23wPKMKijP6yx6Y0fuaep6lownkNHpVXkv4rqeMLl1HZdAC7lLIpscpCY4yv3DqaBL+5fjjlHEfkDk3Mt6oejYx97EUQJjj9sVjAPkJeD/ApTn2kvQBzyQaKv0OpXUL+xq67sE9k=', NULL, NULL)
 GO
-INSERT [dbo].[QuestionAnswers] ([QuestionAnswerId], [QuestionId], [IsCorrect], [QuestionAnswerText], [FileName], [FileData]) VALUES (12, 3, 0, N'82BtkQtxwyCSQ1iJGGDmO2Z1fs/bbvc+Qvm0At0HwKf8mfbzuGPPpUG9hLuhpIVsFph+EWbnl8CnA4aYow65Pw0=', NULL, NULL)
+INSERT [dbo].[QuestionAnswers] ([QuestionAnswerId], [QuestionId], [IsCorrect], [QuestionAnswerText], [FileName], [FileData]) VALUES (12, 3, 0, N'yc6SAssBhScQY/gPv5DVyZnE4kPJk+yLJgaQwmzSGJtWh6jt4XEGv4iefu1N/IhlWZ8hbCbGEJdGpCWixvdVZ9Pp5xYTyLujgTEI6u8w4FcoW6qLh5PySRynEijjf1Z4Bmma1l/MbDPEvRi6ZpEX496CLmHxY/0grYdLtyfV4oe9GUTCF3n8giBFnn6Mp3uHDbyG4sjGuaWeXxgSN0nVVbK74lZBcy/QQFggsQdQSBjFdrta9wINXw==', NULL, NULL)
 GO
 INSERT [dbo].[QuestionAnswers] ([QuestionAnswerId], [QuestionId], [IsCorrect], [QuestionAnswerText], [FileName], [FileData]) VALUES (13, 4, 0, N'jy5Swpp2Eo4HZf6YZU8a8w9/Oa2Dg6VZrkrwDaKY5TP+2dY4OD08JMGvsllLZTKqIprYGMu8GxPKNJx2zu+XXUl/CFbZEg==', NULL, NULL)
 GO
@@ -684,6 +703,30 @@ INSERT [dbo].[QuestionAnswers] ([QuestionAnswerId], [QuestionId], [IsCorrect], [
 GO
 INSERT [dbo].[QuestionAnswers] ([QuestionAnswerId], [QuestionId], [IsCorrect], [QuestionAnswerText], [FileName], [FileData]) VALUES (84, 21, 0, N'Wwkg2ig9agB3+1VFK+2YnIE4KmSlJY/1ailOboxRTRBFOsBQg7fF3LuMx+HWJCYI9kCSy1F2oiRqX1UXpC4=', NULL, NULL)
 GO
+INSERT [dbo].[QuestionAnswers] ([QuestionAnswerId], [QuestionId], [IsCorrect], [QuestionAnswerText], [FileName], [FileData]) VALUES (85, 1, 0, N'Lxd5bDHjxjZRz1gXHPbxSsSXWXcLaRz4roufV0ff3Dw4GphKzBZ3XSwGXEN+hsSMkmHJecQUuTipm2FR4x4MHzThi1wFpvB/3/ijy7m6Xg79fMeU1il+KYQWADjPK59Pk0FBBN+8ALSUmTCCltRQ6v8Gcmokq9E5CFwOEnZUp5TfObqfe/f6L3AEEt6uwJ/KMJH7ew==', NULL, NULL)
+GO
+INSERT [dbo].[QuestionAnswers] ([QuestionAnswerId], [QuestionId], [IsCorrect], [QuestionAnswerText], [FileName], [FileData]) VALUES (86, 1, 1, N'2g5zFlgg0+eIMePFBIF4obRXYwjUna9BdS3yRE5hvFpMZm55GEquXmSxihAs5rykuZ9zERw9DLxIFYTmqo/uIXCk3SiVIg4oQSFCmoKYoBmGrWwkgbGC1vo4BS2fWPfp+W2+PIxTXJWCd2eMntR+JToofo2bxQWbJj2ieATFSE7qbDMexM+m0rb4B7JwqiDwbxKK8NnhaFFF6ZInvRo1Rq6Iyo5qH35shXYKcztw9MbhKBYMAAn5SAwnRjbPjOR/', NULL, NULL)
+GO
+INSERT [dbo].[QuestionAnswers] ([QuestionAnswerId], [QuestionId], [IsCorrect], [QuestionAnswerText], [FileName], [FileData]) VALUES (87, 1, 0, N'SSQKDYTzUWKaoUVPWlyokRHw6wHSH7M2pMFlkO2kuSj2of17kxVSF4uhMyVVPDF5++5T8p4e7H7Lu71/ZVL8cnN4jjNFk+vfjs1WlGTcxEMvvLn1oHe371xvGG6/V0DxnRIImG4cZKZZJGuO8Zu7NJHV1aMyacdVt24/yeGLlZ+S3ZfxcrwbYMY81Jjjic4XmS4vH02/iivvc+uDnl5g23wVlhsS9OPQO1RhGBRfB5Ln7I7XpE09+PSfeDjkBvd7yeY3bg==', NULL, NULL)
+GO
+INSERT [dbo].[QuestionAnswers] ([QuestionAnswerId], [QuestionId], [IsCorrect], [QuestionAnswerText], [FileName], [FileData]) VALUES (88, 1, 0, N'BU6MjLLvKaZEONGdKC7XoOgjqzMInCGlPIHaNvwMQPUP1zIv74PqgLGfdHiZOrmrl3UYivfAm5vWFMPbLYcurcNbgKG7nOrRAvpJVIrIFnjZx5qRMjHFHEgi/nE8DwfoiL4PGNM2JzPAzYmoUUOMIzJE5Le/HyRRC9bK9qusZ+G8F8mfRPBcMA==', NULL, NULL)
+GO
+INSERT [dbo].[QuestionAnswers] ([QuestionAnswerId], [QuestionId], [IsCorrect], [QuestionAnswerText], [FileName], [FileData]) VALUES (89, 1, 0, N'AV2DlCu0+hr529ay6IpBKKM+3YIqkGrpf9f62+Vd9geNkxQP1Xkf9VMQlA3AuvEpOWTz+vYdn7SGhL13AWvhO8tx6jEwt3zzZXGGumD/KnSahmENzyGzBqTv+xyirWKrwMPyJpCuHgyp8WUsItsh9AbDOhCNBSTpRKNqmd3Pgwi0L+6KnmyTdojvzm4oyYx6ujFraQ==', NULL, NULL)
+GO
+INSERT [dbo].[QuestionAnswers] ([QuestionAnswerId], [QuestionId], [IsCorrect], [QuestionAnswerText], [FileName], [FileData]) VALUES (90, 1, 1, N'w72Kf3hLavdYlLicWr7xnJEv/hlFgPzhJjTg5BnNGAZh9QgiHj8W3R2aYy51doyARI1uoD9KxMQWP6h40hhtYQVDkkjaqaf5UaXRlogLrgLveP/zvYZlCh0L49LQ/G6m5hEnrMZibu4myKtd4VwBonM0ihbRyujYdrw/Fb39CsaJ9PIrFxJ+B4ZkSwouo8EUB/bjsj2q4CU7bgTxL5XEGV7ux18p8omJfMlyF5x3dAWaeIfu4iELeQlRmM8JQxng', NULL, NULL)
+GO
+INSERT [dbo].[QuestionAnswers] ([QuestionAnswerId], [QuestionId], [IsCorrect], [QuestionAnswerText], [FileName], [FileData]) VALUES (91, 1, 0, N'iaqA4HGiehiDm+ieiv6EniRId347ix+hU3UNWfHGSIA7d5I78YFiuJvnXjBUDuIo/wSu9TOX+MEgmIwwoUJdcp9edGbpf0AFM4sW7QZNIGQ+ZIyTKOnS5msXjSlNNk8tXsbBfN/3Ows5vyVCIbhmNkhBF7qSb8si7bWrxZzCeOfcnA+2RnBqrbfswX2dcZI2H1dd9Te/0GmtUUZOiqZHO1e2GYgP+r3QWyyHBJfbiL+hBJ3nhtj+pARDqqvZ+++9glulUw==', NULL, NULL)
+GO
+INSERT [dbo].[QuestionAnswers] ([QuestionAnswerId], [QuestionId], [IsCorrect], [QuestionAnswerText], [FileName], [FileData]) VALUES (92, 1, 0, N'TWZxGKRf4gKuxWeg4m3HHn0ZfHBnjB84TUCTXqo+PX6ZMKcgkVYqEozeZwrnar9oMEEYP8zP5hNqBEE2vPzjMU4rwSrk6ZOUGMUrhjfRmXqVOZe0prQ2708YeCtALYxOW//saHnhoTDs1E+aWNpZFyNrzJdV0yx1JlcHxYVNhYQfMl81tZ1CeQ==', NULL, NULL)
+GO
+INSERT [dbo].[QuestionAnswers] ([QuestionAnswerId], [QuestionId], [IsCorrect], [QuestionAnswerText], [FileName], [FileData]) VALUES (93, 1, 0, N'/pk/URd/AJAVM4rnYeopqBzQdn6qyz1LrM0SIZqvHzRvkwu2+1CpuBB/G8Yv0zRb8YmBgbjCAyTN4gD/A+rCBuZlK4+AEfY1ukHaXRGbuGe6KZf4+mWM7GviSOxzsOxMMRh38NbL/DqenDLrWInuKNWNZRoUSg4plYmt1/JvzJ6gO6TgoBF9TXc5jKXAoqDIZJKjk4ozI+S3gYjFh/6tTD8eeHz7VCxbK8TQS8QTwq+8LgE6FvKc/22HwhQ3sUpFELastIwSe13xQlrHlHeec5lOvdf7PW2neW8T8OtteFJ1c0Lo', NULL, NULL)
+GO
+INSERT [dbo].[QuestionAnswers] ([QuestionAnswerId], [QuestionId], [IsCorrect], [QuestionAnswerText], [FileName], [FileData]) VALUES (94, 1, 1, N'oV82qdPVGX0o+1ghbjr8yyW0jVWwYKZ0xzasdGdjk9KWK8wYFk4M2Wr3C2oEYbu26AvN8FjsqSLonc1fyqmhJnO6MTOUZi+2K2V1ip//RNylgpBQej2V9wUmngbotLgGIvO9XE+Obr7syQb+GWhwM3yUnMLRJ0vAyhrVqoPGxwNoKqTxwl4mh/oLUHbId4yAJBEODUUSlNEER+PMF8LMtoFPWlqE1zr6sE/DXGmW/vcATDceZUVaeW5hOm/lbg09V1GJJR+FQlenhWH9ZrCASINu7bXnD/ECSon12WBH331hOYRyDYg1ahWAiGL6ZeXbmeJrS6kyRQ0m+ZubxcqzvFkfIgVd/j5hSiJb/huCHt3iMQHMoCANhPjfwak=', NULL, NULL)
+GO
+INSERT [dbo].[QuestionAnswers] ([QuestionAnswerId], [QuestionId], [IsCorrect], [QuestionAnswerText], [FileName], [FileData]) VALUES (95, 1, 0, N'yJvEFKp6lZoPYFjMVdyPgxo8uZLa4kN72a/vFGVsDyNgi5nG64+3YQM2mNyWiQSrgXJnvtQBr+yhs/mkWhYs0oSES5BaXnXnZ0YiaBI1ZVSPtcfMrZZH1dzZ/8NE07QeJMX+FeSE6g1hiwhQcIMVCQimbT085X/a0ZDkrafOO5kAYWeldXasEubC1I7bTLv/SYQhbygsG8ySFVSgO7t3d9YGRp2YT1AybiFdLvwXmk4mW7HbV+jB4xp/xrDUO+jotqwrl9ve2Cuh/N37y5aJ19+7kLWL09ZxKUz0e95N6832jJvgZevGamdViBDGkC9DryMApsr6W/84xoV1aU+K8NFK40Cyhtjq3xvWQ6EdAUSCpxxVtntwY3n2roLkmKFyojDy7w==', NULL, NULL)
+GO
+INSERT [dbo].[QuestionAnswers] ([QuestionAnswerId], [QuestionId], [IsCorrect], [QuestionAnswerText], [FileName], [FileData]) VALUES (96, 1, 0, N'cZLZR6wX74IFDTn+VSn80AgWC0lm5FMOJFWGoOgNagnt1UF7bEq8x3WApqIxx1D7SznpZr5Ei3S0AX1Bs+Npo54NbRQUmZgQNDaX92QgmkmndHIK0fw1h6HSvtRhYPsmB538gNB9CZuklJUSt+1DvZZXQMRrL390ueeKsTjrWDJmFfuLobjkjd7HwJnBj3RsPJKQiCQvJv1QGi7RloD0dBkRWtHMe8K/YCL02uMLP5a9ocuaQSirw9bDxtKSf+YTYd+A1q2jKAmh0IdLvdi2gEU149g=', NULL, NULL)
+GO
 SET IDENTITY_INSERT [dbo].[QuestionAnswers] OFF
 GO
 SET IDENTITY_INSERT [dbo].[Questions] ON 
@@ -798,13 +841,9 @@ SET IDENTITY_INSERT [dbo].[ScoreOptions] OFF
 GO
 SET IDENTITY_INSERT [dbo].[StudentExamResults] ON 
 GO
-INSERT [dbo].[StudentExamResults] ([StudentExamId], [StudentId], [ExamId], [TimeEnded], [DateEnded], [TestTimeSpent], [MDKCode], [MDKCriteria], [QualCriteria], [TestCriteria], [TestTotalScore], [PracticeTotalScore], [TaskNumber], [VariantNumber]) VALUES (1, 2, N'5207b3b5-c78a-4888-890f-e931308fb5bf', CAST(N'20:00:23' AS Time), CAST(N'2025-06-16' AS Date), N'2GPVmIjuHOVzdS56xPg+lq/yZqU+nkXje7WU2EdQ4mlS', N'WeYd6zYAK58MxOGCCrbXfmO5wDFgFHBqIRkjNJyef/CbV95VW6SIEQw9J/ucdN2i+jCZ0p/KQ2TTmspZ+JLYLrCIvMh/+ps6iNJ+s2q0wKkll3PSt43aJwtiJ4UOdTyjDiYHhkP6O/sX41DnLHpf+xx0wgWk2shbtRD4zxY/yiW1eK2Xa964g4s5gZfxyi4o0F1LPdGQYlOaEpcbHqXhC0ID1LPi3VhKLrJSihpdYBiXxJOltMmCiVp0GrY+yg3RIfsa3mNDMgUn/7ByOSg/GtYrqEYe/xr69vRcqGOli1dFWwFHZPlEGUV0Sna2ZnmHntqp9jUN2obwbr80coY691bpwKHHfdeyPyjrN4ftrF2sKac0JauetFVPvHOyPc/acQ7O90uE6mr43TnHJ81BGUcPFX4FYAya43vhRYl7R/u5NPIyU0Hvr9/BoLxa/R0paUi0wMz5PJXgax3vk9hf4dG1vGkz6tqaRLKsWkvfbutNSHjWBtCQ12MLjJ9B2elRSaEu1yHdJCaKJvCkMQFJoRnglG8mIjTDiaeA20a1LeNbE2GtMYKCiLD2BcL0pSUuq+FvZDIDDhiWBCnYnYyPXxrnaji6brbEDiA44zme2c01mhL2Hv3iSykOFtcHh7kydzXjP+aZk4d9fWPNiQQB51LU7SoprloUOUp6ER6DIy63NBWuXtwSsmVvQe7ydTBorD7HzkrL+D7N/Ryd2Vvorsa4Y0nSpPBPCh+EB6mXAmdta8I1CKleZyq7f+ufbeoR3KSG8I321o0miwK4b+CRtOF7mF82rUphXoUKa7RgtfYJr6nUg5onLYxCIMIizZSCPCV0sAfkv4j6vTgaixhFvagw11VQQSna3z716m7wCPjLDDPsUwLbZuwzIDDa2VdBnSlAa9Ru6TTq/5J8GxiZ+jxfxS+xiwjUkqoyycYYVthquKAoJuQzZ75JUj+7G/RlOJcj8b2WMAleLY7Wu9jNJZNtApMK1gVACx0hhR5NebTRnbtn9v1gWPv/u6sXmD+4Yi9Ryfw=', N'uiXIfpfIvL2R79SqYi5j6DEcAZ0gX25UzgjoatdgReK6Ez8QCJ+4QuyJFPGCZpRMxq55yXMkrrI5m+qE/3TlmwFaGXtHk9q/Y9JwZjiBFG3tyGIXukGnImWxp3OcRhbq86empBEtHLQq3EchUYAYWTXA67IgC5aoa+vyZeCyDYcr9AePz05kX53SIqAphjimVN6RGocyN/cbUlV0Yo4/9vFqnGpjuOo9wryLW3PolbL3e+YMy0U/F1h01vtonZMLvhz32qoZVDOU/2J30p0BUXKbJpW8PbnvjMg+H3zfQ1OvfXyXbWZeycwW4w3IfI06Ps5bBL3bkzIq9szcBhuRT0tzbNVodq2SqJsNR6WUAbwQcHElyuXbhTlsiu9mzO5Kt0pmrfqEieFGoBTh1Kdu8O4Ey/S44snOizXO1/rcEgBhsovtI+BZWr4XsQs4sw5yZhshDpzMwfknw5Y/cdFDW0mVHS2hzWpBWyBmLueQS1Moxfqbx/RGKNAgCkpqb3bBnRFrBGfRuSSuDxERva5OfL7zcmQRoFAO4m3oaOrF4TX6jnqGvIwWT+yHQ/rcZo6LgvgiLDdKeKTLBEV5THKaUmLvuA58Qci8xJBrpYwSGNXcZewhL3Wpgk7yD00wdCBnNLFdxwo8hr6+', NULL, N'fB4d13Aeoqb4jEjZJBQLW04iGYCn8VeK3RdunnWSYMj3XjCSro3RRg4jM3qOqU3upKOIWQpI+VvxLD7IJt/nybNH6IeRrkyT0y/a6FFbXkH5eSksAu4kv2xYUNBF0N4AmnBaweNjxM95Rz/YdeUhGeWoRUHcr3b8kWmcqs7Og4Fh1q1C/hluEFws//GDkrQ=', N'OYl3pPc1FpbemxhC04zMBCpjGN9MJ+0xUtVMfQCsg4ag', N'kiunEDKU+s3zfozn6/mddQFT1hc4fdhucP63KiO4Qw==', 12, NULL)
+INSERT [dbo].[StudentExamResults] ([StudentExamId], [StudentId], [ExamId], [TimeEnded], [DateEnded], [TestTimeSpent], [PracticeTimeSpent], [MDKCode], [MDKCriteria], [QualCriteria], [TestCriteria], [TestTotalScore], [PracticeTotalScore], [TaskNumber], [VariantNumber], [TestStart]) VALUES (3, 2, N'751c98fe-19d7-431a-9266-9716837a5d0a', CAST(N'16:18:09' AS Time), CAST(N'2025-06-21' AS Date), NULL, NULL, N'rlsr4EHljg2av6TOikJ+xDl4ZzD5dp9icvQLKg==', N'T3lL/Hd34lpUYuVgCs2xjDHq5VbP0RtRoxXIWWhIrWuwKnjgPwPhKeMhX3IW/lXFLsPe70nIjkKmZKVzSjS2URsr89bZ7/dtwsMWC4Z0BnNgRGTk4EBv0XL7x3ToKWF71oga6+86hL8pRNSy6dgLW0PNhx+l+0zHub43XGlspxZrkMdSOu0H+eKw8XMdBzZVdy9Ikh3uaBmvFMyHcmt0ZqMC/wyK/64eUPbVeRU5Hj94dN+DMLuo1gqsIi2Y7i1d1SnAd3X/r1zyan6hhL8uyXY6lSQtau3onBclJDYXEs5oAfWMkMyP0BddoarKs/nZ/ZW9gHiOzzvUaF4K0yo5Hr4viZKb8Q+G/heCRhPF4OvI/88z2JS6tBX4/BUVSsJU+mzoOcIup4+SaUFhOuOfjDCDnq4DQhIoUylDQ6auZzlM', NULL, NULL, NULL, N'x61fAKYXKAYgB3uFcBCA80R6NdcaeZuLNCSu4DElyg==', 7, NULL, 0)
 GO
-INSERT [dbo].[StudentExamResults] ([StudentExamId], [StudentId], [ExamId], [TimeEnded], [DateEnded], [TestTimeSpent], [MDKCode], [MDKCriteria], [QualCriteria], [TestCriteria], [TestTotalScore], [PracticeTotalScore], [TaskNumber], [VariantNumber]) VALUES (2, 3, N'5207b3b5-c78a-4888-890f-e931308fb5bf', CAST(N'07:03:06' AS Time), CAST(N'2025-06-18' AS Date), N'2V+6BoSX4FzUs8WPFhws8fpqu74gCWjLCEiAOOXQ07CC', N'lG8tiDlrHhDLFXuNTCW2jh8PyKfT1ZvDN/Iqz3nrD3XqrjhJihvL/mAB+H6bNN11F/dm5AOJ2C7TN43oLe/afPKfxs6HNwulmi+cD1MUyyRaEG1GH7rc6x0HVBqOMTWMuZ9ZrWK7Uu5IsSFzQG9qvHglaslQOdKIe32/xfzqXi7i6rAPkkcnzsAZVCwWt7d0PxR55tY8G24s4/0Bm9qKrsBJVnEMun6VIlLqIMXkotf9LTwdyqMeIug6AH9kIrEUSrYy8hamcVHKHgBzsIC/Pe43oBoSo/Frn5EophHCBjZmDYwS1rzLCWyR7uX1+KaH5yMvN28KkyjIJhj5JqZjjFyhEJbHBhZdzLHqy532jZzKYjmWi2bwZGS507cOenkbh1wLQ1f8+NQ0XqkjMDqiHT3DsKlw6xELAV+3dDrHXBJkjG9hGhe9jrCQq+/1V6KDTKMFFXBsbdMPDucKYHMfjoIf2FLGBKEhedMm4m7llsHM/Q8dsm/D9fQl0exJt5pyDPqoo4BSEPc3FCiM/fIwYvuQrDvWwPZDwr70ukIG945YbFPvJG6f3M8l0nHY/NCssj1zEf6WQMN9WQZol8LNeWukZ9Lx2h5iiV8DD5+ugCrIW+awfFcUimo4OR5Qltr7lIzsapyAyATMwOrz++XdJmckPwa+p7KqvnHUss1X5yO6a/PVHJd7doxJGFzCRQP0UjWoqAJXWyqW2hgsQHABZ7FOQN8dnLLn0QzVxCDf7LAhCSZV86qwMT3M7OWCdJ4u5XcwFkc6EMEjt3yQKGtnVEWyvuJ4Z0YhL0hp3npOLfGmW4Jwr1Krrv/zosrkJLuvfb7I67zeWIR+wjqCuDjNJcgONFWYea93iLVB12ZcgmdTpMPnd54PMAc//mYj33poOfpwdQ1LLkBtqna9tRdzEY3LQ1wHHRZPf2/y2d7bf6VsLb2WvX6BKjByVmuA8QjAqxg+nv3StJkYLtMUgggSfFVI1nLLBALlrewAY1HbvF7tclSWsdo8jR17mCsdOR9lG4lC7+Kj98mooe0N0jnE0BYd4kJkkzpL4zJLIvuqtJvyikfdAhJFTejzZ+BVQPlCV/KBUjnv72UVv2UX/3Yj7DP6CFOGBufAtmwPtOtuiAJFozNMI7LePt9p5QyVOTtYOiXNXp40MeOUIq+Fa4NxS4qF8R9TROqQ16LjSJ9zJ6C9L8L6rtx231Ea2Fe007eqGFDrLvyou82Tqfw2APA78sezTm/yibaplGId2vL/6uUiLfKipolyQmNveIvJ4ICC1jwzl6tKlAPgpEIe4JlP3xHp46KT+8xg964VNMw+1Eikci7QBpR9YjD6ZdqA6UsAi4HIar6i1VBLZyW98WQtHp2j3gXMj8k3d7eNKGzXdikDEHY60RkZAR/rv5XhshgW0Xa70ZJZDhWn8doa3geTQpZWMasUJrZ7zBBZXvvBcHXbNIeKNSjQ2J/0Vd2+1DHxCTjefe4PX5VMtdU9SDB7UGkBFTbx3fnRWChIuxEN++J0tIJp6e914T1uxcS5eIrlKE0iZoX8E1pAC8j8Wa2C0rNMhyl/JaRWg/4s4L74Cm7MNGrCns1Uo4VgVO8L4OQ4wGws7LCgc8s7S2ypulrmKXJTrAhAF/b+Tw==', N'CJgNEXWD83TMTmjargt19mLF1y86Q/dJPJOHKlUSl9QmlmShm5qqSxxtR21G0EzJfg0EC/hvlJI4inrcJq4TvfwQ3IP8XFLX9pyK1D7S/uvGnoscTGcYzj1mPfY9fgYF4UwdKgN2Nqo/c/p2YVlhYOM+cu2F0T2P9tpHoECeu251aqyJXVxGSTmsZ8r1riv3Vl5yUGA0JbPEiE6H1/J09HD/u9JKJADLCp70DF8yokQHAb/TkXfNbrIDrKdUFhRQlzwI2JdoU1zbhCoAE9GJhq9G6sILehj+9nQJZBJR9sywVUKSLO+f+ZgSnDZhSpWjDECK8QHXB2qgH1OmhrclqQibeV4nAl+SwbNE8Mw+en14MSrT9s7dCMCW/R8imKULktR/dm7ywQJxiuJ2Gg+8Lt2mV0l5rolQtQNlUTYPz1gnmixItYi3bWqMiM2BR33is1rg1LQvqpswZu9MGzfWPh3fxsFWrlElxcf+qP4G44LX4IcTl5e7Txz17HeIRjs4xh9n4djngA==', NULL, N'vxR/jbhR+hQoCxJUVsWuwlqQNDR3SO1/sBzm08EYjXk5VKaEA3aoPVe7mEYyOvYjlqYkuC2C3Xw8O98J+K1Q20u1TNJL4iQOxh0B6NEAA2m683XhmvanfCZfbnHNpGEIfg/GUikoi5T2Pst5AOoN1o+jXKRSp0ZfvBdWtweMtX+x9K4lS78ZxZdkUdMH5A==', N'LkAgJv86HxklfW7Z0p8u08/QAgX90re7QX4ghNIZkBw=', N'xBX7lK/zvq3vZQdsWozKUO817/C45p9fz8IMPw6fQA==', 19, NULL)
-GO
-INSERT [dbo].[StudentExamResults] ([StudentExamId], [StudentId], [ExamId], [TimeEnded], [DateEnded], [TestTimeSpent], [MDKCode], [MDKCriteria], [QualCriteria], [TestCriteria], [TestTotalScore], [PracticeTotalScore], [TaskNumber], [VariantNumber]) VALUES (3, 4, N'5207b3b5-c78a-4888-890f-e931308fb5bf', CAST(N'07:09:59' AS Time), CAST(N'2025-06-18' AS Date), N'oN6VxpxY995/vOKLM2ZgV0k27cUsk/H2ZYq8541bG7Ey', N'YHXt8bf1B8hOyX4PMPJCLgZfg2ogPYJKvCfHMDcaUjEdMlS4LNrF+U8ygFdFjRX8BF/Yie3DNiKWCuS3o0DEnURKQSeJnVJklTzFhEo7j9IvtcGmR4beEUwStzDe5nGke6V4z+kXKtyUvucP8dCH6FuaOin3bX530+CyrjKre1b6nP2yKy1IZHe93Q5H6ccxHesdf9BzurTNAOf9a4TEflUBdnPILZnh975aI3a9bu6HjaU6dieKbpglcLSvXsp0GkpJmGGH/zpEMJbPJb1s7GV6rTZv5+PNfi/qlZD+g2JK65YJeJgwzAAuhHqJk+HcbbifE7d1iPchn5Zl9jfewOviWLazFCPASLAWHP1Qv3e3k+XHHpKTNmUC/GD/xIDiHg4ubsGL6BjXYQmjc/iIkvhWve4t0C79Cvriv+CCfOSzSP8lTQ6CtWDesyR+bDvj2qf7K6sSH0oC17kdWjjoef59fH18nQi8/e7WXRt9r6VM4X26L96evaPNde6iiprjVVCvrdWzpLKODezVSjAzyPYMPv+ryEgzFTWTz7x6o1LDFzW5rOTHdQi7XoA6ToE/wOpAe1TPttyxqC/LNrkM8KdiZ+IfmmsSPp9B7EtLhaE/4vyokzf1z6GyWaPAZ+Q/hpPZNuVzLVQhTaadvVpU3NTB/DeiHCLEws02oZrSRdTO8JU8T1vi/BePzRYE2OcBPFMN7djPOR+UBSziiexjudEejwVsWAbcbhTsepH2uDQvSx8XE4wtQSRnIsGJ7LU+cSpcR7pdPaLjSgrSy3N+JWiJxvoXt1LopWKi48gzNrjBKzg8ctYxp4ZKHawQCsjxp1zht5M5xEUXnuoqpZ39tlcsl0f7mZ3IiSpKSS5iTsK7wO3hUASV6dARdq2cGH8PBXUciCV6vTKUNSAvZybA/VW58ph8AevWsJfj+rfqWKC6YfgOpDCw+2MrSRhOi3ELF/RbjHLp/Iqpe7krsbhTmyi25NQEwJETgllTKl4eImw87M4kEKbcLUjgENo9bowyyJj53AjaSOvS/OF43cYrMoo4JeF8CEsPKW6HnN0CSQfPyVfiVpCa64ZJLbsq+7rssHxx+nf6rKYz3pfxXB8e/27lKQlMfJVXiHtJ73bHnvU1BdKiP1xE6PVU5CB+VRTXl3hMQmS2SLf9aZKVnJ8KxBRvKrMkyH6CIyCC5tNX9++cb78pXe2G6XkmrGz+iVh6wNQAQlGZM8PlxiROfcRv9UEZxFPYHZRkQV0gXw9Kt9ebKmG+DBOuWc87gARYIrZpJEFDRIfxovolc1gipbYYwD0sLqZ7BlH5UVXuXHvgWhUrWPgauT0xF2Y6E7oUQPZuxMgRT+yT8heL/xffvZTcJ4/a6Ksz2ek+6XU=', N'63og+HPzsrRJvo1Xgpohpeesxyt3PpR0vwahKaa8I2ZGpieEKWcPhkgzmXrjMrBe/TFXnxH4igCyS1u0UA3k4Sjv0CAEaNc/ID69QWKXgx77M/UQ5iBOY7NwKVMim/eU7bjumvIRiW9ABSemSpvzUMnjhSK8RjbJBPV3uJn2EyDExMj5TiP3miYsNNLNZZEcWW3tUhhvNjH7dQ07Zl6+/h6eNPyKbB3lZstQ1qGR0jB9KMpnPiH50xWUskKfNHk9xL0L3hG839Cgx9WP4vf7g3lHGKHpDL1+qYKYAQwg+NfxTp9M71VQn41IZ/DCt5wsGshblM8iAHqnrDTcCrEaFDbFYYB04hDFb2dFmAzTJLHOPv57lCAUxFLAjCKi3zrQaxscyufPP4W2CrDj3QnLfHYdIpqNxWRRdiP8a+U+cuOMpNJNJYy7T8dTwIIjg85UNRp+wRQAW63lNZIE6/4PDqJ2w6+i2a99C21C5ezD3qcKF4bbVPQlhX2Y32iethBgXNdwXVBB4dksIK6sQ1ABI3TNAT45prtbsi1mckUlFhx93CdsR9TeLAgcPq16NIWzfSRO8r3jt0nXjPm/OSH+beMv+nv99oryHLp+zvHQSJcta8vRU1NdF94FovJ+ndm3eTX61u+PL+RHKNCC+QyTrRlm6IjvxP1S8cOrAgCM3nVi', NULL, N'NYki7eclv5nSj51IJpKJHbjVHRkvkDrz2w8LcMFXGIezKSK0yINXemeY/i8EoADR8cw+BGllIohqE5STY0KDQZ6X+ZOBZAYi6KRfpW5tGMfidHQUiKTQGRlzSu3JDj/60gk1h+DkAaOuD/TqoYFmL/VKSdkUsqZ8Yb4GTeM7oTpoheoNatIbCh1A7Wi2aA==', N'NEeFxB2uK1xR1/0Op5+UeV8hXfdNl49RU7xvGhzg+ok=', N'BFSn7gruTPlqzkV/zNM8HUpao1zAMVcOf7MvUSx+Cg==', 11, NULL)
-GO
-INSERT [dbo].[StudentExamResults] ([StudentExamId], [StudentId], [ExamId], [TimeEnded], [DateEnded], [TestTimeSpent], [MDKCode], [MDKCriteria], [QualCriteria], [TestCriteria], [TestTotalScore], [PracticeTotalScore], [TaskNumber], [VariantNumber]) VALUES (4, 5, N'5207b3b5-c78a-4888-890f-e931308fb5bf', CAST(N'07:34:25' AS Time), CAST(N'2025-06-18' AS Date), N'lqq0fwq3/4nQiy0Suhuux3ufBos6WUP31YTpPQuql5Jc', N'X9P1870ACnkeDpqgJAndAAAWZ2L3sjktrd/QMAU8C+9W5rziwLOfHIX+XIXpOPHxBI5xbVLL5oBeGFbPm65tYoDzHVIdNmetr7oZswGKT9QciYSItTjD9Y/Kklpo/E7DTZ8MT6G6hqXgHbIQqizJBnIKGuf9IJYlX+oWmVhHxxTA/MWun2hlrwQn33vW/Px+UwrpR8mKj9yGxA7XUgRYtDHbLlbx/BQj/udZOZaQVZosXbzpvps7weMpdVJeNBFEO/JQRI53M8dKyXeY+cxXZdXL0JANK3kiVEA6iKrfWjXfcbSTUhefQlbS3x/oK9G0gOGtu22kBEukj/MkzfI+aLmiMiztvSFRZtoJ7JQpigWBivFYjuaFHxAG77AJUlSscjtugATOLMp10zBXaB2SyiJEI7zpbjO4/OrDRXw9JHisZe0uFHWyHVd90Cp+xVdSUWMdEfnnvG9SvtGjEUvOnUmfMH1t8esSjI4oVtUjtwGJLZSdwHuH6HJanMrvDqjdwT4uoNmdFCgxTOTwy2qf0T5ZGg+M7lgT3D8dytpIn1Z2sWFSMtMXX9S7ba3klMq5v5eCCBLkTKw1FNZujwTvOe12ZWhvsUJfzNloCn6QiU7xEHpjAa7dPj8sN/NeAQbBcli54TOG/ENs2hUDuTOwhCqLiQhC0vRz1fev3ME8Ez6SfWIfKaz4fHrlzTQeYb8iJosS2qrLpOBWl7Dv2evEP+mkv+2HpY53m8UB5tkQNfw1eCbosTfK4pjX38DGnISyBs69kxONGao386xgFQ8+H4iGX8m5MW3yCDCiF4eUQ+LB1CAJ7qvyBp0R7TfUuX1k+4CHaK2i8Ebu5+vZ9guWfX4IBdbZu3BCzHVXI1UMh/Ng6ji10xLAGWgysj6EAkLxiuIgRi5ez2CehPqC5/zTTSTorvr2NAbPwmZHLthhXiFOJ1jmhc0aal5NdsnBebtAR1iVdy57g/SSDjSUMu/H/O7XwpGM0uXTEMfgvBNjcVZZ8EcQ7Sqjarmmx7ws0ZDYfMA/dZI1eU+NIXPNrtzU412UPdpQX32j62OA5WqfDWbFClTt7P24mvFXb2M6bQLN6HSgzy2B8OhXGSk6mbdmDfutaau0jMNgFdPyWzdLOPuj5TyYJyKXO5Hl3RK60fyQ1+Pvm7tIbQ/GGzzWUmBAtvtSaoLIoraT/14lFC4DZfAAG/AjKJ9pherTDbjRreqeVuKKGXYWtERBw2wwjqlyGg3W2XjT+H4Oe6OuwKFqvhRpTKq7o7+YNNct6QXqG7t4bLBJG0H3aV7hjRSQY6iIya9Zj+iz7aYKRO1ujDUhdSq7UOt0Si97jMU6SnYc+YkuR7i12AKbOv26egew/QYrmxYz5l6N5pWpDNBLhv2S9F1TSyj46uu5XChagibEtR7bP8u/7tTdfXol/8+ZHbaMbE32DYRnIgzxWgCaI56ToufBfbU+UxcYq3tmkd9qIMCaL4ZrLwkJxTPI2toLqxCBZk1N+JfwzzholS5VdnpQVKm74kvKXOtbcEBJgpPMWn47d9xbbDMjrXW3PEtyH7iIswQvAmxR4Xky83wmGIYkWJbnhKfpBP5YD6pjDtRZM4JDpcm0f8tpaOsHWiCw9D1m7ST5bZtqoad5YxzkDqU5L4U7bYB9vnIXVfeoOpLgOFPY7lb1wJH7BAjVVGzbgnhrW+oIc3cAZJHfhyRzgT5JRwhT73w4bD3po/NSb3lfUUG8UZWjxgWob64Kt7FGJZPSG4YrOrINuT2M/A==', N'a3kQbmH8dYEcqWO22YFHNsNDjU4aKORsyvloBDfh8ybHT0lHGl6o5rNuIxKCZ9xNKG2cLr9G0Apy/WI5khxPoBuM/AVb43XioQp7k2xl2gsHhA3l0+sKDBhSTR3SdOvX0j7/rr0vlfi3qLS3xRDwKp+3Ua0/MCuZLb/D4OFmg6NVqPUaZNvYoQzYiuFfs6gM8YAPmcvvn6ryUqq5s8kpu0UziuuRPVbApRWh8eAui4mcKmURMgeUSvcWqfF39GgT9j1ekNHDnVsPNDb0cGOLXj54mbZT94H/i1V5Ay1PJ6G816O8+CPor6BDZEtsg05ml6UQpj1SFbt4xhuxoWxjc39GcWSDio1jRsr4pM1U/fuiKcca53zlKphGcFvdZj0zTvravHpsDe1jYHR+XNaBW7EcGZaTcXITKK0bESsYPWmsKmRC2OYhF8HB1rg6v0poJ28S4gmGY0AnAWwbCEeirGSp97BRHsKGkITIB7KZsLZjJMAr6/C2gISW2cLcxKg56ULF7w4Gm6DLHXWqSMPj40L3jJnGga6peLWX', NULL, N'rQLf6rZmQEfd4DtUs2C76Vmsc9457lqos/r28lHPd64oo3FJXQ1yzglfFMcA5qdi4lDzwj4pEe7j0oxZL8y3fRn79CI6lfDFz+MgzFWZsbqt3+4rmIZfNd+QNf16iashWCfGf2VI+WVZ091tpyq6OqBWCr+95GOELyKelcPqg1PJtXEYpnyT17QH6KlFShM=', N'H5/xGDTBpdKxnorVVKIZ3nDkbn/8sYtBAlW+GHwsUSNI', N'5cAr/t4hykOAEQRrN1oGSMRIe4VQFqYVeKhuuDuiBw==', 27, NULL)
+INSERT [dbo].[StudentExamResults] ([StudentExamId], [StudentId], [ExamId], [TimeEnded], [DateEnded], [TestTimeSpent], [PracticeTimeSpent], [MDKCode], [MDKCriteria], [QualCriteria], [TestCriteria], [TestTotalScore], [PracticeTotalScore], [TaskNumber], [VariantNumber], [TestStart]) VALUES (4, 2, N'5207b3b5-c78a-4888-890f-e931308fb5bf', CAST(N'16:25:08' AS Time), CAST(N'2025-06-21' AS Date), NULL, N'b8AMF5e9otdJ4NCMxJcP/40cWPc3tCCPIn17miEgn4NfkQqZ5xY=', N'bnfm8dfQj3QQD/dCTNhwB1PlZ/4rC1tnpPgKcg==', N'+T+yaUk4HvZeI4rG3m+66IfeRVZ+5MuCvLQXuYogTru3v4f40Is1Rc5T6X+H98qVttnGil4EzCh3rRragVSNOW4VmnzrRS04IPcqEmuL9vK4ngIkEgKLCzld0VoK6Q4wu5qSI+AGIMIpX79TiReuCibS2IBRjjI+V2aS0gZvwO8da8r2JkN58zhBZKNyA/IktWUo/mNxPTd9v5w2OUiN+OKMZgrQq2oNPbRJp491AKsNTZwhxubD7/YapnJIxOkL8qDiB74FYMA8hx3eYb0CfFw/ej+P4LfoLH8fIAwwQhlObniiawliD0KI3DWtyHaDtIWWRsJanxzeK92cm+EHWLK5XpLXt/9VBhsRhP5ipTFanQysiLZSCyzRTw1387A8ZyursTfMPJEWbKE0Q4y37Ry75CjChohZKmApYjA39LoB/13BgxQ8ucwUeWN1WLJ27cmPWhoxJUUrQx8k0lu7kGheQ5yDcHk/rKIKw7Cis926fYdyit2cEM685NZwjZhBP9tOT5RVDUgvuWFI094eFZvLC613UG73Tr6oY5RsR0FMlUBAhJbt8EEl', NULL, NULL, NULL, N'1qyyVRXBnovES6QtqGkhM0nNtFxSaZ5ZIJnMg8wIJw==', 20, NULL, 1)
 GO
 SET IDENTITY_INSERT [dbo].[StudentExamResults] OFF
 GO
@@ -980,7 +1019,7 @@ SET IDENTITY_INSERT [dbo].[Teachers] OFF
 GO
 SET IDENTITY_INSERT [dbo].[TopicsDisciplines] ON 
 GO
-INSERT [dbo].[TopicsDisciplines] ([TopicDisciplinesId], [DisciplineId], [TopicName]) VALUES (1, 1, N'zAJg4uzzWb7+j8HYOnk9ipiWh5NmpmhDI6cKSMD/I45CJrzqScr5M0d2nYlxqxwf2LngJLB4eY2qr4NgI8An41OZCu0ZQ4LSbuDEWw3hwupW')
+INSERT [dbo].[TopicsDisciplines] ([TopicDisciplinesId], [DisciplineId], [TopicName]) VALUES (1, 1, N'j14xCaiIUP1/qXsVhlBFOMXKuOFjWukrBO2YC8aApi/xIbfP2hBXAIwVaLwNzLJT1HhSOYFiD+MMexDZtsT33KWuj95wMW+J8JfAin7fBdIy')
 GO
 INSERT [dbo].[TopicsDisciplines] ([TopicDisciplinesId], [DisciplineId], [TopicName]) VALUES (2, 1, N'9RlV7rscjNuOAk7dOmP51n9pV+6/lbB/KwWDpuv12iTJ6RNmLLjQQsl5C+udBi5vQWLKvJzqBt7xEcQztLYLc+ZBVr0tXc48H24AwkwL2+c=')
 GO
@@ -998,19 +1037,19 @@ SET IDENTITY_INSERT [dbo].[TopicsDisciplines] OFF
 GO
 SET IDENTITY_INSERT [dbo].[TopicsExamTest] ON 
 GO
-INSERT [dbo].[TopicsExamTest] ([TopicExamTestId], [TopicId], [ExamTestId], [IsSelected]) VALUES (36, 1, 1, 1)
+INSERT [dbo].[TopicsExamTest] ([TopicExamTestId], [TopicId], [ExamTestId], [IsSelected]) VALUES (57, 1, 1, 1)
 GO
-INSERT [dbo].[TopicsExamTest] ([TopicExamTestId], [TopicId], [ExamTestId], [IsSelected]) VALUES (37, 2, 1, 1)
+INSERT [dbo].[TopicsExamTest] ([TopicExamTestId], [TopicId], [ExamTestId], [IsSelected]) VALUES (58, 2, 1, 1)
 GO
-INSERT [dbo].[TopicsExamTest] ([TopicExamTestId], [TopicId], [ExamTestId], [IsSelected]) VALUES (38, 3, 1, 1)
+INSERT [dbo].[TopicsExamTest] ([TopicExamTestId], [TopicId], [ExamTestId], [IsSelected]) VALUES (59, 3, 1, 1)
 GO
-INSERT [dbo].[TopicsExamTest] ([TopicExamTestId], [TopicId], [ExamTestId], [IsSelected]) VALUES (39, 4, 1, 1)
+INSERT [dbo].[TopicsExamTest] ([TopicExamTestId], [TopicId], [ExamTestId], [IsSelected]) VALUES (60, 4, 1, 1)
 GO
-INSERT [dbo].[TopicsExamTest] ([TopicExamTestId], [TopicId], [ExamTestId], [IsSelected]) VALUES (40, 5, 1, 1)
+INSERT [dbo].[TopicsExamTest] ([TopicExamTestId], [TopicId], [ExamTestId], [IsSelected]) VALUES (61, 5, 1, 1)
 GO
-INSERT [dbo].[TopicsExamTest] ([TopicExamTestId], [TopicId], [ExamTestId], [IsSelected]) VALUES (41, 6, 1, 1)
+INSERT [dbo].[TopicsExamTest] ([TopicExamTestId], [TopicId], [ExamTestId], [IsSelected]) VALUES (62, 6, 1, 1)
 GO
-INSERT [dbo].[TopicsExamTest] ([TopicExamTestId], [TopicId], [ExamTestId], [IsSelected]) VALUES (42, 7, 1, 1)
+INSERT [dbo].[TopicsExamTest] ([TopicExamTestId], [TopicId], [ExamTestId], [IsSelected]) VALUES (63, 7, 1, 1)
 GO
 SET IDENTITY_INSERT [dbo].[TopicsExamTest] OFF
 GO
@@ -1216,133 +1255,124 @@ INSERT [dbo].[Variants] ([VariantId], [VariantNumber], [VariantText]) VALUES (14
 GO
 SET IDENTITY_INSERT [dbo].[Variants] OFF
 GO
-/****** Object:  Index [IX_ExamPractices_DisciplineId]    Script Date: 18.06.2025 7:38:12 ******/
-CREATE NONCLUSTERED INDEX [IX_ExamPractices_DisciplineId] ON [dbo].[ExamPractices]
-(
-	[DisciplineId] ASC
-)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
-GO
-/****** Object:  Index [IX_Exams_DisciplineId]    Script Date: 18.06.2025 7:38:12 ******/
+/****** Object:  Index [IX_Exams_DisciplineId]    Script Date: 21.06.2025 17:06:10 ******/
 CREATE NONCLUSTERED INDEX [IX_Exams_DisciplineId] ON [dbo].[Exams]
 (
 	[DisciplineId] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 GO
-/****** Object:  Index [IX_Exams_OwnerTeacherId]    Script Date: 18.06.2025 7:38:12 ******/
+/****** Object:  Index [IX_Exams_OwnerTeacherId]    Script Date: 21.06.2025 17:06:10 ******/
 CREATE NONCLUSTERED INDEX [IX_Exams_OwnerTeacherId] ON [dbo].[Exams]
 (
 	[OwnerTeacherId] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 GO
-/****** Object:  Index [IX_ExamTests_ExamId]    Script Date: 18.06.2025 7:38:12 ******/
+/****** Object:  Index [IX_ExamTests_ExamId]    Script Date: 21.06.2025 17:06:10 ******/
 CREATE NONCLUSTERED INDEX [IX_ExamTests_ExamId] ON [dbo].[ExamTests]
 (
 	[ExamId] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 GO
-/****** Object:  Index [IX_GroupsExams_ExamId]    Script Date: 18.06.2025 7:38:12 ******/
+/****** Object:  Index [IX_GroupsExams_ExamId]    Script Date: 21.06.2025 17:06:10 ******/
 CREATE NONCLUSTERED INDEX [IX_GroupsExams_ExamId] ON [dbo].[GroupsExams]
 (
 	[ExamId] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 GO
-/****** Object:  Index [IX_GroupsExams_GroupId]    Script Date: 18.06.2025 7:38:12 ******/
+/****** Object:  Index [IX_GroupsExams_GroupId]    Script Date: 21.06.2025 17:06:10 ******/
 CREATE NONCLUSTERED INDEX [IX_GroupsExams_GroupId] ON [dbo].[GroupsExams]
 (
 	[GroupId] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 GO
-/****** Object:  Index [IX_QuestionAnswers_QuestionId]    Script Date: 18.06.2025 7:38:12 ******/
+/****** Object:  Index [IX_QuestionAnswers_QuestionId]    Script Date: 21.06.2025 17:06:10 ******/
 CREATE NONCLUSTERED INDEX [IX_QuestionAnswers_QuestionId] ON [dbo].[QuestionAnswers]
 (
 	[QuestionId] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 GO
-/****** Object:  Index [IX_Questions_ExamTestId]    Script Date: 18.06.2025 7:38:12 ******/
+/****** Object:  Index [IX_Questions_ExamTestId]    Script Date: 21.06.2025 17:06:10 ******/
 CREATE NONCLUSTERED INDEX [IX_Questions_ExamTestId] ON [dbo].[Questions]
 (
 	[ExamTestId] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 GO
-/****** Object:  Index [IX_Questions_QuestionTypeId]    Script Date: 18.06.2025 7:38:12 ******/
+/****** Object:  Index [IX_Questions_QuestionTypeId]    Script Date: 21.06.2025 17:06:10 ******/
 CREATE NONCLUSTERED INDEX [IX_Questions_QuestionTypeId] ON [dbo].[Questions]
 (
 	[QuestionTypeId] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 GO
-/****** Object:  Index [IX_Questions_TopicId]    Script Date: 18.06.2025 7:38:12 ******/
+/****** Object:  Index [IX_Questions_TopicId]    Script Date: 21.06.2025 17:06:10 ******/
 CREATE NONCLUSTERED INDEX [IX_Questions_TopicId] ON [dbo].[Questions]
 (
 	[TopicId] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 GO
-/****** Object:  Index [IX_StudentAttempts_ExamId]    Script Date: 18.06.2025 7:38:12 ******/
+/****** Object:  Index [IX_StudentAttempts_ExamId]    Script Date: 21.06.2025 17:06:10 ******/
 CREATE NONCLUSTERED INDEX [IX_StudentAttempts_ExamId] ON [dbo].[StudentAttempts]
 (
 	[ExamId] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 GO
-/****** Object:  Index [IX_StudentAttempts_StudentId]    Script Date: 18.06.2025 7:38:12 ******/
+/****** Object:  Index [IX_StudentAttempts_StudentId]    Script Date: 21.06.2025 17:06:10 ******/
 CREATE NONCLUSTERED INDEX [IX_StudentAttempts_StudentId] ON [dbo].[StudentAttempts]
 (
 	[StudentId] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 GO
-/****** Object:  Index [IX_StudentExamResults_ExamId]    Script Date: 18.06.2025 7:38:12 ******/
+/****** Object:  Index [IX_StudentExamResults_ExamId]    Script Date: 21.06.2025 17:06:10 ******/
 CREATE NONCLUSTERED INDEX [IX_StudentExamResults_ExamId] ON [dbo].[StudentExamResults]
 (
 	[ExamId] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 GO
-/****** Object:  Index [IX_StudentExamResults_StudentId]    Script Date: 18.06.2025 7:38:12 ******/
+/****** Object:  Index [IX_StudentExamResults_StudentId]    Script Date: 21.06.2025 17:06:10 ******/
 CREATE NONCLUSTERED INDEX [IX_StudentExamResults_StudentId] ON [dbo].[StudentExamResults]
 (
 	[StudentId] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 GO
-/****** Object:  Index [IX_Students_GroupId]    Script Date: 18.06.2025 7:38:12 ******/
+/****** Object:  Index [IX_Students_GroupId]    Script Date: 21.06.2025 17:06:10 ******/
 CREATE NONCLUSTERED INDEX [IX_Students_GroupId] ON [dbo].[Students]
 (
 	[GroupId] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 GO
-/****** Object:  Index [IX_Students_UserId]    Script Date: 18.06.2025 7:38:12 ******/
+/****** Object:  Index [IX_Students_UserId]    Script Date: 21.06.2025 17:06:10 ******/
 CREATE NONCLUSTERED INDEX [IX_Students_UserId] ON [dbo].[Students]
 (
 	[UserId] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 GO
-/****** Object:  Index [IX_Teachers_UserId]    Script Date: 18.06.2025 7:38:12 ******/
+/****** Object:  Index [IX_Teachers_UserId]    Script Date: 21.06.2025 17:06:10 ******/
 CREATE NONCLUSTERED INDEX [IX_Teachers_UserId] ON [dbo].[Teachers]
 (
 	[UserId] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 GO
-/****** Object:  Index [IX_TopicsDisciplines_DisciplineId]    Script Date: 18.06.2025 7:38:12 ******/
+/****** Object:  Index [IX_TopicsDisciplines_DisciplineId]    Script Date: 21.06.2025 17:06:10 ******/
 CREATE NONCLUSTERED INDEX [IX_TopicsDisciplines_DisciplineId] ON [dbo].[TopicsDisciplines]
 (
 	[DisciplineId] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 GO
-/****** Object:  Index [IX_TopicsExamTest_ExamTestId]    Script Date: 18.06.2025 7:38:12 ******/
+/****** Object:  Index [IX_TopicsExamTest_ExamTestId]    Script Date: 21.06.2025 17:06:10 ******/
 CREATE NONCLUSTERED INDEX [IX_TopicsExamTest_ExamTestId] ON [dbo].[TopicsExamTest]
 (
 	[ExamTestId] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 GO
-/****** Object:  Index [IX_Users_RoleId]    Script Date: 18.06.2025 7:38:12 ******/
+/****** Object:  Index [IX_Users_RoleId]    Script Date: 21.06.2025 17:06:10 ******/
 CREATE NONCLUSTERED INDEX [IX_Users_RoleId] ON [dbo].[Users]
 (
 	[RoleId] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 GO
+ALTER TABLE [dbo].[StudentExamResults] ADD  CONSTRAINT [DF_StudentExamResults_TestStart]  DEFAULT ((0)) FOR [TestStart]
+GO
 ALTER TABLE [dbo].[Criteria]  WITH CHECK ADD FOREIGN KEY([ModuleId])
 REFERENCES [dbo].[Modules] ([ModuleId])
-GO
-ALTER TABLE [dbo].[ExamPractices]  WITH CHECK ADD  CONSTRAINT [FK_ExamPractices_Disciplines] FOREIGN KEY([DisciplineId])
-REFERENCES [dbo].[Disciplines] ([DisciplineId])
-GO
-ALTER TABLE [dbo].[ExamPractices] CHECK CONSTRAINT [FK_ExamPractices_Disciplines]
 GO
 ALTER TABLE [dbo].[Exams]  WITH CHECK ADD  CONSTRAINT [FK_Exams_Disciplines] FOREIGN KEY([DisciplineId])
 REFERENCES [dbo].[Disciplines] ([DisciplineId])
